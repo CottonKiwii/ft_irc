@@ -6,7 +6,7 @@
 #    By: jwolfram <jwolfram@student.42vienna.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 15:40:11 by jwolfram          #+#    #+#              #
-#    Updated: 2026/06/02 13:54:42 by jwolfram         ###   ########.fr        #
+#    Updated: 2026/06/11 13:25:20 by svereten         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ OBJS_DIRS = ${sort ${dir ${OBJS}}}
 
 ARGS = port password
 
-DEBUG = 0
+DEFINES = -D DEBUG=0
 
 # **************************************************************************** #
 #                             Compilation Targets                              #
@@ -43,7 +43,7 @@ ${NAME}: ${OBJS}
 		${CXX} ${CXXFLAGS} ${INCLUDE} ${OBJS} -o ${NAME}
 
 ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.cpp | ${OBJS_DIRS}
-		${CXX} ${CXXFLAGS} ${INCLUDE} -D DEBUG=${DEBUG} -c $< -o $@
+		${CXX} ${CXXFLAGS} ${INCLUDE} ${DEFINES} -c $< -o $@
 		
 ${OBJS_DIRS}:
 		mkdir -p $@
@@ -73,4 +73,4 @@ valgrind: ${NAME}
 		--show-leak-kinds=all \
 		./${NAME} ${ARGS}
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re run valgrind

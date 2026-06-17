@@ -6,7 +6,7 @@
 #    By: jwolfram <jwolfram@student.42vienna.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 15:40:11 by jwolfram          #+#    #+#              #
-#    Updated: 2026/06/11 13:25:20 by svereten         ###   ########.fr        #
+#    Updated: 2026/06/17 09:54:47 by svereten         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,11 @@ INCLUDE = -I./include
 SRCS_DIR = src
 OBJS_DIR = obj
 
-SRCS = main.cpp \
+SRCS = Server \
+	   Client
 
-OBJS = ${SRCS:%.cpp=${OBJS_DIR}/%.o}
-DEPS = ${SRCS:%.cpp=${OBJS_DIR}/%.d}
+OBJS = ${SRCS:%=${OBJS_DIR}/%.o}
+DEPS = ${SRCS:%=${OBJS_DIR}/%.d}
 
 OBJS_DIRS = ${sort ${dir ${OBJS}}}
 
@@ -39,11 +40,11 @@ DEFINES = -D DEBUG=0
 # **************************************************************************** #
 all: ${NAME}
 
-${NAME}: ${OBJS}
-		${CXX} ${CXXFLAGS} ${INCLUDE} ${OBJS} -o ${NAME}
+${NAME}: ${OBJS} obj/main.o
+		${CXX} ${CXXFLAGS} ${INCLUDE} $^ -o ${NAME}
 
 ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.cpp | ${OBJS_DIRS}
-		${CXX} ${CXXFLAGS} ${INCLUDE} ${DEFINES} -c $< -o $@
+		bear --append -- ${CXX} ${CXXFLAGS} ${INCLUDE} ${DEFINES} -c $< -o $@
 		
 ${OBJS_DIRS}:
 		mkdir -p $@

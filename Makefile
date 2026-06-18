@@ -13,14 +13,29 @@ OBJS_DIR = obj
 
 SRCS = Server \
 	   Client \
-	   Command
+	   Command \
+	   handlers/handleCap \
+	   handlers/handleJoin \
+	   handlers/handleKick \
+	   handlers/handleMode \
+	   handlers/handleNick \
+	   handlers/handleNotice \
+	   handlers/handlePart \
+	   handlers/handlePass \
+	   handlers/handlePing \
+	   handlers/handlePong \
+	   handlers/handlePrivmsg \
+	   handlers/handleQuit \
+	   handlers/handleTopic \
+	   handlers/handleUnknown \
+	   handlers/handleUser 
 
 OBJS = ${SRCS:%=${OBJS_DIR}/%.o}
 DEPS = ${SRCS:%=${OBJS_DIR}/%.d}
 
 OBJS_DIRS = ${sort ${dir ${OBJS}}}
 
-ARGS = 2202 hello
+ARGS = 6667 hello
 
 DEFINES = -D DEBUG=0
 

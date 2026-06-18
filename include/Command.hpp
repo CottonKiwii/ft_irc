@@ -35,8 +35,10 @@ class Command {
 		Command(const Command &other);
 		~Command();
 		
-		int					getType() const;
-		static e_command	getType(std::string rawType);
+		int							getType() const;
+		std::vector<std::string>	getArgs() const;
+
+		static e_command			getType(std::string rawType);
 };
 
 #endif

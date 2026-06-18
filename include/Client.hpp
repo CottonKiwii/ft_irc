@@ -9,6 +9,9 @@ class Client {
 	private:
 		int			_fd;
 		std::string	_ip;
+		std::string	_nick;
+		std::string	_name;
+		bool		_capabilitiesResolved;
 
 	public:
 		Client(int fd, std::string ip);
@@ -16,7 +19,14 @@ class Client {
 
 		std::string getIp() const;
 		int			getFd() const;
+		bool		getCapabilitiesResolved() const;
+		std::string	getNick() const;
+		std::string	getName() const;
 		
+		void		setCapabilitiesResolved(bool status);
+		void		setNick(std::string nick);
+		void		setName(std::string name);
+
 		void		handleCommand(Command &command);
 };
 

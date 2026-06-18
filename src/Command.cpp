@@ -19,7 +19,10 @@ Command::Command(const Command &other):
 	_args(other._args)
 {}
 
-Command::~Command() {};
+Command::~Command() {}
+
+int							Command::getType() const { return _type; }
+std::vector<std::string>	Command::getArgs() const { return _args;}
 
 e_command	Command::getType(std::string rawType) {
 	static std::map<std::string, e_command> types;

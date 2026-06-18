@@ -9,6 +9,7 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <string.h>
+#include "Command.hpp"
 
 short		Server::Config::_port = 0;
 std::string	Server::Config::_pass;
@@ -101,6 +102,7 @@ void	Server::handleNewData(int fd) {
 	}
 	Command command(buff);
 	std::cout << buff << std::endl;
+	getClientByFd(fd).handleCommand(command);
 }
 
 void	Server::listenAndServe(void) {

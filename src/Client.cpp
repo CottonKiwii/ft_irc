@@ -1,11 +1,22 @@
 #include "Client.hpp"
 #include "Handlers.hpp"
 
-Client::Client(int fd, std::string ip): _fd(fd), _ip(ip) {}
+Client::Client(int fd, std::string ip):
+	_fd(fd),
+	_ip(ip),
+	_capabilitiesResolved(true)
+{}
 Client::~Client() {}
 
 std::string	Client::getIp() const { return _ip; }
 int			Client::getFd() const { return _fd; }
+bool		Client::getCapabilitiesResolved() const { return _capabilitiesResolved; }
+std::string	Client::getNick() const { return _nick; }
+std::string	Client::getName() const { return _name; }
+
+void		Client::setCapabilitiesResolved(bool status) {_capabilitiesResolved = status;}
+void		Client::setNick(std::string nick) { _nick = nick; }
+void		Client::setName(std::string name) { _name = name; }
 
 void		Client::handleCommand(Command &command)
 {

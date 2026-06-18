@@ -1,4 +1,5 @@
 #include "Server.hpp"
+#include "Command.hpp"
 #include <sstream>
 #include <iostream>
 #include <asm-generic/socket.h>
@@ -9,7 +10,6 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <string.h>
-#include "Command.hpp"
 
 short		Server::Config::_port = 0;
 std::string	Server::Config::_pass;
@@ -100,9 +100,13 @@ void	Server::handleNewData(int fd) {
 		disconnectClient(fd);
 		return ;
 	}
-	Command command(buff);
 	std::cout << buff << std::endl;
-	getClientByFd(fd).handleCommand(command);
+	std::istringstream	commands(buff);
+	std::string			rawCommand;
+	while (std::getline(commands, rawCommand, '\n')) {
+		Command command(rawCommand);
+		getClientByFd(fd).handleCommand(command);
+	}
 }
 
 void	Server::listenAndServe(void) {

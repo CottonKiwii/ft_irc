@@ -15,6 +15,7 @@ enum e_command {
 	JOIN,
 	PART,
 	KICK,
+	TOPIC,
 	MODE,
 	PRIVMSG,
 	NOTICE,
@@ -33,6 +34,7 @@ class Command {
 		Command(const Command &other);
 		~Command();
 		
+		int			getType() const;
 		static int	getType(std::string rawType);
 };
 

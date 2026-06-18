@@ -2,6 +2,7 @@
 # define CLIENT_HPP
 
 # include <string>
+# include "Command.hpp"
 
 // TODO; make orthodox canonical (can shove unused into private)
 class Client {
@@ -15,6 +16,8 @@ class Client {
 
 		std::string getIp() const;
 		int			getFd() const;
+		
+		void		handleCommand(Command &command);
 };
 
 #endif

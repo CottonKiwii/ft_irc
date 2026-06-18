@@ -7,6 +7,8 @@ Command::Command(const Command &other):
 
 Command::~Command() {};
 
+int	Command::getType() const { return _type; }
+
 int	Command::getType(std::string rawType) {
 	std::string	types[] = {
 		"CAP", "PASS", "NICK", "USER", "QUIT", "PING", "PONG",
@@ -20,3 +22,4 @@ int	Command::getType(std::string rawType) {
 
 	return (UNKNOWN);
 }
+

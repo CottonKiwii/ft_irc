@@ -34,7 +34,8 @@ class Server {
 	
 		void	init(char *argv[3]);
 		void	listenAndServe(void);
-
+		
+		Client	&getClientByFd(int fd);
 };
 
 #endif

@@ -72,7 +72,7 @@ void	Server::acceptNewClient(void) {
 	newSocket.revents = 0;
 	Server::_sockets.push_back(newSocket);
 	Client newClient(newSocket.fd, inet_ntoa(newAddr.sin_addr));
-	_clients.push_back(newClient);
+	Server::_clients.push_back(newClient);
 	std::cout << "Accepted new client from " << newClient.getIp() << std::endl;
 }
 
@@ -118,4 +118,13 @@ void	Server::listenAndServe(void) {
 			}
 		}
 	}
+}
+
+Client	&Server::getClientByFd(int fd) {
+	size_t	res = 0;
+	for (; res < Server::_clients.size(); res++)
+		if (Server::_clients[res].getFd() == fd) 
+			break ;
+	
+	return (Server::_clients[res]);
 }

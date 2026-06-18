@@ -7,11 +7,13 @@ int main(int argc, char **argv)
 		return (std::cerr << "Error: argument format should be ./ircserv <port> <password> !" << std::endl, 1);
 
 	Server	s;
+	int		exitStatus = 0;
 	try {
 		s.init(argv);
 		s.listenAndServe();
 	} catch (std::exception &e) {
 		std::cerr << e.what() << std::endl;
-		return (1);
+		exitStatus = 1;
 	}
+	return (exitStatus);
 }

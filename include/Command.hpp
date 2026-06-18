@@ -2,6 +2,7 @@
 # define COMMAND_HPP
 
 #include <string>
+#include <vector>
 
 enum e_command {
 	UNKNOWN,
@@ -24,18 +25,18 @@ enum e_command {
 class Command {
 	private:
 		Command();
-
 		Command	&operator=(const Command &other);
 
-		std::string	_raw;
-		e_command	_type;
+		e_command					_type;
+		std::vector<std::string>	_args;
 
 	public:
+		Command(std::string rawCommand);
 		Command(const Command &other);
 		~Command();
 		
-		int			getType() const;
-		static int	getType(std::string rawType);
+		int					getType() const;
+		static e_command	getType(std::string rawType);
 };
 
 #endif

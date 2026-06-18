@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jwolfram <jwolfram@student.42vienna.com>   +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/05/26 15:40:11 by jwolfram          #+#    #+#              #
-#    Updated: 2026/06/18 11:35:49 by jwolfram         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = ircserv
 
 CXX = c++
@@ -24,14 +12,15 @@ SRCS_DIR = src
 OBJS_DIR = obj
 
 SRCS = Server \
-	   Client
+	   Client \
+	   Command
 
 OBJS = ${SRCS:%=${OBJS_DIR}/%.o}
 DEPS = ${SRCS:%=${OBJS_DIR}/%.d}
 
 OBJS_DIRS = ${sort ${dir ${OBJS}}}
 
-ARGS = port password
+ARGS = 2202 hello
 
 DEFINES = -D DEBUG=0
 

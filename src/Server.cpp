@@ -99,6 +99,7 @@ void	Server::handleNewData(int fd) {
 		disconnectClient(fd);
 		return ;
 	}
+	Command command(buff);
 	std::cout << buff << std::endl;
 }
 

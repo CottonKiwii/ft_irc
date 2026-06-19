@@ -17,7 +17,7 @@ void handlePing(Client &sender, Command &command) {
 	response = RPL_PING
 		+ sender.getNick()
 		+ " :"
-		+ command.getArgs()[0]
+		+ command.getArgs()[1]
 		+ "\n";
 	sender.sendMsg(response);
 }

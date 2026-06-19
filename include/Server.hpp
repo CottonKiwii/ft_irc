@@ -12,30 +12,33 @@
 class Server {
 	private:
 		Server(const Server &other);
-		Server &operator=(const Server &other);
+		Server	&operator=(const Server &other);
 
 		class Config {
 			public:
 				static short		_port;
 				static std::string	_pass;
 		};
+
 		static	std::vector<pollfd>	_sockets;
 		static	std::vector<Client> _clients;
 		static	bool				_signalReceived;
 
 
-		void	createServerSocket(void);
-		void	acceptNewClient(void);
-		void	disconnectClient(int fd);
-		void	handleNewData(int fd);
+		void			createServerSocket(void);
+		void			acceptNewClient(void);
+		void			disconnectClient(int fd);
+		void			handleNewData(int fd);
+
 	public:
 		Server();
 		~Server();
 	
-		void	init(char *argv[3]);
-		void	listenAndServe(void);
+		void			init(char *argv[3]);
+		void			listenAndServe(void);
 		
-		Client	&getClientByFd(int fd);
+		Client			&getClientByFd(int fd);
+		static Client	&getClientByNick(std::string nickname);
 };
 
 #endif

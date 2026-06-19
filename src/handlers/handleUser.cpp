@@ -14,7 +14,10 @@ void handleUser(Client &sender, Command &command) {
 	}
 
 	// ERR_NEEDMOREPARAMS
-	if (command.getArgs().size() < 4 || command.getArgs()[0].size() < 1) {
+	if (command.getArgs().size() < 4
+		|| command.getArgs()[1].size() < 1
+		|| command.getArgs()[2][0] == '0'
+		|| command.getArgs()[3][0] == '*') {
 		response = ERR_NEEDMOREPARAMS(sender.getNick());
 		sender.sendMsg(response);
 		return ;
@@ -22,7 +25,6 @@ void handleUser(Client &sender, Command &command) {
 
 	// RPL_WELCOME
 	sender.setName(command.getArgs()[1]);
-	sender.setRegisterStatus(true);
 
 	response = RPL_WELCOME
 		+ sender.getNick()
@@ -32,4 +34,6 @@ void handleUser(Client &sender, Command &command) {
 		+ sender.getName()
 		+ "@localhost\n";
 	sender.sendMsg(response);
+
+	sender.setRegisterStatus(true);
 }

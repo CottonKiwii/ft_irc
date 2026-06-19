@@ -22,10 +22,20 @@
 # include "Server.hpp"
 # include "Handlers.hpp"
 
-# define ERR_NEEDMOREPARAMS(sender)		":localhost 461 " + sender + " :Not enough parameters\n"
-# define ERR_ALREADYREGISTERED(sender)	":localhost 462 " + sender + " :You may not reregister\n"
+// NICKNAME ERRORS
+# define ERR_NONICKNAMEGIVEN(sender)		":localhost 431 " + sender + " :No nickname given\n"
+# define ERR_ERRONEUSNICKNAME(sender, nick)	":localhost 432 " + sender + " " + nick + " :Erroneus nickname\n"
+# define ERR_NICKNAMEINUSE(sender, nick)	":localhost 433 " + sender + " " + nick + " :Nickname is already in use\n"
 
-# define RPL_WELCOME					":localhost 001 "
-# define RPL_PING						":localhost PONG "
+// GENERAL ERRORS
+# define ERR_NEEDMOREPARAMS(sender)			":localhost 461 " + sender + " :Not enough parameters\n"
+# define ERR_ALREADYREGISTERED(sender)		":localhost 462 " + sender + " :You may not reregister\n"
+
+// OFFICIAL IRC REPLIES
+# define RPL_WELCOME						":localhost 001 :"
+
+// CUSTOM IRC REPLIES
+# define RPL_NEWNICKNAME					":localhost NICK :"
+# define RPL_PING							":localhost PONG :"
 
 #endif

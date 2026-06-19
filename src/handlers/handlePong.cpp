@@ -18,6 +18,6 @@ void handlePong(Client &sender, Command &command) {
 		+ sender.getNick()
 		+ " :"
 		+ command.getArgs()[1]
-		+ "\n";
+		+ "\r\n";
 	sender.sendMsg(response);
 }

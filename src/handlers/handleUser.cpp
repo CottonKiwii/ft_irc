@@ -15,9 +15,7 @@ void handleUser(Client &sender, Command &command) {
 
 	// ERR_NEEDMOREPARAMS
 	if (command.getArgs().size() < 4
-		|| command.getArgs()[1].size() < 1
-		|| command.getArgs()[2][0] == '0'
-		|| command.getArgs()[3][0] == '*') {
+		|| command.getArgs()[1].size() < 1) {
 		response = ERR_NEEDMOREPARAMS(sender.getNick());
 		sender.sendMsg(response);
 		return ;
@@ -32,7 +30,7 @@ void handleUser(Client &sender, Command &command) {
 		+ sender.getNick()
 		+ "! "
 		+ sender.getName()
-		+ "@localhost\n";
+		+ "@localhost\r\n";
 	sender.sendMsg(response);
 
 	sender.setRegisterStatus(true);

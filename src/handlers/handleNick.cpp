@@ -15,8 +15,9 @@ void handleNick(Client &sender, Command &command) {
 
 	// ERR_NICKNAMEINUSE
 	if (sender.getRegisterStatus()) {
-		Client	compare = Server::getClientByNick(command.getArgs()[1]);
-		if (compare.getNick() == command.getArgs()[1]) {
+		Client	*compare = Server::getClientByNick(command.getArgs()[1]);
+		std::cout << "hewwo" << std::endl;
+		if (compare) {
 			response = ERR_NICKNAMEINUSE(sender.getNick(), command.getArgs()[1]);
 			sender.sendMsg(response);
 			return ;
@@ -31,6 +32,7 @@ void handleNick(Client &sender, Command &command) {
 			return ;
 		}
 	}
+
 	if (command.getArgs()[1][0] == '#'
 		|| command.getArgs()[1][0] == ':'
 		|| command.getArgs()[1][0] == ' ') {
@@ -45,7 +47,7 @@ void handleNick(Client &sender, Command &command) {
 			+ sender.getNick()
 			+ " changed his nickname to "
 			+ command.getArgs()[1]
-			+ "\n";
+			+ "\r\n";
 		sender.sendMsg(response);
 	}
 

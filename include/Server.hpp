@@ -38,7 +38,7 @@ class Server {
 		void			listenAndServe(void);
 		
 		Client			&getClientByFd(int fd);
-		static Client	&getClientByNick(std::string nickname);
+		static Client	*getClientByNick(std::string nickname);
 };
 
 #endif

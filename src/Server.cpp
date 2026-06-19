@@ -126,12 +126,11 @@ Client	&Server::getClientByFd(int fd) {
 	return (Server::_clients[res]);
 }
 
-Client &Server::getClientByNick(std::string nickname)
+Client *Server::getClientByNick(std::string nickname)
 {
 	size_t	res = 0;
 	for (; res < Server::_clients.size(); res++)
 		if (Server::_clients[res].getNick() == nickname) 
-			break ;
-
-	return (Server::_clients[res]);
+			return (&Server::_clients[res]);
+	return (NULL);
 }

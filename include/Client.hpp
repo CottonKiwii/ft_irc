@@ -1,8 +1,8 @@
 #ifndef CLIENT_HPP
 # define CLIENT_HPP
 
-# include <string>
 # include "Command.hpp"
+# include <string>
 
 // TODO; make orthodox canonical (can shove unused into private)
 class Client {
@@ -28,6 +28,7 @@ class Client {
 		void		setName(std::string name);
 
 		void		handleCommand(Command &command);
+		void		sendMsg(std::string response);
 };
 
 #endif

@@ -1,5 +1,5 @@
-#include "Client.hpp"
-#include "Handlers.hpp"
+
+#include "irc.hpp"
 
 Client::Client(int fd, std::string ip):
 	_fd(fd),
@@ -68,4 +68,10 @@ void		Client::handleCommand(Command &command)
 			handleUnknown(*this, command);	
 			break ;
 	}
+}
+
+void	Client::sendMsg(std::string response)
+{
+	if (send(_fd, response.c_str(), response.size(), 0) == -1)
+		throw std::runtime_error("Error: An error occured while sending a message!");
 }

@@ -1,4 +1,3 @@
-
 #include "irc.hpp"
 
 short		Server::Config::_port = 0;
@@ -87,13 +86,19 @@ void	Server::handleNewData(int fd) {
 
 	// TODO: clean up client on disconnect
 	if (bytesReceived < 1) {
-		disconnectClient(fd);
+		Server::disconnectClient(fd);
 		return ;
 	}
 	std::cout << buff << std::endl;
 	std::istringstream	commands(buff);
 	std::string			rawCommand;
 	while (std::getline(commands, rawCommand, '\n')) {
+		while (rawCommand[rawCommand.size() - 1] == '\r'
+			|| rawCommand[rawCommand.size() - 1] == '\n')
+			rawCommand.erase(rawCommand.end() - 1);
+		if (rawCommand.size() == 0)
+			continue ;
+
 		Command command(rawCommand);
 		getClientByFd(fd).handleCommand(command);
 	}
@@ -116,6 +121,8 @@ void	Server::listenAndServe(void) {
 		}
 	}
 }
+
+std::string	Server::getPass() { return Server::Config::_pass; }
 
 Client	&Server::getClientByFd(int fd) {
 	size_t	res = 0;

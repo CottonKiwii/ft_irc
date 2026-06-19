@@ -28,7 +28,8 @@ SRCS = Server \
 	   handlers/handleQuit \
 	   handlers/handleTopic \
 	   handlers/handleUnknown \
-	   handlers/handleUser 
+	   handlers/handleUser \
+
 
 OBJS = ${SRCS:%=${OBJS_DIR}/%.o}
 DEPS = ${SRCS:%=${OBJS_DIR}/%.d}

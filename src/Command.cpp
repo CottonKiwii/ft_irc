@@ -1,5 +1,7 @@
-
-#include "irc.hpp"
+#include "Command.hpp"
+#include <sstream>
+#include <string>
+#include <map>
 
 Command::Command(std::string rawCommand) {
 	std::istringstream	split(rawCommand);
@@ -46,4 +48,3 @@ e_command	Command::getType(std::string rawType) {
 		return (it->second);
 	return (UNKNOWN);
 }
-

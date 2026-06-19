@@ -26,7 +26,6 @@ class Client {
 		void		setNick(std::string nick);
 		void		setName(std::string name);
 		void		setRegisterStatus(bool status);
-
 		void		handleCommand(Command &command);
 		void		sendMsg(std::string response);
 };

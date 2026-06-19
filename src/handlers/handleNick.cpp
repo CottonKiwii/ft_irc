@@ -1,4 +1,3 @@
-
 #include "irc.hpp"
 
 void handleNick(Client &sender, Command &command) {
@@ -16,7 +15,6 @@ void handleNick(Client &sender, Command &command) {
 	// ERR_NICKNAMEINUSE
 	if (sender.getRegisterStatus()) {
 		Client	*compare = Server::getClientByNick(command.getArgs()[1]);
-		std::cout << "hewwo" << std::endl;
 		if (compare) {
 			response = ERR_NICKNAMEINUSE(sender.getNick(), command.getArgs()[1]);
 			sender.sendMsg(response);
@@ -50,6 +48,4 @@ void handleNick(Client &sender, Command &command) {
 			+ "\r\n";
 		sender.sendMsg(response);
 	}
-
-	sender.setNick(command.getArgs()[1]);
 }

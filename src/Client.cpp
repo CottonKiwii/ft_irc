@@ -1,4 +1,3 @@
-
 #include "irc.hpp"
 
 Client::Client(int fd, std::string ip):

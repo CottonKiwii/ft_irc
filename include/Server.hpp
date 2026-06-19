@@ -12,7 +12,7 @@
 class Server {
 	private:
 		Server(const Server &other);
-		Server	&operator=(const Server &other);
+		Server		&operator=(const Server &other);
 
 		class Config {
 			public:
@@ -25,20 +25,21 @@ class Server {
 		static	bool				_signalReceived;
 
 
-		void			createServerSocket(void);
-		void			acceptNewClient(void);
-		void			disconnectClient(int fd);
-		void			handleNewData(int fd);
-
+		void				createServerSocket(void);
+		void				acceptNewClient(void);
+		void				handleNewData(int fd);
 	public:
 		Server();
 		~Server();
 	
-		void			init(char *argv[3]);
-		void			listenAndServe(void);
+		void				init(char *argv[3]);
+		void				listenAndServe(void);
+		Client				&getClientByFd(int fd);
+		static Client		*getClientByNick(std::string nickname);
 		
-		Client			&getClientByFd(int fd);
-		static Client	*getClientByNick(std::string nickname);
+		static std::string	getPass();
+
+		static void			disconnectClient(int fd);
 };
 
 #endif

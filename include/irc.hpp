@@ -30,6 +30,9 @@
 // GENERAL ERRORS
 # define ERR_NEEDMOREPARAMS(sender)			":localhost 461 " + sender + " :Not enough parameters\n"
 # define ERR_ALREADYREGISTERED(sender)		":localhost 462 " + sender + " :You may not reregister\n"
+# define ERR_PASSWDMISMATCH(clientName)		":localhost 464 " + clientName + " :Password is incorrect\r\n"
+
+
 
 // OFFICIAL IRC REPLIES
 # define RPL_WELCOME						":localhost 001 :"

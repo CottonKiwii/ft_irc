@@ -11,21 +11,21 @@ class Client {
 		std::string	_ip;
 		std::string	_nick;
 		std::string	_name;
-		bool		_capabilitiesResolved;
+		bool		_registered;
 
 	public:
 		Client(int fd, std::string ip);
 		~Client();
 
-		std::string getIp() const;
 		int			getFd() const;
-		bool		getCapabilitiesResolved() const;
+		std::string getIp() const;
 		std::string	getNick() const;
 		std::string	getName() const;
+		bool		getRegisterStatus() const;
 		
-		void		setCapabilitiesResolved(bool status);
 		void		setNick(std::string nick);
 		void		setName(std::string name);
+		void		setRegisterStatus(bool status);
 
 		void		handleCommand(Command &command);
 		void		sendMsg(std::string response);

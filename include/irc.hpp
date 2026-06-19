@@ -22,10 +22,10 @@
 # include "Server.hpp"
 # include "Handlers.hpp"
 
-# define ERR_NEEDMOREPARAMS	":localhost 461 "
+# define ERR_NEEDMOREPARAMS(sender)		":localhost 461 " + sender + " :Not enough parameters\n"
+# define ERR_ALREADYREGISTERED(sender)	":localhost 462 " + sender + " :You may not reregister\n"
 
-# define RPL_WELCOME		":localhost 001 "
-
-# define RPL_PING			":localhost PONG "
+# define RPL_WELCOME					":localhost 001 "
+# define RPL_PING						":localhost PONG "
 
 #endif

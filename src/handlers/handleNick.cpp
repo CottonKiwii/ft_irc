@@ -1,6 +1,5 @@
-#include "Client.hpp"
-#include "Command.hpp"
-#include <iostream>
+
+#include "irc.hpp"
 
 void handleNick(Client &sender, Command &command) {
 	std::cout << "Handling NICK" << std::endl;

@@ -1,15 +1,5 @@
-#include "Server.hpp"
-#include "Command.hpp"
-#include <sstream>
-#include <iostream>
-#include <asm-generic/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <sys/poll.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <unistd.h>
-#include <string.h>
+
+#include "irc.hpp"
 
 short		Server::Config::_port = 0;
 std::string	Server::Config::_pass;

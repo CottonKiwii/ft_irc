@@ -1,6 +1,5 @@
 
-#include "Client.hpp"
-#include "Command.hpp"
+#include "irc.hpp"
 
 void handleTopic(Client &sender, Command &command) {
 	(void)sender;

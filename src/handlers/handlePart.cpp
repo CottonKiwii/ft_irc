@@ -1,5 +1,5 @@
-#include "Client.hpp"
-#include "Command.hpp"
+
+#include "irc.hpp"
 
 void handlePart(Client &sender, Command &command) {
 	(void)sender;

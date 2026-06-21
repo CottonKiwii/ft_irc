@@ -7,7 +7,6 @@ void handlePrivmsg(Client &sender, Command &command) {
 	// == handle channel msg ==
 	
 	// CLIENT TO CLIENT MESSAGE
-
 	Client	*receiver = Server::getClientByNick(command.getArgs()[1]);
 
 	// ERR_NOSUCHNICK

@@ -22,23 +22,37 @@
 # include "Server.hpp"
 # include "Handlers.hpp"
 
-// NICKNAME ERRORS
-# define ERR_NONICKNAMEGIVEN(sender)		":localhost 431 " + sender + " :No nickname given\n"
-# define ERR_ERRONEUSNICKNAME(sender, nick)	":localhost 432 " + sender + " " + nick + " :Erroneus nickname\n"
-# define ERR_NICKNAMEINUSE(sender, nick)	":localhost 433 " + sender + " " + nick + " :Nickname is already in use\n"
-
 // GENERAL ERRORS
-# define ERR_NEEDMOREPARAMS(sender)			":localhost 461 " + sender + " :Not enough parameters\n"
-# define ERR_ALREADYREGISTERED(sender)		":localhost 462 " + sender + " :You may not reregister\n"
-# define ERR_PASSWDMISMATCH(clientName)		":localhost 464 " + clientName + " :Password is incorrect\r\n"
+# define ERR_NEEDMOREPARAMS(sender)				":localhost 461 " + sender \
+												+ " :Not enough parameters\r\n"
+# define ERR_ALREADYREGISTERED(sender)			":localhost 462 " + sender \
+												+ " :You may not reregister\r\n"
+# define ERR_PASSWDMISMATCH(sender)				":localhost 464 " + sender \
+												+ " :Password is incorrect\r\n"
 
+// PRIVMSG ERRORS
+# define ERR_NOSUCHNICK(sender, nick)			":localhost 401 " + sender + " " + nick \
+												+ " :No such nickname\r\n"
+# define ERR_NOSUCHCHANNEL(sender, chan)		":localhost 403 " + sender + " " + chan \
+												+ " :No such nickname\r\n"
+# define ERR_CANNOTSENDTOCHAN(sender, chan)		":localhost 403 " + sender + " " + chan \
+												+ " :Cannot send to channel\r\n"
 
+// NICKNAME ERRORS
+# define ERR_NONICKNAMEGIVEN(sender)			":localhost 431 " + sender \
+												+ " :No nickname given\r\n"
+# define ERR_ERRONEUSNICKNAME(sender, nick)		":localhost 432 " + sender + " " + nick \
+												+ " :Erroneus nickname\r\n"
+# define ERR_NICKNAMEINUSE(sender, nick)		":localhost 433 " + sender + " " + nick \
+												+ " :Nickname is already in use\r\n"
 
 // OFFICIAL IRC REPLIES
-# define RPL_WELCOME						":localhost 001 :"
+# define RPL_WELCOME							":localhost 001 :"
 
 // CUSTOM IRC REPLIES
-# define RPL_NEWNICKNAME					":localhost NICK :"
-# define RPL_PING							":localhost PONG :"
+# define RPL_NEWNICKNAME						":localhost NICK :"
+# define RPL_PING								":localhost PONG :"
+# define RPL_QUIT								":localhost QUIT :"
+# define RPL_PRIVMSG							":localhost PRIVMSG :"
 
 #endif

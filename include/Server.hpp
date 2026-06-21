@@ -25,21 +25,24 @@ class Server {
 		static	bool				_signalReceived;
 
 
-		void				createServerSocket(void);
-		void				acceptNewClient(void);
-		void				handleNewData(int fd);
+		void			createServerSocket(void);
+		void			acceptNewClient(void);
+		void			handleNewData(int fd);
+
 	public:
 		Server();
 		~Server();
 	
 		void				init(char *argv[3]);
 		void				listenAndServe(void);
+
+		static void			disconnectClient(int fd);
+
 		Client				&getClientByFd(int fd);
 		static Client		*getClientByNick(std::string nickname);
 		
 		static std::string	getPass();
 
-		static void			disconnectClient(int fd);
 };
 
 #endif

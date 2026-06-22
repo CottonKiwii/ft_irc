@@ -36,13 +36,14 @@ class Server {
 		void				init(char *argv[3]);
 		void				listenAndServe(void);
 
-		static void			disconnectClient(int fd);
 
 		Client				&getClientByFd(int fd);
 		static Client		*getClientByNick(std::string nickname);
 		
 		static std::string	getPass();
 
+		static void			disconnectClient(int fd);
+		static void			disconnectClient(int fd, std::string reason);
 };
 
 #endif

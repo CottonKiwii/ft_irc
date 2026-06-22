@@ -5,6 +5,13 @@ void handleUser(Client &sender, Command &command) {
 	std::string response;
 
 	std::cout << "Handling USER" << std::endl;
+	
+	if (sender.getPassGiven() == false) {
+		response = ERR_PASSWDMISMATCH(sender.getNick());
+		sender.sendMsg(response);
+		Server::disconnectClient(sender.getFd(), "Bad Password");
+		return ;
+	}
 
 	// ERR_ALREADYREGISTERED
 	if (sender.getRegisterStatus()) {

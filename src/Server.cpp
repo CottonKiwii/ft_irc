@@ -77,6 +77,18 @@ void	Server::disconnectClient(int fd) {
 	std::cout << "Client disconnected" << std::endl;
 }
 
+void	Server::disconnectClient(int fd, std::string reason) {
+	size_t	socketIdx = 0;
+	std::string	response = "ERROR :Closing Link: localhost (" + reason + ")" ;
+	
+	for (; Server::_sockets[socketIdx].fd != fd; socketIdx++) {}
+	
+	close(Server::_sockets[socketIdx].fd);
+	Server::_sockets.erase(Server::_sockets.begin() + socketIdx);
+	Server::_clients.erase(Server::_clients.begin() + socketIdx - 1);
+	std::cout << "Client disconnected" << std::endl;
+}
+
 void	Server::handleNewData(int fd) {
 	char buff[4096];
 

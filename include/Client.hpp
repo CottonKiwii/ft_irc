@@ -12,6 +12,7 @@ class Client {
 		std::string	_nick;
 		std::string	_name;
 		bool		_registered;
+		bool		_passGiven;
 
 	public:
 		Client(int fd, std::string ip);
@@ -22,12 +23,16 @@ class Client {
 		std::string	getNick() const;
 		std::string	getName() const;
 		bool		getRegisterStatus() const;
+		bool		getPassGiven() const;
 		
 		void		setNick(std::string nick);
 		void		setName(std::string name);
 		void		setRegisterStatus(bool status);
+		void		setPassGiven(bool status);
+
 		void		handleCommand(Command &command);
 		void		sendMsg(std::string response);
+		bool		checkAuth();
 };
 
 #endif

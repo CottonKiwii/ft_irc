@@ -48,4 +48,6 @@ void handleNick(Client &sender, Command &command) {
 			+ "\r\n";
 		sender.sendMsg(response);
 	}
+
+	sender.setNick(command.getArgs()[1]);
 }

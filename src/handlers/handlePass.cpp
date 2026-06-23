@@ -1,17 +1,13 @@
 #include "irc.hpp"
 
 void handlePass(Client &sender, Command &command) {
-	std::string response;
-
 	if (sender.getRegisterStatus()) {
-		response = ERR_ALREADYREGISTERED(sender.getNick());
-		sender.sendMsg(response);
+		sender.addToResponse(ERR_ALREADYREGISTERED(sender.getNick()));
 		return ;
 	}
 
 	if (command.getArgs().size() < 2) {
-		response = ERR_NEEDMOREPARAMS(sender.getNick());
-		sender.sendMsg(response);
+		sender.addToResponse(ERR_NEEDMOREPARAMS(sender.getNick()));
 		return ;
 	}
 

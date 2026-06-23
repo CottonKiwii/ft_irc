@@ -14,6 +14,7 @@ OBJS_DIR = obj
 SRCS = Server \
 	   Client \
 	   Command \
+	   Channel \
 	   handlers/handleCap \
 	   handlers/handleJoin \
 	   handlers/handleKick \

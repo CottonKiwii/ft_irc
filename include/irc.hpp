@@ -22,6 +22,23 @@
 # include "Server.hpp"
 # include "Handlers.hpp"
 
+// REPLIES
+# define RPL_NAMERPLY(client, channel)			":localhost 353 " \
+												+ client.getNick() \
+												+ " " \
+												+ (channel.getPublic() ? "=" : "@") \
+												+ " " \
+												+ channel.getName() \
+												+ " :" \
+												+ channel.getNames() \
+												+ "\n"
+# define RPL_ENDOFNAMES(client, channel)		":localhost 366 " \
+												+ client.getNick() \
+												+ " " \
+												+ channel.getName() \
+												+ " :End of /NAMES list.\n"
+
+
 // GENERAL ERRORS
 # define ERR_NEEDMOREPARAMS(sender)				":localhost 461 " + sender \
 												+ " :Not enough parameters\r\n"
@@ -46,8 +63,16 @@
 # define ERR_NICKNAMEINUSE(sender, nick)		":localhost 433 " + sender + " " + nick \
 												+ " :Nickname is already in use\r\n"
 
+// CHANNEL ERRORS
+#define ERR_BADCHANMASK(client, channelName)	":localhost 476 " \
+												+ client.getNick() \
+												+ " " \
+												+ channelName \
+												+ " :Invalid channel name"
+
+
 // OFFICIAL IRC REPLIES
-# define RPL_WELCOME							":localhost 001 :"
+# define RPL_WELCOME							":localhost 001 "
 
 // CUSTOM IRC REPLIES
 # define RPL_NEWNICKNAME						":localhost NICK :"

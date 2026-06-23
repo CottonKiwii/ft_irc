@@ -11,6 +11,7 @@ class Client {
 		std::string	_ip;
 		std::string	_nick;
 		std::string	_name;
+		std::string	_response;
 		bool		_registered;
 		bool		_passGiven;
 
@@ -31,8 +32,11 @@ class Client {
 		void		setPassGiven(bool status);
 
 		void		handleCommand(Command &command);
-		void		sendMsg(std::string response);
-		bool		checkAuth();
+
+		std::string	getPrefix() const;
+
+		void		addToResponse(std::string response);
+		void		flushResponse();
 };
 
 #endif

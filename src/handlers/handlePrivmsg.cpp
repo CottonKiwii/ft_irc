@@ -12,7 +12,7 @@ void handlePrivmsg(Client &sender, Command &command) {
 	// ERR_NOSUCHNICK
 	if (!receiver) {
 		response = ERR_NOSUCHNICK(sender.getNick(), command.getArgs()[1]);
-		sender.sendMsg(response);
+		sender.addToResponse(response);
 		return ;
 	}
 	
@@ -21,5 +21,5 @@ void handlePrivmsg(Client &sender, Command &command) {
 		+ " :"
 		+ command.getArgs()[1]
 		+ "\r\n";
-	receiver->sendMsg(response);
+	receiver->addToResponse(response);
 }

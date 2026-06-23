@@ -3,6 +3,7 @@
 Client::Client(int fd, std::string ip):
 	_fd(fd),
 	_ip(ip),
+	_response(""),
 	_registered(false),
 	_passGiven(false)
 {}
@@ -72,8 +73,20 @@ void		Client::handleCommand(Command &command)
 	}
 }
 
-void	Client::sendMsg(std::string response)
+std::string	Client::getPrefix() const {
+	return _nick + "!" + _name + "@localhost";
+}
+
+void	Client::addToResponse(std::string response)
 {
-	if (send(_fd, response.c_str(), response.size(), 0) == -1)
+	_response += response;
+}
+
+void	Client::flushResponse() {
+	if (_response.size() == 0)
+		return ;
+	_response += "\r\n";
+	if (send(_fd, _response.c_str(), _response.size(), 0) == -1)
 		throw std::runtime_error("Error: An error occured while sending a message!");
+	_response.clear();
 }

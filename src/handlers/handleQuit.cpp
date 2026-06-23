@@ -16,6 +16,6 @@ void handleQuit(Client &sender, Command &command) {
 			+ command.getArgs()[1];
 	}
 
-	sender.sendMsg(response);
+	sender.addToResponse(response);
 	Server::disconnectClient(sender.getFd());
 }

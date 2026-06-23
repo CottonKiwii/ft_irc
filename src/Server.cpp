@@ -1,10 +1,11 @@
 #include "irc.hpp"
 
-short		Server::Config::_port = 0;
-std::string	Server::Config::_pass;
-std::vector<pollfd> Server::_sockets;
-std::vector<Client> Server::_clients;
-bool				Server::_signalReceived = false;
+short					Server::Config::_port = 0;
+std::string				Server::Config::_pass;
+std::vector<pollfd>		Server::_sockets;
+std::vector<Client>		Server::_clients;
+std::vector<Channel>	Server::_channels;
+bool					Server::_signalReceived = false;
 
 Server::Server() {}
 Server::~Server() {}
@@ -68,6 +69,8 @@ void	Server::acceptNewClient(void) {
 
 void	Server::disconnectClient(int fd) {
 	size_t	socketIdx = 0;
+	Client	*client = Server::getClientByFd(fd);
+	client->flushResponse();
 	
 	for (; Server::_sockets[socketIdx].fd != fd; socketIdx++) {}
 	
@@ -79,7 +82,10 @@ void	Server::disconnectClient(int fd) {
 
 void	Server::disconnectClient(int fd, std::string reason) {
 	size_t	socketIdx = 0;
-	std::string	response = "ERROR :Closing Link: localhost (" + reason + ")" ;
+	std::string	response = "ERROR :Closing Link: localhost (" + reason + ")\n" ;
+	Client	*client = Server::getClientByFd(fd);
+	client->addToResponse(response);
+	client->flushResponse();
 	
 	for (; Server::_sockets[socketIdx].fd != fd; socketIdx++) {}
 	
@@ -112,8 +118,13 @@ void	Server::handleNewData(int fd) {
 			continue ;
 
 		Command command(rawCommand);
-		getClientByFd(fd).handleCommand(command);
+		getClientByFd(fd)->handleCommand(command);
 	}
+	for (
+		std::vector<Client>::iterator client = Server::_clients.begin();
+		client != Server::_clients.end();
+		client++)
+		client->flushResponse();
 }
 
 void	Server::listenAndServe(void) {
@@ -136,13 +147,28 @@ void	Server::listenAndServe(void) {
 
 std::string	Server::getPass() { return Server::Config::_pass; }
 
-Client	&Server::getClientByFd(int fd) {
+Channel	&Server::createChannel(Client &creator, std::string name) {
+	_channels.push_back(Channel(creator, name));
+	return (_channels.back());
+}
+
+Channel	*Server::getChannelByName(std::string name) {
+	size_t	res = 0;
+	for (; res < Server::_channels.size(); res++) {
+		if (Server::_channels[res].getName() == name) {
+			return (&Server::_channels[res]);
+		}
+	}
+	return (NULL);
+}
+
+Client	*Server::getClientByFd(int fd) {
 	size_t	res = 0;
 	for (; res < Server::_clients.size(); res++)
 		if (Server::_clients[res].getFd() == fd) 
-			break ;
+			return (&Server::_clients[res]);
 	
-	return (Server::_clients[res]);
+	return (NULL);
 }
 
 Client *Server::getClientByNick(std::string nickname)

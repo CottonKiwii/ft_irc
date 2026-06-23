@@ -4,6 +4,7 @@
 # include <string>
 # include <vector>
 # include <poll.h>
+#include "Channel.hpp"
 #include "Client.hpp"
 
 #define USAGE_MSG	"Usage: ./ircserv <port> <pass>\n"
@@ -16,13 +17,14 @@ class Server {
 
 		class Config {
 			public:
-				static short		_port;
-				static std::string	_pass;
+				static short			_port;
+				static std::string		_pass;
 		};
 
-		static	std::vector<pollfd>	_sockets;
-		static	std::vector<Client> _clients;
-		static	bool				_signalReceived;
+		static	std::vector<pollfd>		_sockets;
+		static	std::vector<Client>		_clients;
+		static	std::vector<Channel>	_channels;
+		static	bool					_signalReceived;
 
 
 		void			createServerSocket(void);
@@ -37,11 +39,14 @@ class Server {
 		void				listenAndServe(void);
 
 
-		Client				&getClientByFd(int fd);
-		static Client		*getClientByNick(std::string nickname);
 		
 		static std::string	getPass();
 
+		static Channel		&createChannel(Client &creator, std::string name);
+		static Channel		*getChannelByName(std::string name);
+
+		static Client		*getClientByNick(std::string nickname);
+		static Client		*getClientByFd(int fd);
 		static void			disconnectClient(int fd);
 		static void			disconnectClient(int fd, std::string reason);
 };

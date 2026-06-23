@@ -23,6 +23,13 @@
 # include "Handlers.hpp"
 
 // REPLIES
+# define RPL_TOPIC(client, channel)				":localhost 332 " \
+												+ client.getNick() \
+												+ " "\
+												+ channel.getName() \
+												+ " :"\
+												+ channel.getTopic() \
+												+ "\n"
 # define RPL_NAMERPLY(client, channel)			":localhost 353 " \
 												+ client.getNick() \
 												+ " " \
@@ -50,8 +57,11 @@
 // PRIVMSG ERRORS
 # define ERR_NOSUCHNICK(sender, nick)			":localhost 401 " + sender + " " + nick \
 												+ " :No such nickname\r\n"
-# define ERR_NOSUCHCHANNEL(sender, chan)		":localhost 403 " + sender + " " + chan \
-												+ " :No such nickname\r\n"
+# define ERR_NOSUCHCHANNEL(client, name)		":localhost 403 " \
+												+ client.getNick() \
+												+ " " \
+												+ name \
+												+ " :No such channel\n"
 # define ERR_CANNOTSENDTOCHAN(sender, chan)		":localhost 403 " + sender + " " + chan \
 												+ " :Cannot send to channel\r\n"
 
@@ -64,10 +74,15 @@
 												+ " :Nickname is already in use\r\n"
 
 // CHANNEL ERRORS
-#define ERR_BADCHANMASK(client, channelName)	":localhost 476 " \
+#define ERR_BADCHANNELKEY(client, channel)		":localhost 475 " \
 												+ client.getNick() \
 												+ " " \
-												+ channelName \
+												+ channel.getName() \
+												+ " :Cannot join channel (+k) - bad key\n"
+#define ERR_BADCHANMASK(client, name)			":localhost 476 " \
+												+ client.getNick() \
+												+ " " \
+												+ name \
 												+ " :Invalid channel name"
 
 
@@ -75,7 +90,6 @@
 # define RPL_WELCOME							":localhost 001 "
 
 // CUSTOM IRC REPLIES
-# define RPL_NEWNICKNAME						":localhost NICK :"
 # define RPL_PING								":localhost PONG :"
 # define RPL_QUIT								":localhost QUIT :"
 # define RPL_PRIVMSG							":localhost PRIVMSG :"

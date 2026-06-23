@@ -30,6 +30,10 @@ class Channel {
 		void		setKey(std::string key);
 
 		std::string getNames() const;
+		void		sendAll(std::string response);
+
+		void		addMember(int fd);
+		void		removeMember(int fd);
 
 		static bool	verifyName(std::string name);
 };

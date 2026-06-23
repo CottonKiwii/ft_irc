@@ -35,11 +35,11 @@ void handleNick(Client &sender, Command &command) {
 
 	// RPL_NEWNICKNAME
 	if (sender.getRegisterStatus()) {
-		std::string response = RPL_NEWNICKNAME
-			+ sender.getNick()
-			+ " changed his nickname to "
-			+ command.getArgs()[1]
-			+ "\n";
+		std::string response =	":"
+								+ sender.getPrefix()
+								+ " NICK "
+								+ command.getArgs()[1]
+								+ "\n";
 		sender.addToResponse(response);
 	}
 

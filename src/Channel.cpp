@@ -47,8 +47,30 @@ std::string	Channel::getNames() const {
 		res += " ";
 	}
 	res.erase(res.begin() + res.size() - 1);
+	std::cerr << res << std::endl;
 
 	return (res);
+}
+
+void	Channel::sendAll(std::string response) {
+	for (size_t i = 0; i < _members.size(); i++) {
+		Client *client = Server::getClientByFd(_members[i]);
+		client->addToResponse(response);
+	}
+}
+
+void	Channel::addMember(int fd) {
+	_members.push_back(fd);
+}
+
+void	Channel::removeMember(int fd) {
+	std::vector<int>::iterator it = 
+		std::find(_members.begin(), _members.end(), fd);
+	if (it != _members.end())
+		_members.erase(it);
+	it = std::find(_operators.begin(), _operators.end(), fd);
+	if (it != _operators.end())
+		_operators.erase(it);
 }
 
 bool	Channel::verifyName(std::string rawName) {

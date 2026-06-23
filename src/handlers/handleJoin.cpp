@@ -1,7 +1,7 @@
 #include "irc.hpp"
 #include <queue>
 
-void	handleJoinCreate(Client &creator, std::string name, std::string key) {
+static void	handleJoinCreate(Client &creator, std::string name, std::string key) {
 	if (!Channel::verifyName(name)) {
 		creator.addToResponse(ERR_BADCHANMASK(creator, name));
 		return ;
@@ -12,7 +12,8 @@ void	handleJoinCreate(Client &creator, std::string name, std::string key) {
 	std::string response =	":"
 							+ creator.getPrefix()
 							+ " JOIN "
-							+ name;
+							+ name
+							+ "\n";
 	creator.addToResponse(response);
 	response =	":localhost MODE "
 				+ channel.getName()
@@ -20,6 +21,33 @@ void	handleJoinCreate(Client &creator, std::string name, std::string key) {
 	creator.addToResponse(response);
 	creator.addToResponse(RPL_NAMERPLY(creator, channel));
 	creator.addToResponse(RPL_ENDOFNAMES(creator, channel));
+}
+
+static void	handleJoinExisting(Client &sender, std::string name, std::string key) {
+	if (!Channel::verifyName(name)) {
+		sender.addToResponse(ERR_BADCHANMASK(sender, name));
+		return ;
+	}
+	Channel	*channel = Server::getChannelByName(name);
+	if (!channel) {
+		sender.addToResponse(ERR_NOSUCHCHANNEL(sender, name));
+		return ;
+	}
+	if (key != channel->getKey()) {
+		sender.addToResponse(ERR_BADCHANNELKEY(sender, (*channel)));
+	}
+	channel->addMember(sender.getFd());
+
+	std::string response =	":"
+							+ sender.getPrefix()
+							+ " JOIN "
+							+ name
+							+ "\n";
+	channel->sendAll(response);
+	if (!channel->getTopic().empty())
+		sender.addToResponse(RPL_TOPIC(sender, (*channel)));
+	sender.addToResponse(RPL_NAMERPLY(sender, (*channel)));
+	sender.addToResponse(RPL_ENDOFNAMES(sender, (*channel)));
 }
 
 void	handleJoin(Client &sender, Command &command) {
@@ -60,5 +88,7 @@ void	handleJoin(Client &sender, Command &command) {
 		Channel *curChan = Server::getChannelByName(curChanName);
 		if (!curChan)
 			handleJoinCreate(sender, curChanName, curKeyName);
+		else
+			handleJoinExisting(sender, curChanName, curKeyName);
 	}
 }

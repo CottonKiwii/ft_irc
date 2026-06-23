@@ -33,9 +33,19 @@ static void	handleJoinExisting(Client &sender, std::string name, std::string key
 		sender.addToResponse(ERR_NOSUCHCHANNEL(sender, name));
 		return ;
 	}
-	if (key != channel->getKey()) {
+	if (!channel->getKey().empty() && key != channel->getKey()) {
 		sender.addToResponse(ERR_BADCHANNELKEY(sender, (*channel)));
+		return ;
 	}
+	if (channel->isFull()) {
+		sender.addToResponse(ERR_CHANNELISFULL(sender, (*channel)));
+		return ;
+	}
+	if (channel->getInviteOnly()) {
+		sender.addToResponse(ERR_INVITEONLYCHAN(sender, (*channel)));
+		return ;
+	}
+
 	channel->addMember(sender.getFd());
 
 	std::string response =	":"

@@ -10,16 +10,19 @@ std::string	Channel::getName() const { return _name; }
 std::string	Channel::getTopic() const { return _topic; }
 std::string	Channel::getKey() const { return _key; }
 bool		Channel::getPublic() const { return _public; }
+bool		Channel::getInviteOnly() const { return _mode._inviteOnly; }
 
 void		Channel::setTopic(std::string topic) { _topic = topic; }
 void		Channel::setKey(std::string key) { _key = key; }
 
 Channel::Channel(Client &creator, std::string name):
 	_name(name),
-	_public(true)
+	_public(true),
+	_memberLimit(0)
 {
 	_members.push_back(creator.getFd());
 	_operators.push_back(creator.getFd());
+	_mode._protectedTopic = true;
 }
 
 Channel::Channel(const Channel &other) {
@@ -71,6 +74,10 @@ void	Channel::removeMember(int fd) {
 	it = std::find(_operators.begin(), _operators.end(), fd);
 	if (it != _operators.end())
 		_operators.erase(it);
+}
+
+bool	Channel::isFull() const {
+	return (_members.size() == _memberLimit);
 }
 
 bool	Channel::verifyName(std::string rawName) {

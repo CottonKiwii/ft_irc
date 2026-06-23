@@ -74,12 +74,22 @@
 												+ " :Nickname is already in use\r\n"
 
 // CHANNEL ERRORS
-#define ERR_BADCHANNELKEY(client, channel)		":localhost 475 " \
+# define ERR_CHANNELISFULL(client, channel)		":localhost 471 " \
+												+ client.getNick() \
+												+ " " \
+												+ channel.getName() \
+												+ " :Cannot join channel (+l)\n"
+# define ERR_INVITEONLYCHAN(client, channel)	":localhost 473 " \
+												+ client.getNick() \
+												+ " " \
+												+ channel.getName() \
+												+ " :Cannot join channel (+i)\n"
+# define ERR_BADCHANNELKEY(client, channel)		":localhost 475 " \
 												+ client.getNick() \
 												+ " " \
 												+ channel.getName() \
 												+ " :Cannot join channel (+k) - bad key\n"
-#define ERR_BADCHANMASK(client, name)			":localhost 476 " \
+# define ERR_BADCHANMASK(client, name)			":localhost 476 " \
 												+ client.getNick() \
 												+ " " \
 												+ name \

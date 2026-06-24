@@ -11,15 +11,16 @@ void handlePrivmsg(Client &sender, Command &command) {
 
 	// ERR_NOSUCHNICK
 	if (!receiver) {
-		response = ERR_NOSUCHNICK(sender, command.getArgs()[1]);
-		sender.addToResponse(response);
+		sender.addToResponse(ERR_NOSUCHNICK(sender, command.getArgs()[1]));
 		return ;
 	}
 	
-	response = RPL_PRIVMSG
-		+ sender.getNick()
-		+ " :"
-		+ command.getArgs()[1]
-		+ "\r\n";
+	response = ":" + sender.getPrefix() + " ";
+	for (size_t i = 2; i < command.getArgs().size(); i++) {
+		response += command.getArgs()[i];
+		response += " ";
+	}
+	response.erase(response.begin() + response.size() - 1);
+	response += "\n";
 	receiver->addToResponse(response);
 }

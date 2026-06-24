@@ -80,10 +80,8 @@
 
 // PRIVMSG ERRORS
 # define ERR_NOSUCHNICK(client, nick)			":localhost 401 " \
-												+ client.getNick() \
-												+ " " \
 												+ nick \
-												+ " :No such nickname\n"
+												+ " :No such nick/channel"
 # define ERR_NOSUCHCHANNEL(client, name)		":localhost 403 " \
 												+ client.getNick() \
 												+ " " \

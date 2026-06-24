@@ -173,8 +173,7 @@ Client	*Server::getClientByFd(int fd) {
 
 Client *Server::getClientByNick(std::string nickname)
 {
-	size_t	res = 0;
-	for (; res < Server::_clients.size(); res++)
+	for (size_t res = 0; res < Server::_clients.size(); res++)
 		if (Server::_clients[res].getNick() == nickname) 
 			return (&Server::_clients[res]);
 	return (NULL);

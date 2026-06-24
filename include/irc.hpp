@@ -23,6 +23,25 @@
 # include "Handlers.hpp"
 
 // REPLIES
+# define RPL_UMODEIS(client)					":localhost 221 " \
+												+ client.getNick() \
+												+ " +r\n"
+# define RPL_CHANNELMODEIS(client, channel)		":localhost 324 " \
+												+ client.getNick() \
+												+ " " \
+												+ channel.getName() \
+												+ " "\
+												+ channel.getModestring() \
+												+ " "\
+												+ channel.getModeArgs() \
+												+ "\n"
+# define RPL_CREATIONTIME(client, channel)		":localhost 329 " \
+												+ client.getNick() \
+												+ " " \
+												+ channel.getName() \
+												+ " " \
+												+ channel.getCreationTime() \
+												+ "\n"
 # define RPL_TOPIC(client, channel)				":localhost 332 " \
 												+ client.getNick() \
 												+ " "\
@@ -30,11 +49,16 @@
 												+ " :"\
 												+ channel.getTopic() \
 												+ "\n"
+/**
+ * No @ or * options for privacy of the channel
+ * because according to subject all the channels
+ * are public (keys and invites are not affected
+ * by how private a channel is, only the commands
+ * that we are not supposed to implement are)
+ */
 # define RPL_NAMERPLY(client, channel)			":localhost 353 " \
 												+ client.getNick() \
-												+ " " \
-												+ (channel.getPublic() ? "=" : "@") \
-												+ " " \
+												+ " = " \
 												+ channel.getName() \
 												+ " :" \
 												+ channel.getNames() \
@@ -55,8 +79,11 @@
 												+ " :Password is incorrect\r\n"
 
 // PRIVMSG ERRORS
-# define ERR_NOSUCHNICK(sender, nick)			":localhost 401 " + sender + " " + nick \
-												+ " :No such nickname\r\n"
+# define ERR_NOSUCHNICK(client, nick)			":localhost 401 " \
+												+ client.getNick() \
+												+ " " \
+												+ nick \
+												+ " :No such nickname\n"
 # define ERR_NOSUCHCHANNEL(client, name)		":localhost 403 " \
 												+ client.getNick() \
 												+ " " \
@@ -93,7 +120,19 @@
 												+ client.getNick() \
 												+ " " \
 												+ name \
-												+ " :Invalid channel name"
+												+ " :Invalid channel name\n"
+# define ERR_CHANOPRIVSNEEDED(client, channel)	":localhost 482 " \
+												+ client.getNick() \
+												+ " " \
+												+ channel.getName() \
+												+ " :You're not channel operator\n"
+// MODE ERRORS
+# define ERR_UMODEUNKNOWNFLAG(client)			":localhost 501 " \
+												+ client.getNick() \
+												+ " :Unknown MODE flag\n"
+# define ERR_USERSDONTMATCH(client)				":localhost 502 " \
+												+ client.getNick() \
+												+ " :Can't access mode of other users\n"
 
 
 // OFFICIAL IRC REPLIES

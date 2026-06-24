@@ -13,7 +13,7 @@ void handleNotice(Client &sender, Command &command) {
 
 	// ERR_NOSUCHNICK
 	if (!receiver) {
-		response = ERR_NOSUCHNICK(sender.getNick(), command.getArgs()[1]);
+		response = ERR_NOSUCHNICK(sender, command.getArgs()[1]);
 		sender.addToResponse(response);
 		return ;
 	}

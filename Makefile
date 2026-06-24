@@ -30,6 +30,8 @@ SRCS = Server \
 	   handlers/handleTopic \
 	   handlers/handleUnknown \
 	   handlers/handleUser \
+	   modeHandlers/modeUserUnknown \
+	   modeHandlers/modeUseri \
 
 
 OBJS = ${SRCS:%=${OBJS_DIR}/%.o}

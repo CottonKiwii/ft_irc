@@ -2,6 +2,7 @@
 #include "Server.hpp"
 #include <algorithm>
 #include <iostream>
+#include <sstream>
 
 Channel::Channel() {};
 Channel::~Channel() {};
@@ -9,15 +10,15 @@ Channel::~Channel() {};
 std::string	Channel::getName() const { return _name; }
 std::string	Channel::getTopic() const { return _topic; }
 std::string	Channel::getKey() const { return _key; }
-bool		Channel::getPublic() const { return _public; }
 bool		Channel::getInviteOnly() const { return _mode._inviteOnly; }
 
 void		Channel::setTopic(std::string topic) { _topic = topic; }
 void		Channel::setKey(std::string key) { _key = key; }
+void		Channel::setMemberLimit(size_t limit) { _memberLimit = limit; }
 
 Channel::Channel(Client &creator, std::string name):
 	_name(name),
-	_public(true),
+	_createdTimestamp(std::time(0)),
 	_memberLimit(0)
 {
 	_members.push_back(creator.getFd());
@@ -32,6 +33,9 @@ Channel::Channel(const Channel &other) {
 		_name = other._name;
 		_topic = other._topic;
 		_key = other._key;
+		_createdTimestamp = other._createdTimestamp;
+		_mode = other._mode;
+		_memberLimit = other._memberLimit;
 	}
 }
 
@@ -50,8 +54,37 @@ std::string	Channel::getNames() const {
 		res += " ";
 	}
 	res.erase(res.begin() + res.size() - 1);
-	std::cerr << res << std::endl;
+	return (res);
+}
 
+std::string	Channel::getModestring() const {
+	std::string res = "+n";
+	
+	if (_mode._inviteOnly)
+		res += "i";
+	if (_mode._protectedTopic)
+		res += "t";
+	if (!_key.empty())
+		res += "k";
+	if (_memberLimit)
+		res += "l";
+	return (res);
+}
+
+std::string Channel::getModeArgs() const {
+	std::string res = "";
+	std::stringstream tokens;
+	tokens << _memberLimit;
+	tokens >> res;
+	if (res == "0")
+		return ("");
+	return (res);
+}
+std::string Channel::getCreationTime() const {
+	std::string res;
+	std::stringstream tokens;
+	tokens << _createdTimestamp;
+	tokens >> res;
 	return (res);
 }
 
@@ -78,6 +111,14 @@ void	Channel::removeMember(int fd) {
 
 bool	Channel::isFull() const {
 	return (_members.size() == _memberLimit);
+}
+
+bool	Channel::isClientOp(int fd) const {
+	std::vector<int>::const_iterator it =
+		std::find(_operators.begin(), _operators.end(), fd);
+	if (it != _operators.end())
+		return (true);
+	return (false);
 }
 
 bool	Channel::verifyName(std::string rawName) {

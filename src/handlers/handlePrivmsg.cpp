@@ -1,4 +1,3 @@
-
 #include "irc.hpp"
 
 void handlePrivmsg(Client &sender, Command &command) {
@@ -15,7 +14,7 @@ void handlePrivmsg(Client &sender, Command &command) {
 		return ;
 	}
 	
-	response = ":" + sender.getPrefix() + " ";
+	response = ":" + sender.getPrefix() + " PRIVMSG " + receiver->getNick() + " ";
 	for (size_t i = 2; i < command.getArgs().size(); i++) {
 		response += command.getArgs()[i];
 		response += " ";

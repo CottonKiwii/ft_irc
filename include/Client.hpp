@@ -11,7 +11,10 @@ class Client {
 		std::string	_ip;
 		std::string	_nick;
 		std::string	_name;
+		std::string	_hostname;
+
 		std::string	_response;
+
 		bool		_registered;
 		bool		_passGiven;
 
@@ -23,11 +26,13 @@ class Client {
 		std::string getIp() const;
 		std::string	getNick() const;
 		std::string	getName() const;
+		std::string	getHostname() const;
 		bool		getRegisterStatus() const;
 		bool		getPassGiven() const;
 		
 		void		setNick(std::string nick);
 		void		setName(std::string name);
+		void		setHostname(std::string host);
 		void		setRegisterStatus(bool status);
 		void		setPassGiven(bool status);
 

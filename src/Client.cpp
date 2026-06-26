@@ -15,11 +15,13 @@ bool		Client::getRegisterStatus() const { return _registered; }
 bool		Client::getPassGiven() const { return _passGiven; }
 std::string	Client::getNick() const { return _nick; }
 std::string	Client::getName() const { return _name; }
+std::string	Client::getHostname() const { return _hostname; }
 
 void		Client::setRegisterStatus(bool status) {_registered = status;}
 void		Client::setPassGiven(bool status) { _passGiven = status; }
 void		Client::setNick(std::string nick) { _nick = nick; }
 void		Client::setName(std::string name) { _name = name; }
+void		Client::setHostname(std::string host) { _name = host; }
 
 void		Client::handleCommand(Command &command)
 {

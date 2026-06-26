@@ -18,6 +18,7 @@ void		Channel::setMemberLimit(size_t limit) { _memberLimit = limit; }
 
 Channel::Channel(Client &creator, std::string name):
 	_name(name),
+	_topic(NULL),
 	_createdTimestamp(std::time(0)),
 	_memberLimit(0)
 {
@@ -113,6 +114,14 @@ bool	Channel::isFull() const {
 	return (_members.size() == _memberLimit);
 }
 
+bool	Channel::isClientMember(int fd) const {
+	std::vector<int>::const_iterator it =
+		std::find(_members.begin(), _members.end(), fd);
+	if (it != _members.end())
+		return (true);
+	return (false);
+}
+
 bool	Channel::isClientOp(int fd) const {
 	std::vector<int>::const_iterator it =
 		std::find(_operators.begin(), _operators.end(), fd);
@@ -132,3 +141,19 @@ bool	Channel::verifyName(std::string rawName) {
 	}
 	return (true);
 }
+
+bool	Channel::hasMode(char mode) const
+{
+	std::string modestr = getModestring();
+
+	for (size_t i = 0; i < modestr.size(); i++) {
+		if (modestr[i] == mode)
+			return (true);
+	}
+	return (false);
+}
+
+
+
+
+

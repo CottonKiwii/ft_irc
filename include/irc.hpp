@@ -44,11 +44,16 @@
 												+ " " \
 												+ channel.getCreationTime() \
 												+ "\n"
+# define RPL_NOTOPIC(client, channel)			":localhost 331 " \
+												+ client.getNick() \
+												+ " " \
+												+ channel.getName() \
+												+ " :No topic is set\n"
 # define RPL_TOPIC(client, channel)				":localhost 332 " \
 												+ client.getNick() \
-												+ " "\
+												+ " " \
 												+ channel.getName() \
-												+ " :"\
+												+ " :" \
 												+ channel.getTopic() \
 												+ "\n"
 /**
@@ -102,6 +107,11 @@
 												+ " :Nickname is already in use\n"
 
 // CHANNEL ERRORS
+# define ERR_NOTONCHANNEL(client, channel)		":localhost 442 " \
+												+ client.getNick() \
+												+ " " \
+												+ channel.getName() \
+												+ " :You're not on that channel\n"
 # define ERR_CHANNELISFULL(client, channel)		":localhost 471 " \
 												+ client.getNick() \
 												+ " " \

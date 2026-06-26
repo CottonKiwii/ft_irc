@@ -55,7 +55,9 @@ class Channel {
 		void		removeMember(int fd);
 	
 		bool		isFull() const;
+		bool		isClientMember(int fd) const;
 		bool		isClientOp(int fd) const;
+		bool		hasMode(char mode) const;
 		bool		hasModes() const;
 
 		static bool	verifyName(std::string name);

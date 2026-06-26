@@ -3,25 +3,54 @@
 
 /* only difference to privmsg is that automatic replies
 are not allowed to be sent in response to a notice */
-void handleNotice(Client &sender, Command &command) {
-	std::string response;
+static std::vector<std::string>	getTargets(std::string str)
+{
+	std::vector<std::string>	targets;
+	int							start = 0, idx = 0;
 
-	// == handle channel msg ==
-	
-	// CLIENT TO CLIENT NOTICE
-	Client	*receiver = Server::getClientByNick(command.getArgs()[1]);
+	for (size_t i = 0; i < str.size(); i++) {
+		if (str[i] == ',') {
+			targets.insert(targets.begin() + idx, str.substr(start, i));
+			start = i + 1;
+			idx++;
+		}
+	}
+	targets.insert(targets.begin() + idx, str.substr(start, str.size()));
 
-	// ERR_NOSUCHNICK
-	if (!receiver) {
-		response = ERR_NOSUCHNICK(sender, command.getArgs()[1]);
-		sender.addToResponse(response);
+	return (targets);
+}
+
+	void handleNotice(Client &sender, Command &command) {
+	std::vector<std::string>	targets;
+
+	// ERR_NOTEXTTOSEND
+	if (command.getArgs().size() < 3) {
+		sender.addToResponse(ERR_NOTEXTTOSEND(sender));
 		return ;
 	}
-	
-	response = RPL_PRIVMSG
-		+ sender.getNick()
-		+ " :"
-		+ command.getArgs()[1]
-		+ "\r\n";
-	receiver->addToResponse(response);
+
+	targets = getTargets(command.getArgs()[1]);
+	for (size_t i = 0; i < targets.size(); i++) {
+
+		// FINDING RECEIVER
+		Channel	*channel = Server::getChannelByName(targets[i]);
+		if (!channel)
+			channel = 
+				Server::getChannelByName(targets[i].substr(1, targets[i].size() - 1));
+		Client	*receiver = Server::getClientByNick(targets[i]);
+
+		// ERR_NOSUCHNICK
+		if (!channel && !receiver) {
+			sender.addToResponse(ERR_NOSUCHNICK(sender, command.getArgs()[1]));
+			continue ;
+		}
+
+		// CLIENT TO CHANNEL MESSAGE
+		if (channel)
+			handleClientToChannel(sender, *channel, command);
+
+		// CLIENT TO CLIENT MESSAGE
+		if (receiver)
+			handleClientToClient(sender, *receiver, command);
+	}
 }

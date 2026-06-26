@@ -5,7 +5,13 @@ void handleClientToChannel(Client &sender, Channel &receiver, Command &command)
 {
 	std::string	response;
 
-	// == SENDER PERMISSION CHECK ==
+	// ERR_NOTONCHANNEL
+	if (!receiver.isClientMember(sender.getFd())) {
+		sender.addToResponse(ERR_NOTONCHANNEL(sender, receiver));
+		return ;
+	}
+
+	// other permission checks?
 
 	response = ":" + sender.getPrefix() + " PRIVMSG " + receiver.getName() + " ";
 	for (size_t i = 2; i < command.getArgs().size(); i++) {

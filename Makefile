@@ -30,6 +30,8 @@ SRCS = Server \
 	   handlers/handleTopic \
 	   handlers/handleUnknown \
 	   handlers/handleUser \
+	   privmsgHandlers/handleClientToClient \
+	   privmsgHandlers/handleClientToChannel \
 	   modeHandlers/modeUserUnknown \
 	   modeHandlers/modeUseri \
 

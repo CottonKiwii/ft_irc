@@ -20,6 +20,7 @@ void	handleQuit(Client &sender, Command &command);
 
 void	handlePrivmsg(Client &sender, Command &command);
 void	handleNotice(Client &sender, Command &command);
+
 void	handleTopic(Client &sender, Command &command);
 void	handleMode(Client &sender, Command &command);
 

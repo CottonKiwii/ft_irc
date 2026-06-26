@@ -5,7 +5,7 @@ void handleNick(Client &sender, Command &command) {
 
 	// ERR_NONICKNAMEGIVEN
 	if (command.getArgs().empty() || command.getArgs()[1].size() < 1) {
-		sender.addToResponse(ERR_NONICKNAMEGIVEN(sender.getNick()));
+		sender.addToResponse(ERR_NONICKNAMEGIVEN(sender));
 		return ;
 	}
 
@@ -13,7 +13,7 @@ void handleNick(Client &sender, Command &command) {
 	if (sender.getRegisterStatus()) {
 		Client	*compare = Server::getClientByNick(command.getArgs()[1]);
 		if (compare) {
-			sender.addToResponse(ERR_NICKNAMEINUSE(sender.getNick(), command.getArgs()[1]));
+			sender.addToResponse(ERR_NICKNAMEINUSE(sender, command.getArgs()[1]));
 			return ;
 		}
 	}
@@ -21,7 +21,7 @@ void handleNick(Client &sender, Command &command) {
 	// ERR_ERRONEUSNICKNAME
 	for (size_t i = 0; i < command.getArgs()[1].size() - 1; i++) {
 		if (!std::isprint(command.getArgs()[1][i])) {
-			sender.addToResponse(ERR_ERRONEUSNICKNAME(sender.getNick(), command.getArgs()[1]));
+			sender.addToResponse(ERR_ERRONEUSNICKNAME(sender, command.getArgs()[1]));
 			return ;
 		}
 	}
@@ -29,7 +29,7 @@ void handleNick(Client &sender, Command &command) {
 	if (command.getArgs()[1][0] == '#'
 		|| command.getArgs()[1][0] == ':'
 		|| command.getArgs()[1][0] == ' ') {
-		sender.addToResponse(ERR_ERRONEUSNICKNAME(sender.getNick(), command.getArgs()[1]));
+		sender.addToResponse(ERR_ERRONEUSNICKNAME(sender, command.getArgs()[1]));
 		return ;
 	}
 

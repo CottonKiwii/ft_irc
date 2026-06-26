@@ -6,7 +6,7 @@ void handlePing(Client &sender, Command &command) {
 
 	// ERR_NEEDMOREPARAMS
 	if (command.getArgs().empty()) {
-		sender.addToResponse(ERR_NEEDMOREPARAMS(sender.getNick()));
+		sender.addToResponse(ERR_NEEDMOREPARAMS(sender));
 		return ;
 	}
 

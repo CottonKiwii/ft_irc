@@ -2,12 +2,12 @@
 
 void handlePass(Client &sender, Command &command) {
 	if (sender.getRegisterStatus()) {
-		sender.addToResponse(ERR_ALREADYREGISTERED(sender.getNick()));
+		sender.addToResponse(ERR_ALREADYREGISTERED(sender));
 		return ;
 	}
 
 	if (command.getArgs().size() < 2) {
-		sender.addToResponse(ERR_NEEDMOREPARAMS(sender.getNick()));
+		sender.addToResponse(ERR_NEEDMOREPARAMS(sender));
 		return ;
 	}
 

@@ -21,6 +21,8 @@
 # include "Command.hpp"
 # include "Server.hpp"
 # include "Handlers.hpp"
+# include "modeHandlers.hpp"
+# include "privmsgHandlers.hpp"
 
 // REPLIES
 # define RPL_UMODEIS(client)					":localhost 221 " \
@@ -69,34 +71,35 @@
 												+ channel.getName() \
 												+ " :End of /NAMES list.\n"
 
-
 // GENERAL ERRORS
-# define ERR_NEEDMOREPARAMS(sender)				":localhost 461 " + sender \
-												+ " :Not enough parameters\r\n"
-# define ERR_ALREADYREGISTERED(sender)			":localhost 462 " + sender \
-												+ " :You may not reregister\r\n"
-# define ERR_PASSWDMISMATCH(sender)				":localhost 464 " + sender \
-												+ " :Password is incorrect\r\n"
+# define ERR_NEEDMOREPARAMS(client)				":localhost 461 " + client.getNick() \
+												+ " :Not enough parameters\n"
+# define ERR_ALREADYREGISTERED(client)			":localhost 462 " + client.getNick() \
+												+ " :You may not reregister\n"
+# define ERR_PASSWDMISMATCH(client)				":localhost 464 " + client.getNick() \
+												+ " :Password is incorrect\n"
 
 // PRIVMSG ERRORS
 # define ERR_NOSUCHNICK(client, nick)			":localhost 401 " \
 												+ nick \
 												+ " :No such nick/channel"
-# define ERR_NOSUCHCHANNEL(client, name)		":localhost 403 " \
-												+ client.getNick() \
-												+ " " \
-												+ name \
+# define ERR_NOSUCHCHANNEL(client, channel)		":localhost 403 " + client.getNick() \
+												+ " " + channel \
 												+ " :No such channel\n"
-# define ERR_CANNOTSENDTOCHAN(sender, chan)		":localhost 403 " + sender + " " + chan \
-												+ " :Cannot send to channel\r\n"
+
+# define ERR_CANNOTSENDTOCHAN(client, channel)		":localhost 404 " + client.getNick() \
+												+ " " + channel.getName() \
+												+ " :Cannot send to channel\n"
+# define ERR_NOTEXTTOSEND(client)				":localhost 412 " + client.getNick() \
+												+ " :No text to send"
 
 // NICKNAME ERRORS
-# define ERR_NONICKNAMEGIVEN(sender)			":localhost 431 " + sender \
-												+ " :No nickname given\r\n"
-# define ERR_ERRONEUSNICKNAME(sender, nick)		":localhost 432 " + sender + " " + nick \
-												+ " :Erroneus nickname\r\n"
-# define ERR_NICKNAMEINUSE(sender, nick)		":localhost 433 " + sender + " " + nick \
-												+ " :Nickname is already in use\r\n"
+# define ERR_NONICKNAMEGIVEN(client)			":localhost 431 " + client.getNick() \
+												+ " :No nickname given\n"
+# define ERR_ERRONEUSNICKNAME(client, nick)		":localhost 432 " + client.getNick() + " " + nick \
+												+ " :Erroneus nickname\n"
+# define ERR_NICKNAMEINUSE(client, nick)		":localhost 433 " + client.getNick() + " " + nick \
+												+ " :Nickname is already in use\n"
 
 // CHANNEL ERRORS
 # define ERR_CHANNELISFULL(client, channel)		":localhost 471 " \
@@ -124,6 +127,7 @@
 												+ " " \
 												+ channel.getName() \
 												+ " :You're not channel operator\n"
+
 // MODE ERRORS
 # define ERR_UMODEUNKNOWNFLAG(client)			":localhost 501 " \
 												+ client.getNick() \
@@ -131,7 +135,6 @@
 # define ERR_USERSDONTMATCH(client)				":localhost 502 " \
 												+ client.getNick() \
 												+ " :Can't access mode of other users\n"
-
 
 // OFFICIAL IRC REPLIES
 # define RPL_WELCOME							":localhost 001 "

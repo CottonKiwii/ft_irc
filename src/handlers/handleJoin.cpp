@@ -71,7 +71,7 @@ void	handleJoin(Client &sender, Command &command) {
 	}
 
 	if (command.getArgs().size() < 2) {
-		sender.addToResponse(ERR_NEEDMOREPARAMS(sender.getNick()));
+		sender.addToResponse(ERR_NEEDMOREPARAMS(sender));
 		return ;
 	}
 

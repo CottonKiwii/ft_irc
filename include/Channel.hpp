@@ -33,10 +33,13 @@ class Channel {
 		std::string	getTopic() const;
 		std::string	getKey() const;
 		bool		getInviteOnly() const;
+		size_t		getMemberLimit() const;
 
 		void		setTopic(std::string topic);
 		void		setKey(std::string key);
 		void		setMemberLimit(size_t limit);
+		void		setInviteOnly(bool status);
+		void		setProtectedTopic(bool status);
 
 		std::string getNames() const;
 		/**
@@ -53,6 +56,8 @@ class Channel {
 
 		void		addMember(int fd);
 		void		removeMember(int fd);
+		void		addOp(int fd);
+		void		removeOp(int fd);
 	
 		bool		isFull() const;
 		bool		isClientMember(int fd) const;

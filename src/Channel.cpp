@@ -11,10 +11,13 @@ std::string	Channel::getName() const { return _name; }
 std::string	Channel::getTopic() const { return _topic; }
 std::string	Channel::getKey() const { return _key; }
 bool		Channel::getInviteOnly() const { return _mode._inviteOnly; }
+size_t		Channel::getMemberLimit() const { return _memberLimit; }
 
 void		Channel::setTopic(std::string topic) { _topic = topic; }
 void		Channel::setKey(std::string key) { _key = key; }
 void		Channel::setMemberLimit(size_t limit) { _memberLimit = limit; }
+void		Channel::setInviteOnly(bool status) { _mode._inviteOnly = status; }
+void		Channel::setProtectedTopic(bool status) { _mode._protectedTopic = status ;}
 
 Channel::Channel(Client &creator, std::string name):
 	_name(name),
@@ -97,7 +100,10 @@ void	Channel::sendAll(std::string response) {
 }
 
 void	Channel::addMember(int fd) {
-	_members.push_back(fd);
+	std::vector<int>::iterator it =
+		std::find(_members.begin(), _members.end(), fd);
+	if (it != _members.end())
+		_members.push_back(fd);
 }
 
 void	Channel::removeMember(int fd) {
@@ -110,12 +116,26 @@ void	Channel::removeMember(int fd) {
 		_operators.erase(it);
 }
 
+void	Channel::addOp(int fd) {
+	std::vector<int>::iterator it =
+		std::find(_operators.begin(), _operators.end(), fd);
+	if (it != _operators.end())
+		_operators.push_back(fd);
+}
+
+void	Channel::removeOp(int fd) {
+	std::vector<int>::iterator it = 
+		std::find(_operators.begin(), _operators.end(), fd);
+	if (it != _operators.end())
+		_operators.erase(it);
+}
+
 bool	Channel::isFull() const {
 	return (_members.size() == _memberLimit);
 }
 
 bool	Channel::isClientMember(int fd) const {
-	std::vector<int>::const_iterator it =
+	std::vector<int>::const_iterator	it =
 		std::find(_members.begin(), _members.end(), fd);
 	if (it != _members.end())
 		return (true);

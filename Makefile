@@ -34,6 +34,12 @@ SRCS = Server \
 	   privmsgHandlers/handleClientToChannel \
 	   modeHandlers/modeUserUnknown \
 	   modeHandlers/modeUseri \
+	   modeHandlers/modeChanUnknown \
+	   modeHandlers/modeChani \
+	   modeHandlers/modeChant \
+	   modeHandlers/modeChank \
+	   modeHandlers/modeChano \
+	   modeHandlers/modeChanl \
 
 
 OBJS = ${SRCS:%=${OBJS_DIR}/%.o}

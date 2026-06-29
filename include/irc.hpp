@@ -83,7 +83,6 @@
 												+ " :You may not reregister\n"
 # define ERR_PASSWDMISMATCH(client)				":localhost 464 " + client.getNick() \
 												+ " :Password is incorrect\n"
-
 // PRIVMSG ERRORS
 # define ERR_NOSUCHNICK(client, nick)			":localhost 401 " \
 												+ nick \
@@ -107,16 +106,22 @@
 												+ " :Nickname is already in use\n"
 
 // CHANNEL ERRORS
-# define ERR_NOTONCHANNEL(client, channel)		":localhost 442 " \
-												+ client.getNick() \
-												+ " " \
+# define ERR_NOTONCHANNEL(channel)				":localhost 442 " \
 												+ channel.getName() \
-												+ " :You're not on that channel\n"
+												+ " :User is not on channel\n"
+# define ERR_KEYSET(channel)					":localhost 467 " \
+												+ channel.getName() \
+												+ " :Channel key is already set\n"
 # define ERR_CHANNELISFULL(client, channel)		":localhost 471 " \
 												+ client.getNick() \
 												+ " " \
 												+ channel.getName() \
 												+ " :Cannot join channel (+l)\n"
+# define ERR_UNKNOWNMODE(client, modeChar)		":localhost 472 " \
+												+ client.getNick() \
+												+ " " \
+												+ modeChar \
+												+ " :Unknown mode char\n"
 # define ERR_INVITEONLYCHAN(client, channel)	":localhost 473 " \
 												+ client.getNick() \
 												+ " " \

@@ -21,7 +21,7 @@ void		Channel::setProtectedTopic(bool status) { _mode._protectedTopic = status ;
 
 Channel::Channel(Client &creator, std::string name):
 	_name(name),
-	_topic(NULL),
+	_topic(""),
 	_createdTimestamp(std::time(0)),
 	_memberLimit(0)
 {

@@ -7,7 +7,7 @@ void handleClientToChannel(Client &sender, Channel &receiver, Command &command)
 
 	// ERR_NOTONCHANNEL
 	if (!receiver.isClientMember(sender.getFd())) {
-		sender.addToResponse(ERR_NOTONCHANNEL(sender, receiver));
+		sender.addToResponse(ERR_NOTONCHANNEL(receiver));
 		return ;
 	}
 

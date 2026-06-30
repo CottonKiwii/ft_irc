@@ -17,7 +17,7 @@ bool	modeChano(Channel &channel,
 			sender.addToResponse(ERR_NOSUCHNICK(sender, newOpNick));
 			return (false);
 		}
-		if (!channel.isMember(newOp->getFd())) {
+		if (!channel.isClientMember(newOp->getFd())) {
 			modeArgs.pop();
 			sender.addToResponse(ERR_NOTONCHANNEL(channel));
 			return (false);
@@ -39,7 +39,7 @@ bool	modeChano(Channel &channel,
 			sender.addToResponse(ERR_NOSUCHNICK(sender, opNick));
 			return (false);
 		}
-		if (!channel.isMember(op->getFd())) {
+		if (!channel.isClientMember(op->getFd())) {
 			modeArgs.pop();
 			sender.addToResponse(ERR_NOTONCHANNEL(channel));
 			return (false);

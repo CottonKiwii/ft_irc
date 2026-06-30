@@ -26,7 +26,7 @@ void handleTopic(Client &sender, Command &command) {
 
 	// ERR_NOTONCHANNEL
 	if (!channel->isClientMember(sender.getFd())) {
-		sender.addToResponse(ERR_NOTONCHANNEL(sender, (*channel)));
+		sender.addToResponse(ERR_NOTONCHANNEL((*channel)));
 		return ;
 	}
 

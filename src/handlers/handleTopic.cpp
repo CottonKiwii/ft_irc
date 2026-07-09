@@ -24,7 +24,7 @@ void handleTopic(Client &sender, Command &command) {
 	}
 	//ERR_NOSUCHCHANNEL
 	if (!channel) {
-		sender.addToResponse(ERR_NOSUCHCHANNEL(sender, command.getArgs()[1]));
+		sender.addToResponse(ERR_NOSUCHCHANNEL(command.getArgs()[1]));
 		return ;
 	}
 

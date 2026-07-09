@@ -37,8 +37,7 @@ class Server {
 	
 		void				init(char *argv[3]);
 		void				listenAndServe(void);
-
-
+	
 		
 		static std::string	getPass();
 
@@ -49,6 +48,8 @@ class Server {
 		static Client		*getClientByFd(int fd);
 		static void			disconnectClient(int fd);
 		static void			disconnectClient(int fd, std::string reason);
+
+		static void			signalHandler(int signal);
 };
 
 #endif

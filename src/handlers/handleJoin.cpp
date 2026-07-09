@@ -30,7 +30,7 @@ static void	handleJoinExisting(Client &sender, std::string name, std::string key
 	}
 	Channel	*channel = Server::getChannelByName(name);
 	if (!channel) {
-		sender.addToResponse(ERR_NOSUCHCHANNEL(sender, name));
+		sender.addToResponse(ERR_NOSUCHCHANNEL(name));
 		return ;
 	}
 	if (!channel->getKey().empty() && key != channel->getKey()) {

@@ -12,6 +12,7 @@ class Client {
 		std::string	_nick;
 		std::string	_name;
 		std::string	_hostname;
+		std::string _buff;
 
 		std::string	_response;
 
@@ -36,12 +37,20 @@ class Client {
 		void		setRegisterStatus(bool status);
 		void		setPassGiven(bool status);
 
+		bool		commandsReady();
+		void		handleCommands();
 		void		handleCommand(Command &command);
 
 		std::string	getPrefix() const;
 
 		void		addToResponse(std::string response);
+		void		addToBuff(std::string buff);
 		void		flushResponse();
+
+		void		inLog();
+		void		outLog();
+		void		connectLog();
+		void		disconnectLog();
 };
 
 #endif

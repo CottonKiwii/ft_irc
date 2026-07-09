@@ -90,6 +90,7 @@ valgrind: ${NAME}
 		valgrind \
 		--leak-check=full \
 		--show-leak-kinds=all \
+		--track-fds=all \
 		./${NAME} ${ARGS}
 
 .PHONY: all clean fclean re run valgrind

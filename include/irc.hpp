@@ -87,8 +87,8 @@
 # define ERR_NOSUCHNICK(client, nick)			":localhost 401 " \
 												+ nick \
 												+ " :No such nick/channel"
-# define ERR_NOSUCHCHANNEL(client, channel)		":localhost 403 " + client.getNick() \
-												+ " " + channel \
+# define ERR_NOSUCHCHANNEL(chanName)			":localhost 403 " \
+												+ chanName \
 												+ " :No such channel\n"
 
 # define ERR_CANNOTSENDTOCHAN(client, channel)		":localhost 404 " + client.getNick() \
@@ -106,9 +106,14 @@
 												+ " :Nickname is already in use\n"
 
 // CHANNEL ERRORS
-# define ERR_NOTONCHANNEL(channel)				":localhost 442 " \
+# define ERR_USERNOTINCHANNEL(nick, channel)	":localhost 441 " \
+												+ nick \
+												+ " " \
 												+ channel.getName() \
 												+ " :User is not on channel\n"
+# define ERR_NOTONCHANNEL(channel)				":localhost 442 " \
+												+ channel.getName() \
+												+ " :You are not on channel\n"
 # define ERR_KEYSET(channel)					":localhost 467 " \
 												+ channel.getName() \
 												+ " :Channel key is already set\n"

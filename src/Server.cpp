@@ -1,4 +1,6 @@
 #include "irc.hpp"
+#include <signal.h>
+#include <unistd.h>
 
 short					Server::Config::_port = 0;
 std::string				Server::Config::_pass;
@@ -8,14 +10,21 @@ std::vector<Channel>	Server::_channels;
 bool					Server::_signalReceived = false;
 
 Server::Server() {}
-Server::~Server() {}
+Server::~Server() {
+	for (std::vector<pollfd>::iterator it = _sockets.begin();
+		it != _sockets.end();
+		it++) {
+		close(it->fd);
+	}
+}
 
 void Server::init(char *args[3]) {
 	std::istringstream	portToken(args[1]);
 
-	if (!(portToken >> Server::Config::_port)) {
+	if (!(portToken >> Server::Config::_port))
 		throw (std::runtime_error(PORT_MSG));
-}
+	signal(SIGINT, Server::signalHandler);
+	signal(SIGQUIT, Server::signalHandler);
 	Server::Config::_pass = args[2];
 };
 
@@ -47,7 +56,7 @@ void	Server::createServerSocket(void) {
 
 void	Server::acceptNewClient(void) {
 	sockaddr_in	newAddr;
-	socklen_t	newAddrSize;
+	socklen_t	newAddrSize = sizeof(newAddr);
 	pollfd		newSocket;
 
 	newSocket.fd = accept(
@@ -64,7 +73,7 @@ void	Server::acceptNewClient(void) {
 	Server::_sockets.push_back(newSocket);
 	Client newClient(newSocket.fd, inet_ntoa(newAddr.sin_addr));
 	Server::_clients.push_back(newClient);
-	std::cout << "Accepted new client from " << newClient.getIp() << std::endl;
+	newClient.connectLog();
 }
 
 void	Server::disconnectClient(int fd) {
@@ -77,7 +86,7 @@ void	Server::disconnectClient(int fd) {
 	close(Server::_sockets[socketIdx].fd);
 	Server::_sockets.erase(Server::_sockets.begin() + socketIdx);
 	Server::_clients.erase(Server::_clients.begin() + socketIdx - 1);
-	std::cout << "Client disconnected" << std::endl;
+	client->disconnectLog();
 }
 
 void	Server::disconnectClient(int fd, std::string reason) {
@@ -92,34 +101,24 @@ void	Server::disconnectClient(int fd, std::string reason) {
 	close(Server::_sockets[socketIdx].fd);
 	Server::_sockets.erase(Server::_sockets.begin() + socketIdx);
 	Server::_clients.erase(Server::_clients.begin() + socketIdx - 1);
-	std::cout << "Client disconnected" << std::endl;
+	client->disconnectLog();
 }
 
 void	Server::handleNewData(int fd) {
-	char buff[4096];
+	char	buff[4096];
+	Client	*client = getClientByFd(fd);
 
 	memset(buff, 0, sizeof(buff));
 
 	ssize_t bytesReceived = recv(fd, buff, sizeof(buff) - 1, 0);
 
-	// TODO: clean up client on disconnect
 	if (bytesReceived < 1) {
 		Server::disconnectClient(fd);
 		return ;
 	}
-	std::cout << "["<< fd << ": in]" << buff << std::endl;
-	std::istringstream	commands(buff);
-	std::string			rawCommand;
-	while (std::getline(commands, rawCommand, '\n')) {
-		while (rawCommand[rawCommand.size() - 1] == '\r'
-			|| rawCommand[rawCommand.size() - 1] == '\n')
-			rawCommand.erase(rawCommand.end() - 1);
-		if (rawCommand.size() == 0)
-			continue ;
-
-		Command command(rawCommand);
-		getClientByFd(fd)->handleCommand(command);
-	}
+	client->addToBuff(buff);
+	if (client->commandsReady())
+			getClientByFd(fd)->handleCommands();
 	for (
 		std::vector<Client>::iterator client = Server::_clients.begin();
 		client != Server::_clients.end();
@@ -131,7 +130,8 @@ void	Server::listenAndServe(void) {
 	createServerSocket();
 
 	while (Server::_signalReceived == false) {
-		if (poll(&Server::_sockets[0], Server::_sockets.size(), -1) == -1)
+		if (poll(&Server::_sockets[0], Server::_sockets.size(), -1) == -1
+			&& Server::_signalReceived == false)
 			throw std::runtime_error("Poll failed");
 
 		for (size_t i = 0; i < Server::_sockets.size(); i++) {
@@ -177,4 +177,10 @@ Client *Server::getClientByNick(std::string nickname)
 		if (Server::_clients[res].getNick() == nickname) 
 			return (&Server::_clients[res]);
 	return (NULL);
+}
+
+void	Server::signalHandler(int signal) {
+	(void)signal;
+	std::cout << "[server: signal recieved]" << std::endl;
+	_signalReceived = true;
 }

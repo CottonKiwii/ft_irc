@@ -20,6 +20,7 @@ void handleQuit(Client &sender, Command &command) {
 			+ command.getArgs()[1];
 	}
 
+	response += "\n";
 	sender.addToResponse(response);
 	Server::disconnectClient(sender.getFd());
 }

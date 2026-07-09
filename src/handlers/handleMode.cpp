@@ -52,7 +52,7 @@ static std::string buildResponse(Client &sender,
 static void	handleModeChannel(Client &sender, Command &command) {
 	Channel	*channel = Server::getChannelByName(command.getArgs()[1]);
 	if (!channel) {
-		sender.addToResponse(ERR_NOSUCHCHANNEL(sender, command.getArgs()[1]));
+		sender.addToResponse(ERR_NOSUCHCHANNEL(command.getArgs()[1]));
 		return ;
 	}
 	if (command.getArgs().size() == 2) {
@@ -93,7 +93,6 @@ static void	handleModeChannel(Client &sender, Command &command) {
 				if (modestring[i] == 'o') {
 					std::string	nick = modeArgs.front();
 					opsToAdd.push_back(nick);
-					std::cerr << "hello" << std::endl;
 					modeArgs.pop();
 				}
 			}

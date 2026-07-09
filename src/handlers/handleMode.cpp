@@ -147,6 +147,10 @@ static void	handleModeClient(Client &sender, Command &command) {
 }
 
 void handleMode(Client &sender, Command &command) {
+	if (sender.getRegisterStatus() == false) {
+		Server::disconnectClient(sender.getFd(), "unauthorised");
+		return ;
+	}
 	if (command.getArgs().size() == 1) {
 		sender.addToResponse(RPL_UMODEIS(sender));
 		return ;

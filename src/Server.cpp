@@ -107,7 +107,7 @@ void	Server::handleNewData(int fd) {
 		Server::disconnectClient(fd);
 		return ;
 	}
-	std::cout << buff << std::endl;
+	std::cout << "["<< fd << ": in]" << buff << std::endl;
 	std::istringstream	commands(buff);
 	std::string			rawCommand;
 	while (std::getline(commands, rawCommand, '\n')) {

@@ -102,7 +102,7 @@ void	Channel::sendAll(std::string response) {
 void	Channel::addMember(int fd) {
 	std::vector<int>::iterator it =
 		std::find(_members.begin(), _members.end(), fd);
-	if (it != _members.end())
+	if (it == _members.end())
 		_members.push_back(fd);
 }
 
@@ -119,7 +119,7 @@ void	Channel::removeMember(int fd) {
 void	Channel::addOp(int fd) {
 	std::vector<int>::iterator it =
 		std::find(_operators.begin(), _operators.end(), fd);
-	if (it != _operators.end())
+	if (it == _operators.end())
 		_operators.push_back(fd);
 }
 
@@ -172,8 +172,3 @@ bool	Channel::hasMode(char mode) const
 	}
 	return (false);
 }
-
-
-
-
-

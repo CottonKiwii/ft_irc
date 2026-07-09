@@ -18,6 +18,10 @@ void handleTopic(Client &sender, Command &command) {
 
 	Channel *channel = Server::getChannelByName(command.getArgs()[1]);
 
+	if (sender.getRegisterStatus() == false) {
+		Server::disconnectClient(sender.getFd(), "unauthorised");
+		return ;
+	}
 	//ERR_NOSUCHCHANNEL
 	if (!channel) {
 		sender.addToResponse(ERR_NOSUCHCHANNEL(sender, command.getArgs()[1]));

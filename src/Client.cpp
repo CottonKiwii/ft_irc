@@ -87,9 +87,8 @@ void	Client::addToResponse(std::string response)
 void	Client::flushResponse() {
 	if (_response.size() == 0)
 		return ;
+	std::cout << "[" << _fd << ": out]" << _response << std::endl;
 	_response += "\r\n";
-	std::cout << "Flushing response for " << _fd << std::endl;
-	std::cout << _response << std::endl;
 	if (send(_fd, _response.c_str(), _response.size(), 0) == -1)
 		throw std::runtime_error("Error: An error occured while sending a message!");
 	_response.clear();

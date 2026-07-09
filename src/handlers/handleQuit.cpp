@@ -4,6 +4,10 @@
 void handleQuit(Client &sender, Command &command) {
 	std::string response;
 
+	if (sender.getRegisterStatus() == false) {
+		Server::disconnectClient(sender.getFd(), "unauthorised");
+		return ;
+	}
 	if (command.getArgs().empty()) {
 		response = RPL_QUIT
 			+ sender.getNick()

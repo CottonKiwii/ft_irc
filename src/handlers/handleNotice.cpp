@@ -20,9 +20,13 @@ static std::vector<std::string>	getTargets(std::string str)
 	return (targets);
 }
 
-	void handleNotice(Client &sender, Command &command) {
+void handleNotice(Client &sender, Command &command) {
 	std::vector<std::string>	targets;
 
+	if (sender.getRegisterStatus() == false) {
+		Server::disconnectClient(sender.getFd(), "unauthorised");
+		return ;
+	}
 	// ERR_NOTEXTTOSEND
 	if (command.getArgs().size() < 3) {
 		sender.addToResponse(ERR_NOTEXTTOSEND(sender));

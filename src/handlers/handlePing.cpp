@@ -2,8 +2,10 @@
 #include "irc.hpp"
 
 void handlePing(Client &sender, Command &command) {
-	std::cout << "Handling PING" << std::endl;
-
+	if (sender.getRegisterStatus() == false) {
+		Server::disconnectClient(sender.getFd(), "unauthorised");
+		return ;
+	}
 	// ERR_NEEDMOREPARAMS
 	if (command.getArgs().empty()) {
 		sender.addToResponse(ERR_NEEDMOREPARAMS(sender));

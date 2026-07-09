@@ -64,6 +64,10 @@ void	handleJoin(Client &sender, Command &command) {
 	std::string				response;
 	std::queue<std::string>	channels;
 	std::queue<std::string>	keys;
+	if (sender.getRegisterStatus() == false) {
+		Server::disconnectClient(sender.getFd(), "unauthorised");
+		return ;
+	}
 
 	if (sender.getRegisterStatus() == false) {
 		Server::disconnectClient(sender.getFd(), "Unauthorized");

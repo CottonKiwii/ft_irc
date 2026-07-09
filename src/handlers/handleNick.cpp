@@ -1,8 +1,6 @@
 #include "irc.hpp"
 
 void handleNick(Client &sender, Command &command) {
-	std::cout << "Handling NICK" << std::endl;
-
 	// ERR_NONICKNAMEGIVEN
 	if (command.getArgs().empty() || command.getArgs()[1].size() < 1) {
 		sender.addToResponse(ERR_NONICKNAMEGIVEN(sender));

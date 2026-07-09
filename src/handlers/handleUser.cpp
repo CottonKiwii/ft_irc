@@ -1,11 +1,14 @@
 #include "irc.hpp"
 
 void handleUser(Client &sender, Command &command) {
-	std::cout << "Handling USER" << std::endl;
-	
 	if (sender.getPassGiven() == false) {
 		sender.addToResponse(ERR_PASSWDMISMATCH(sender));
 		Server::disconnectClient(sender.getFd(), "Bad Password");
+		return ;
+	}
+
+	if (sender.getNick().empty()) {
+		Server::disconnectClient(sender.getFd(), "Nick is not set");
 		return ;
 	}
 

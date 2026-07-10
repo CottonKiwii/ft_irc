@@ -3,6 +3,7 @@ ircserv
 obj
 bin
 ft_irc-tester
-
 .cache
+
+in
 compile_commands.json

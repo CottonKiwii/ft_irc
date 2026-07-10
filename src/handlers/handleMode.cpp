@@ -50,7 +50,7 @@ static std::string buildResponse(Client &sender,
 }
 
 static void	handleModeChannel(Client &sender, Command &command) {
-	Channel	*channel = Server::getChannelByName(command.getArgs()[1]);
+	Channel	*channel = Server::getChannel(command.getArgs()[1]);
 	if (!channel) {
 		sender.addToResponse(ERR_NOSUCHCHANNEL(command.getArgs()[1]));
 		return ;
@@ -118,7 +118,7 @@ static void	handleModeChannel(Client &sender, Command &command) {
 }
 
 static void	handleModeClient(Client &sender, Command &command) {
-	Client *client = Server::getClientByNick(command.getArgs()[1]);
+	Client *client = Server::getClient(command.getArgs()[1]);
 	if (!client) {
 		sender.addToResponse(ERR_NOSUCHNICK(sender, command.getArgs()[1]));
 		return ;
@@ -147,7 +147,8 @@ static void	handleModeClient(Client &sender, Command &command) {
 
 void handleMode(Client &sender, Command &command) {
 	if (sender.getRegisterStatus() == false) {
-		Server::disconnectClient(sender.getFd(), "unauthorised");
+		sender.setIsConnected(false);
+		sender.addToResponse(ERROR_CLOSINGLINK("unauthorised"));
 		return ;
 	}
 	if (command.getArgs().size() == 1) {

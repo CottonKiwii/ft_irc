@@ -41,13 +41,13 @@ class Server {
 		
 		static std::string	getPass();
 
-		static Channel		&createChannel(Client &creator, std::string name);
-		static Channel		*getChannelByName(std::string name);
 
-		static Client		*getClientByNick(std::string nickname);
-		static Client		*getClientByFd(int fd);
+		static Client		*getClient(std::string nickname);
+		static Client		*getClient(int fd);
 		static void			disconnectClient(int fd);
-		static void			disconnectClient(int fd, std::string reason);
+
+		static Channel		&createChannel(Client &creator, std::string name);
+		static Channel		*getChannel(std::string name);
 
 		static void			signalHandler(int signal);
 };

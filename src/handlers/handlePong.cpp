@@ -3,7 +3,8 @@
 
 void handlePong(Client &sender, Command &command) {
 	if (sender.getRegisterStatus() == false) {
-		Server::disconnectClient(sender.getFd(), "unauthorised");
+		sender.setIsConnected(false);
+		sender.addToResponse(ERROR_CLOSINGLINK("unauthorised"));
 		return ;
 	}
 	// ERR_NEEDMOREPARAMS

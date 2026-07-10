@@ -52,7 +52,7 @@ std::string	Channel::getNames() const {
 			std::find(_operators.begin(), _operators.end(), _members[i]);
 		if (it != _operators.end())
 			name += "@";
-		Client *client = Server::getClientByFd(_members[i]);
+		Client *client = Server::getClient(_members[i]);
 		name += client->getNick();
 		res += name;
 		res += " ";
@@ -94,7 +94,7 @@ std::string Channel::getCreationTime() const {
 
 void	Channel::sendAll(std::string response) {
 	for (size_t i = 0; i < _members.size(); i++) {
-		Client *client = Server::getClientByFd(_members[i]);
+		Client *client = Server::getClient(_members[i]);
 		client->addToResponse(response);
 	}
 }

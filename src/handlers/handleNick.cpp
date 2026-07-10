@@ -9,7 +9,7 @@ void handleNick(Client &sender, Command &command) {
 
 	// ERR_NICKNAMEINUSE
 	if (sender.getRegisterStatus()) {
-		Client	*compare = Server::getClientByNick(command.getArgs()[1]);
+		Client	*compare = Server::getClient(command.getArgs()[1]);
 		if (compare) {
 			sender.addToResponse(ERR_NICKNAMEINUSE(sender, command.getArgs()[1]));
 			return ;

@@ -156,6 +156,9 @@
 												+ client.getNick() \
 												+ " :Can't access mode of other users\n"
 
+# define ERROR_CLOSINGLINK(reason)				"ERROR :Closing Link: localhost (" \
+												reason \
+												")\n"
 // OFFICIAL IRC REPLIES
 # define RPL_WELCOME							":localhost 001 "
 

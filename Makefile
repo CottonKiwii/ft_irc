@@ -11,8 +11,10 @@ INCLUDE = -I./include
 SRCS_DIR = src
 OBJS_DIR = obj
 
-SRCS = Server \
-	   Client \
+SRCS = classes/Server/Server \
+	   classes/Server/utils \
+	   classes/Client/Client \
+	   classes/Client/utils \
 	   Command \
 	   Channel \
 	   handlers/handleCap \

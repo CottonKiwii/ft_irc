@@ -5,7 +5,8 @@ void handleQuit(Client &sender, Command &command) {
 	std::string response;
 
 	if (sender.getRegisterStatus() == false) {
-		Server::disconnectClient(sender.getFd(), "unauthorised");
+		sender.setIsConnected(false);
+		sender.addToResponse(ERROR_CLOSINGLINK("unauthorised"));
 		return ;
 	}
 	if (command.getArgs().empty()) {

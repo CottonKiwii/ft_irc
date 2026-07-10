@@ -11,7 +11,7 @@ bool	modeChano(Channel &channel,
 			return (false);
 		}
 		std::string newOpNick = modeArgs.front();
-		Client		*newOp = Server::getClientByNick(newOpNick);
+		Client		*newOp = Server::getClient(newOpNick);
 		if (!newOp) {
 			modeArgs.pop();
 			sender.addToResponse(ERR_NOSUCHNICK(sender, newOpNick));
@@ -33,7 +33,7 @@ bool	modeChano(Channel &channel,
 			return (false);
 		}
 		std::string opNick = modeArgs.front();
-		Client		*op = Server::getClientByNick(opNick);
+		Client		*op = Server::getClient(opNick);
 		if (!op) {
 			modeArgs.pop();
 			sender.addToResponse(ERR_NOSUCHNICK(sender, opNick));

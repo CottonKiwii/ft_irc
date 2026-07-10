@@ -16,10 +16,12 @@ static void sendResponse(Client &sender, Channel &channel)
 void handleTopic(Client &sender, Command &command) {
 	std::string topic;
 
-	Channel *channel = Server::getChannelByName(command.getArgs()[1]);
+	Channel *channel = Server::getChannel(command.getArgs()[1]);
+
 
 	if (sender.getRegisterStatus() == false) {
-		Server::disconnectClient(sender.getFd(), "unauthorised");
+		sender.setIsConnected(false);
+		sender.addToResponse(ERROR_CLOSINGLINK("unauthorised"));
 		return ;
 	}
 	//ERR_NOSUCHCHANNEL

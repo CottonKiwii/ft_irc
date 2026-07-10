@@ -28,7 +28,7 @@ static void	handleJoinExisting(Client &sender, std::string name, std::string key
 		sender.addToResponse(ERR_BADCHANMASK(sender, name));
 		return ;
 	}
-	Channel	*channel = Server::getChannelByName(name);
+	Channel	*channel = Server::getChannel(name);
 	if (!channel) {
 		sender.addToResponse(ERR_NOSUCHCHANNEL(name));
 		return ;
@@ -65,12 +65,8 @@ void	handleJoin(Client &sender, Command &command) {
 	std::queue<std::string>	channels;
 	std::queue<std::string>	keys;
 	if (sender.getRegisterStatus() == false) {
-		Server::disconnectClient(sender.getFd(), "unauthorised");
-		return ;
-	}
-
-	if (sender.getRegisterStatus() == false) {
-		Server::disconnectClient(sender.getFd(), "Unauthorized");
+		sender.setIsConnected(false);
+		sender.addToResponse(ERROR_CLOSINGLINK("unauthorised"));
 		return ;
 	}
 
@@ -99,7 +95,7 @@ void	handleJoin(Client &sender, Command &command) {
 			keys.pop();
 		}
 		channels.pop();
-		Channel *curChan = Server::getChannelByName(curChanName);
+		Channel *curChan = Server::getChannel(curChanName);
 		if (!curChan)
 			handleJoinCreate(sender, curChanName, curKeyName);
 		else

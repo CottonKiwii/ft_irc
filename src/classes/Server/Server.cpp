@@ -1,6 +1,6 @@
 #include "irc.hpp"
-#include <signal.h>
 #include <unistd.h>
+#include <signal.h>
 
 short					Server::Config::_port = 0;
 std::string				Server::Config::_pass;
@@ -27,6 +27,25 @@ void Server::init(char *args[3]) {
 	signal(SIGQUIT, Server::signalHandler);
 	Server::Config::_pass = args[2];
 };
+
+void	Server::listenAndServe(void) {
+	createServerSocket();
+
+	while (Server::_signalReceived == false) {
+		if (poll(&Server::_sockets[0], Server::_sockets.size(), -1) == -1
+			&& Server::_signalReceived == false)
+			throw std::runtime_error("Poll failed");
+
+		for (size_t i = 0; i < Server::_sockets.size(); i++) {
+			if (Server::_sockets[i].revents & POLLIN) {
+				if (i == 0)
+					acceptNewClient();
+				else
+					handleNewData(Server::_sockets[i].fd);
+			}
+		}
+	}
+}
 
 void	Server::createServerSocket(void) {
 	pollfd		res;
@@ -76,37 +95,9 @@ void	Server::acceptNewClient(void) {
 	newClient.connectLog();
 }
 
-void	Server::disconnectClient(int fd) {
-	size_t	socketIdx = 0;
-	Client	*client = Server::getClientByFd(fd);
-	client->flushResponse();
-	
-	for (; Server::_sockets[socketIdx].fd != fd; socketIdx++) {}
-	
-	close(Server::_sockets[socketIdx].fd);
-	Server::_sockets.erase(Server::_sockets.begin() + socketIdx);
-	Server::_clients.erase(Server::_clients.begin() + socketIdx - 1);
-	client->disconnectLog();
-}
-
-void	Server::disconnectClient(int fd, std::string reason) {
-	size_t	socketIdx = 0;
-	std::string	response = "ERROR :Closing Link: localhost (" + reason + ")\n" ;
-	Client	*client = Server::getClientByFd(fd);
-	client->addToResponse(response);
-	client->flushResponse();
-	
-	for (; Server::_sockets[socketIdx].fd != fd; socketIdx++) {}
-	
-	close(Server::_sockets[socketIdx].fd);
-	Server::_sockets.erase(Server::_sockets.begin() + socketIdx);
-	Server::_clients.erase(Server::_clients.begin() + socketIdx - 1);
-	client->disconnectLog();
-}
-
 void	Server::handleNewData(int fd) {
 	char	buff[4096];
-	Client	*client = getClientByFd(fd);
+	Client	*client = getClient(fd);
 
 	memset(buff, 0, sizeof(buff));
 
@@ -118,65 +109,15 @@ void	Server::handleNewData(int fd) {
 	}
 	client->addToBuff(buff);
 	if (client->commandsReady())
-			getClientByFd(fd)->handleCommands();
+			getClient(fd)->handleCommands();
 	for (
 		std::vector<Client>::iterator client = Server::_clients.begin();
 		client != Server::_clients.end();
-		client++)
+		client++) {
 		client->flushResponse();
-}
-
-void	Server::listenAndServe(void) {
-	createServerSocket();
-
-	while (Server::_signalReceived == false) {
-		if (poll(&Server::_sockets[0], Server::_sockets.size(), -1) == -1
-			&& Server::_signalReceived == false)
-			throw std::runtime_error("Poll failed");
-
-		for (size_t i = 0; i < Server::_sockets.size(); i++) {
-			if (Server::_sockets[i].revents & POLLIN) {
-				if (i == 0)
-					acceptNewClient();
-				else
-					handleNewData(Server::_sockets[i].fd);
-			}
-		}
+		if (client->getIsConnected() == false)
+			disconnectClient(client->getFd());
 	}
-}
-
-std::string	Server::getPass() { return Server::Config::_pass; }
-
-Channel	&Server::createChannel(Client &creator, std::string name) {
-	_channels.push_back(Channel(creator, name));
-	return (_channels.back());
-}
-
-Channel	*Server::getChannelByName(std::string name) {
-	size_t	res = 0;
-	for (; res < Server::_channels.size(); res++) {
-		if (Server::_channels[res].getName() == name) {
-			return (&Server::_channels[res]);
-		}
-	}
-	return (NULL);
-}
-
-Client	*Server::getClientByFd(int fd) {
-	size_t	res = 0;
-	for (; res < Server::_clients.size(); res++)
-		if (Server::_clients[res].getFd() == fd) 
-			return (&Server::_clients[res]);
-	
-	return (NULL);
-}
-
-Client *Server::getClientByNick(std::string nickname)
-{
-	for (size_t res = 0; res < Server::_clients.size(); res++)
-		if (Server::_clients[res].getNick() == nickname) 
-			return (&Server::_clients[res]);
-	return (NULL);
 }
 
 void	Server::signalHandler(int signal) {

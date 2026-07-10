@@ -22,7 +22,8 @@ static void	leaveChannel(Client &sender, Channel &channel, Command &command) {
 
 void	handlePart(Client &sender, Command &command) {
 	if (sender.getRegisterStatus() == false) {
-		Server::disconnectClient(sender.getFd(), "unauthorised");
+		sender.setIsConnected(false);
+		sender.addToResponse(ERROR_CLOSINGLINK("unauthorised"));
 		return ;
 	}
 	if (command.getArgs().size() < 2) {
@@ -32,7 +33,7 @@ void	handlePart(Client &sender, Command &command) {
 	std::istringstream	split(command.getArgs()[1]);
 	std::string			chanName;
 	while (std::getline(split, chanName, ',')) {
-		Channel *channel = Server::getChannelByName(chanName);
+		Channel *channel = Server::getChannel(chanName);
 		if (!channel) {
 			sender.addToResponse(ERR_NOSUCHCHANNEL(chanName));
 			continue ;

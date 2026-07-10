@@ -2,13 +2,15 @@
 
 void handleUser(Client &sender, Command &command) {
 	if (sender.getPassGiven() == false) {
+		sender.setIsConnected(false);
 		sender.addToResponse(ERR_PASSWDMISMATCH(sender));
-		Server::disconnectClient(sender.getFd(), "Bad Password");
+		sender.addToResponse(ERROR_CLOSINGLINK("bad password"));
 		return ;
 	}
 
 	if (sender.getNick().empty()) {
-		Server::disconnectClient(sender.getFd(), "Nick is not set");
+		sender.setIsConnected(false);
+		sender.addToResponse(ERROR_CLOSINGLINK("nick is not set"));
 		return ;
 	}
 

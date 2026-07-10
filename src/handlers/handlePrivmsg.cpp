@@ -22,7 +22,8 @@ void handlePrivmsg(Client &sender, Command &command) {
 	std::vector<std::string>	targets;
 
 	if (sender.getRegisterStatus() == false) {
-		Server::disconnectClient(sender.getFd(), "unauthorised");
+		sender.setIsConnected(false);
+		sender.addToResponse(ERROR_CLOSINGLINK("unauthorised"));
 		return ;
 	}
 	// ERR_NOTEXTTOSEND
@@ -35,11 +36,11 @@ void handlePrivmsg(Client &sender, Command &command) {
 	for (size_t i = 0; i < targets.size(); i++) {
 
 		// FINDING RECEIVER
-		Channel	*channel = Server::getChannelByName(targets[i]);
+		Channel	*channel = Server::getChannel(targets[i]);
 		if (!channel)
 			channel = 
-				Server::getChannelByName(targets[i].substr(1, targets[i].size() - 1));
-		Client	*receiver = Server::getClientByNick(targets[i]);
+				Server::getChannel(targets[i].substr(1, targets[i].size() - 1));
+		Client	*receiver = Server::getClient(targets[i]);
 
 		// ERR_NOSUCHNICK
 		if (!channel && !receiver) {

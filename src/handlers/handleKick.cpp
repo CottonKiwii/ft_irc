@@ -2,7 +2,8 @@
 
 void handleKick(Client &sender, Command &command) {
 	if (sender.getRegisterStatus() == false) {
-		Server::disconnectClient(sender.getFd(), "unauthorised");
+		sender.setIsConnected(false);
+		sender.addToResponse(ERROR_CLOSINGLINK("unauthorised"));
 		return ;
 	}
 	if (command.getArgs().size() < 3) {
@@ -10,12 +11,12 @@ void handleKick(Client &sender, Command &command) {
 		return ;
 	}
 	
-	Channel	*channel = Server::getChannelByName(command.getArgs()[1]);
+	Channel	*channel = Server::getChannel(command.getArgs()[1]);
 	if (!channel) {
 		sender.addToResponse(ERR_NOSUCHCHANNEL(command.getArgs()[1]));
 		return ;
 	}
-	Client	*reciever = Server::getClientByNick(command.getArgs()[2]);
+	Client	*reciever = Server::getClient(command.getArgs()[2]);
 	if (!reciever || channel->isClientMember(reciever->getFd())) {
 		sender.addToResponse(ERR_USERNOTINCHANNEL(command.getArgs()[2], (*channel)));
 		return ;

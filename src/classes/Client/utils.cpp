@@ -40,6 +40,25 @@ void	Client::flushResponse() {
 	_response.clear();
 }
 
+void	Client::logConnect() {
+	std::cout
+	<< "["
+	<< _fd
+	<< ": connection established]"
+	<< std::endl;
+}
+
+void	Client::logDisconnect() {
+	std::cout
+	<< "["
+	<< (_nick.empty() ? "" : _nick)
+	<< (_nick.empty() ? "" : " (")
+	<< _fd
+	<< (_nick.empty() ? "" : ")")
+	<< ": disconnected] "
+	<< std::endl;
+}
+
 void	Client::logCommand(Command &command) {
 	std::cout 
 	<< "["
@@ -47,7 +66,7 @@ void	Client::logCommand(Command &command) {
 	<< (_nick.empty() ? "" : " (")
 	<< _fd
 	<< (_nick.empty() ? "" : ")")
-	<< ": in] ";
+	<< ": in]";
 	for (size_t i = 0; i < command.getArgs().size(); i++)
 		std::cout << " " << command.getArgs()[i];
 	std::cout << std::endl;
@@ -69,21 +88,13 @@ void	Client::logResponse() {
 		std::cout << logPrefix << responseLine << std::endl;
 }
 
-void	Client::connectLog() {
-	std::cout
-	<< "["
-	<< _fd
-	<< ": connection established]"
-	<< std::endl;
-}
-
-void	Client::disconnectLog() {
-	std::cout
+void	Client::logUnhandled() {
+	std::cout 
 	<< "["
 	<< (_nick.empty() ? "" : _nick)
 	<< (_nick.empty() ? "" : " (")
 	<< _fd
 	<< (_nick.empty() ? "" : ")")
-	<< ": disconnected] "
-	<< std::endl;
+	<< ": server] Command is recognized but unhandled";
+	std::cout << std::endl;
 }

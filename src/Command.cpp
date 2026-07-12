@@ -27,8 +27,7 @@ std::vector<std::string>	Command::getArgs() const { return _args;}
 e_command	Command::getType(std::string rawType) {
 	static std::map<std::string, e_command> types;
 	
-	if (types.size() != 13) {
-		types["CAP"] = CAP;
+	if (types.size() != 37) {
 		types["PASS"] = PASS;
 		types["NICK"] = NICK;
 		types["USER"] = USER;
@@ -41,6 +40,31 @@ e_command	Command::getType(std::string rawType) {
 		types["MODE"] = MODE;
 		types["PRIVMSG"] = PRIVMSG;
 		types["NOTICE"] = NOTICE;
+		types["CAP"] = UNHANDLED;
+		types["AUTHENTICATE"] = UNHANDLED;
+		types["OPER"] = UNHANDLED;
+		types["ERROR"] = UNHANDLED;
+		types["NAMES"] = UNHANDLED;
+		types["MOTD"] = UNHANDLED;
+		types["VERSION"] = UNHANDLED;
+		types["ADMIN"] = UNHANDLED;
+		types["CONNECT"] = UNHANDLED;
+		types["LUSERS"] = UNHANDLED;
+		types["TIME"] = UNHANDLED;
+		types["STATS"] = UNHANDLED;
+		types["HELP"] = UNHANDLED;
+		types["INFO"] = UNHANDLED;
+		types["WHO"] = UNHANDLED;
+		types["WHOIS"] = UNHANDLED;
+		types["WHOWAS"] = UNHANDLED;
+		types["KILL"] = UNHANDLED;
+		types["REHASH"] = UNHANDLED;
+		types["RESTART"] = UNHANDLED;
+		types["SQUIT"] = UNHANDLED;
+		types["AWAY"] = UNHANDLED;
+		types["LINKS"] = UNHANDLED;
+		types["USERHOST"] = UNHANDLED;
+		types["WALLOPS"] = UNHANDLED;
 	}
 
 	std::map<std::string, e_command>::iterator it = types.find(rawType);

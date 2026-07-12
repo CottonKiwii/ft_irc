@@ -20,7 +20,7 @@ Client *Server::getClient(std::string nickname)
 void	Server::disconnectClient(int fd) {
 	size_t	socketIdx = 0;
 	Client	*client = Server::getClient(fd);
-	client->disconnectLog();
+	client->logDisconnect();
 	
 	for (; Server::_sockets[socketIdx].fd != fd; socketIdx++) {}
 	

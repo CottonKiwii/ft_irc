@@ -1,4 +1,3 @@
-
 #include "irc.hpp"
 #include <sstream>
 

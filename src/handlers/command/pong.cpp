@@ -1,4 +1,3 @@
-
 #include "irc.hpp"
 
 void handlePong(Client &sender, Command &command) {

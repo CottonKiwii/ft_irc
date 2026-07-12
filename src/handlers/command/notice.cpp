@@ -1,4 +1,3 @@
-
 #include "irc.hpp"
 
 /* only difference to privmsg is that automatic replies

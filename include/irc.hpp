@@ -20,7 +20,7 @@
 # include "Client.hpp"
 # include "Command.hpp"
 # include "Server.hpp"
-# include "Handlers.hpp"
+# include "handlers/command.hpp"
 # include "modeHandlers.hpp"
 # include "privmsgHandlers.hpp"
 
@@ -77,6 +77,9 @@
 												+ " :End of /NAMES list.\n"
 
 // GENERAL ERRORS
+# define ERR_UNKNOWNCOMMAND(commandName)		":localhost 421 " \
+												+ commandName \
+												+ " :Unknown command\n"
 # define ERR_NEEDMOREPARAMS(client)				":localhost 461 " + client.getNick() \
 												+ " :Not enough parameters\n"
 # define ERR_ALREADYREGISTERED(client)			":localhost 462 " + client.getNick() \

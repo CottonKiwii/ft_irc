@@ -1,11 +1,7 @@
 #include "Channel.hpp"
 #include "Server.hpp"
 #include <algorithm>
-#include <iostream>
 #include <sstream>
-
-Channel::Channel() {};
-Channel::~Channel() {};
 
 std::string	Channel::getName() const { return _name; }
 std::string	Channel::getTopic() const { return _topic; }
@@ -18,30 +14,6 @@ void		Channel::setKey(std::string key) { _key = key; }
 void		Channel::setMemberLimit(size_t limit) { _memberLimit = limit; }
 void		Channel::setInviteOnly(bool status) { _mode._inviteOnly = status; }
 void		Channel::setProtectedTopic(bool status) { _mode._protectedTopic = status ;}
-
-Channel::Channel(Client &creator, std::string name):
-	_name(name),
-	_topic(""),
-	_createdTimestamp(std::time(0)),
-	_memberLimit(0)
-{
-	_members.push_back(creator.getFd());
-	_operators.push_back(creator.getFd());
-	_mode._protectedTopic = true;
-}
-
-Channel::Channel(const Channel &other) {
-	if (this != &other) {
-		_members = other._members;
-		_operators = other._operators;
-		_name = other._name;
-		_topic = other._topic;
-		_key = other._key;
-		_createdTimestamp = other._createdTimestamp;
-		_mode = other._mode;
-		_memberLimit = other._memberLimit;
-	}
-}
 
 std::string	Channel::getNames() const {
 	std::string res;
@@ -84,6 +56,7 @@ std::string Channel::getModeArgs() const {
 		return ("");
 	return (res);
 }
+
 std::string Channel::getCreationTime() const {
 	std::string res;
 	std::stringstream tokens;
@@ -130,6 +103,10 @@ void	Channel::removeOp(int fd) {
 		_operators.erase(it);
 }
 
+bool	Channel::isEmpty() const {
+	return (_members.size() == 0);
+}
+
 bool	Channel::isFull() const {
 	return (_members.size() == _memberLimit);
 }
@@ -150,6 +127,17 @@ bool	Channel::isClientOp(int fd) const {
 	return (false);
 }
 
+bool	Channel::hasMode(char mode) const
+{
+	std::string modestr = getModestring();
+
+	for (size_t i = 0; i < modestr.size(); i++) {
+		if (modestr[i] == mode)
+			return (true);
+	}
+	return (false);
+}
+
 bool	Channel::verifyName(std::string rawName) {
 	if (rawName.size() < 2 || rawName.size() > 200)
 		return (false);
@@ -160,15 +148,4 @@ bool	Channel::verifyName(std::string rawName) {
 			return (false);
 	}
 	return (true);
-}
-
-bool	Channel::hasMode(char mode) const
-{
-	std::string modestr = getModestring();
-
-	for (size_t i = 0; i < modestr.size(); i++) {
-		if (modestr[i] == mode)
-			return (true);
-	}
-	return (false);
 }

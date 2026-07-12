@@ -92,7 +92,7 @@ void	Server::acceptNewClient(void) {
 	Server::_sockets.push_back(newSocket);
 	Client newClient(newSocket.fd, inet_ntoa(newAddr.sin_addr));
 	Server::_clients.push_back(newClient);
-	newClient.connectLog();
+	newClient.logConnect();
 }
 
 void	Server::handleNewData(int fd) {
@@ -117,6 +117,14 @@ void	Server::handleNewData(int fd) {
 		client->flushResponse();
 		if (client->getIsConnected() == false)
 			disconnectClient(client->getFd());
+	}
+	for (
+		std::vector<Channel>::iterator chan = Server::_channels.begin();
+		chan != Server::_channels.end();
+		chan++) {
+		chan->updateMembers();
+		if (chan->isEmpty())
+			Server::_channels.erase(chan);
 	}
 }
 

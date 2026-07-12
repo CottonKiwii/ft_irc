@@ -11,8 +11,8 @@ class Client {
 		std::string	_ip;
 		std::string	_nick;
 		std::string	_name;
-		std::string _buff;
 
+		std::string _buff;
 		std::string	_response;
 
 		bool		_isConnected;
@@ -49,10 +49,15 @@ class Client {
 		void		addToBuff(std::string buff);
 		void		flushResponse();
 
-		void		connectLog();
-		void		disconnectLog();
+		void		logConnect();
+		void		logDisconnect();
 		void		logCommand(Command &command);
 		void		logResponse();
+		/**
+		 * For commands that are part of IRC protocol,
+		 * but not required by the subject
+		 */
+		void		logUnhandled();
 };
 
 #endif

@@ -6,7 +6,7 @@
 
 enum e_command {
 	UNKNOWN,
-	CAP,
+	UNHANDLED,
 	PASS,
 	NICK,
 	USER,

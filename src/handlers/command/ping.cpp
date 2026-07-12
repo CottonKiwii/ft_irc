@@ -1,4 +1,3 @@
-
 #include "irc.hpp"
 
 void handlePing(Client &sender, Command &command) {

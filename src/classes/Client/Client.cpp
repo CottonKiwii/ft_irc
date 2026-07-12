@@ -25,7 +25,6 @@ void		Client::handleCommands() {
 void		Client::handleCommand(Command &command) {
 	logCommand(command);
 	switch (command.getType()) {
-		case CAP: handleCap(*this, command); break ;
 		case PING: handlePing(*this, command); break ;
 		case PONG: handlePong(*this, command); break ;
 		case NICK: handleNick(*this, command); break ;
@@ -39,6 +38,7 @@ void		Client::handleCommand(Command &command) {
 		case TOPIC: handleTopic(*this, command); break ;
 		case NOTICE: handleNotice(*this, command); break ;
 		case PRIVMSG: handlePrivmsg(*this, command); break ;
+		case UNHANDLED: handleUnhandled(*this); break ;
 		default: handleUnknown(*this, command); break ;
 	}
 }

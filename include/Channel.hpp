@@ -41,6 +41,8 @@ class Channel {
 		void		setInviteOnly(bool status);
 		void		setProtectedTopic(bool status);
 
+		void		updateMembers();
+
 		std::string getNames() const;
 		/**
 		 * Will always have at least "+n" mode
@@ -59,6 +61,7 @@ class Channel {
 		void		addOp(int fd);
 		void		removeOp(int fd);
 	
+		bool		isEmpty() const;
 		bool		isFull() const;
 		bool		isClientMember(int fd) const;
 		bool		isClientOp(int fd) const;

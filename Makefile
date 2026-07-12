@@ -15,23 +15,24 @@ SRCS = classes/Server/Server \
 	   classes/Server/utils \
 	   classes/Client/Client \
 	   classes/Client/utils \
+	   classes/Channel/Channel \
+	   classes/Channel/utils \
 	   Command \
-	   Channel \
-	   handlers/handleCap \
-	   handlers/handleJoin \
-	   handlers/handleKick \
-	   handlers/handleMode \
-	   handlers/handleNick \
-	   handlers/handleNotice \
-	   handlers/handlePart \
-	   handlers/handlePass \
-	   handlers/handlePing \
-	   handlers/handlePong \
-	   handlers/handlePrivmsg \
-	   handlers/handleQuit \
-	   handlers/handleTopic \
-	   handlers/handleUnknown \
-	   handlers/handleUser \
+	   handlers/command/join \
+	   handlers/command/kick \
+	   handlers/command/mode \
+	   handlers/command/nick \
+	   handlers/command/notice \
+	   handlers/command/part \
+	   handlers/command/pass \
+	   handlers/command/ping \
+	   handlers/command/pong \
+	   handlers/command/privmsg \
+	   handlers/command/quit \
+	   handlers/command/topic \
+	   handlers/command/user \
+	   handlers/command/unknown \
+	   handlers/command/unhandled \
 	   privmsgHandlers/handleClientToClient \
 	   privmsgHandlers/handleClientToChannel \
 	   modeHandlers/modeUserUnknown \

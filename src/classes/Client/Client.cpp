@@ -3,7 +3,8 @@
 Client::Client(int fd, std::string ip):
 	_fd(fd),
 	_ip(ip),
-	_isConnected(true)
+	_isConnected(true),
+	_registered(false)
 {}
 Client::~Client() {}
 

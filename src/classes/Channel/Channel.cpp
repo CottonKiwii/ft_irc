@@ -11,6 +11,7 @@ Channel::Channel(Client &creator, std::string name):
 {
 	_members.push_back(creator.getFd());
 	_operators.push_back(creator.getFd());
+	_mode._inviteOnly = false;
 	_mode._protectedTopic = true;
 }
 Channel::Channel(const Channel &other):

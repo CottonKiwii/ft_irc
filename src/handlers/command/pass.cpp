@@ -13,6 +13,7 @@ void handlePass(Client &sender, Command &command) {
 
 	if (command.getArgs()[1] != Server::getPass()) {
 		sender.setPassGiven(false);
+		sender.addToResponse(ERR_PASSWDMISMATCH(sender));
 		return ;
 	}
 	sender.setPassGiven(true);

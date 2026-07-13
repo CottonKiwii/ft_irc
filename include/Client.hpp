@@ -21,6 +21,7 @@ class Client {
 
 	public:
 		Client(int fd, std::string ip);
+		Client(const Client &other);
 		~Client();
 
 		int			getFd() const;

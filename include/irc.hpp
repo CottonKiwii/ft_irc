@@ -103,9 +103,11 @@
 // NICKNAME ERRORS
 # define ERR_NONICKNAMEGIVEN(client)			":localhost 431 " + client.getNick() \
 												+ " :No nickname given\n"
-# define ERR_ERRONEUSNICKNAME(client, nick)		":localhost 432 " + client.getNick() + " " + nick \
+# define ERR_ERRONEUSNICKNAME(nick)				":localhost 432 " \
+												+ nick \
 												+ " :Erroneus nickname\n"
-# define ERR_NICKNAMEINUSE(client, nick)		":localhost 433 " + client.getNick() + " " + nick \
+# define ERR_NICKNAMEINUSE(nick)				":localhost 433 " \
+												+ nick \
 												+ " :Nickname is already in use\n"
 
 // CHANNEL ERRORS

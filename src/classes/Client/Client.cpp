@@ -3,9 +3,23 @@
 Client::Client(int fd, std::string ip):
 	_fd(fd),
 	_ip(ip),
+	_nick(""),
+	_name(""),
+	_buff(""),
+	_response(""),
 	_isConnected(true),
-	_registered(false)
-{}
+	_registered(false),
+	_passGiven(false) {}
+Client::Client(const Client &other):
+	_fd(other._fd),
+	_ip(other._ip),
+	_nick(other._nick),
+	_name(other._name),
+	_buff(other._buff),
+	_response(other._response),
+	_isConnected(other._isConnected),
+	_registered(other._registered),
+	_passGiven(other._passGiven) {}
 Client::~Client() {}
 
 void		Client::handleCommands() {

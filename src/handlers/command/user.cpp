@@ -3,7 +3,6 @@
 void handleUser(Client &sender, Command &command) {
 	if (sender.getPassGiven() == false) {
 		sender.setIsConnected(false);
-		sender.addToResponse(ERR_PASSWDMISMATCH(sender));
 		sender.addToResponse(ERROR_CLOSINGLINK("bad password"));
 		return ;
 	}

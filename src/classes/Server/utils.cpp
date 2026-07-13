@@ -29,6 +29,30 @@ void	Server::disconnectClient(int fd) {
 	Server::_clients.erase(Server::_clients.begin() + socketIdx - 1);
 }
 
+void	Server::flushClients() {
+	for (
+		std::vector<Client>::iterator client = Server::_clients.begin();
+		client != Server::_clients.end();
+		client++) {
+		client->flushResponse();
+	}
+}
+
+void	Server::disconnectClients() {
+	std::vector<int> fdsToDisconnect;
+
+	for (
+		std::vector<Client>::iterator client = Server::_clients.begin();
+		client != Server::_clients.end();
+		client++) {
+		if (client->getIsConnected() == false)
+			fdsToDisconnect.push_back(client->getFd());
+	}
+	for (size_t i = 0; i < fdsToDisconnect.size(); i++) {
+		disconnectClient(fdsToDisconnect[i]);
+	}
+}
+
 Channel	&Server::createChannel(Client &creator, std::string name) {
 	_channels.push_back(Channel(creator, name));
 	return (_channels.back());
@@ -39,4 +63,12 @@ Channel	*Server::getChannel(std::string name) {
 		if (Server::_channels[res].getName() == name)
 			return (&Server::_channels[res]);
 	return (NULL);
+}
+
+void	Server::updateChannels() {
+	for (size_t i = 0; i < _channels.size(); i++) {
+		_channels[i].updateMembers();
+		if (_channels[i].isEmpty())
+			_channels.erase(_channels.begin() + i);
+	}
 }

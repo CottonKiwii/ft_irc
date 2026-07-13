@@ -110,22 +110,9 @@ void	Server::handleNewData(int fd) {
 	client->addToBuff(buff);
 	if (client->commandsReady())
 			getClient(fd)->handleCommands();
-	for (
-		std::vector<Client>::iterator client = Server::_clients.begin();
-		client != Server::_clients.end();
-		client++) {
-		client->flushResponse();
-		if (client->getIsConnected() == false)
-			disconnectClient(client->getFd());
-	}
-	for (
-		std::vector<Channel>::iterator chan = Server::_channels.begin();
-		chan != Server::_channels.end();
-		chan++) {
-		chan->updateMembers();
-		if (chan->isEmpty())
-			Server::_channels.erase(chan);
-	}
+	Server::flushClients();
+	Server::disconnectClients();
+	Server::updateChannels();
 }
 
 void	Server::signalHandler(int signal) {

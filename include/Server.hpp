@@ -46,8 +46,13 @@ class Server {
 		static Client		*getClient(int fd);
 		static void			disconnectClient(int fd);
 
+		static void			flushClients();
+		static void			disconnectClients();
+
 		static Channel		&createChannel(Client &creator, std::string name);
 		static Channel		*getChannel(std::string name);
+
+		static void			updateChannels();
 
 		static void			signalHandler(int signal);
 };

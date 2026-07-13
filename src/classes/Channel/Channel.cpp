@@ -4,15 +4,18 @@
 Channel::Channel() {};
 Channel::~Channel() {};
 Channel::Channel(Client &creator, std::string name):
+	_members(),
+	_operators(),
 	_name(name),
 	_topic(""),
+	_key(""),
 	_createdTimestamp(std::time(0)),
 	_memberLimit(0)
 {
-	_members.push_back(creator.getFd());
-	_operators.push_back(creator.getFd());
 	_mode._inviteOnly = false;
 	_mode._protectedTopic = true;
+	_members.push_back(creator.getFd());
+	_operators.push_back(creator.getFd());
 }
 Channel::Channel(const Channel &other):
 	_members(other._members),

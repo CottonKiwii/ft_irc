@@ -7,15 +7,13 @@ void handlePing(Client &sender, Command &command) {
 		return ;
 	}
 	// ERR_NEEDMOREPARAMS
-	if (command.getArgs().empty()) {
+	if (command.getArgs().size() < 2) {
 		sender.addToResponse(ERR_NEEDMOREPARAMS(sender));
 		return ;
 	}
 
 	// RPL_PING
-	std::string response = RPL_PING
-		+ sender.getNick()
-		+ " :"
+	std::string response = CMD_PONG
 		+ command.getArgs()[1]
 		+ "\n";
 	sender.addToResponse(response);

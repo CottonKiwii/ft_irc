@@ -55,6 +55,7 @@ class Channel {
 		std::string	getCreationTime() const;
 
 		void		sendAll(std::string response);
+		void		sendAll(std::string response, int fdToIgnore);
 
 		void		addMember(int fd);
 		void		removeMember(int fd);

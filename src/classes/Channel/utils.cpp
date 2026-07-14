@@ -68,6 +68,23 @@ std::string Channel::getCreationTime() const {
 void	Channel::sendAll(std::string response) {
 	for (size_t i = 0; i < _members.size(); i++) {
 		Client *client = Server::getClient(_members[i]);
+		if (!client) {
+			this->removeMember(_members[i]);
+			continue ;
+		}
+		client->addToResponse(response);
+	}
+}
+
+void	Channel::sendAll(std::string response, int fdToIgnore) {
+	for (size_t i = 0; i < _members.size(); i++) {
+		Client *client = Server::getClient(_members[i]);
+		if (!client) {
+			this->removeMember(_members[i]);
+			continue ;
+		}
+		if (client->getFd() == fdToIgnore)
+			continue ;
 		client->addToResponse(response);
 	}
 }

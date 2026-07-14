@@ -51,6 +51,7 @@ class Server {
 
 		static Channel		&createChannel(Client &creator, std::string name);
 		static Channel		*getChannel(std::string name);
+		static void			sendToAllChannels(Client &sender, std::string msg);
 
 		static void			updateChannels();
 

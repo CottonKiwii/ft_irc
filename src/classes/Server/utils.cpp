@@ -65,6 +65,17 @@ Channel	*Server::getChannel(std::string name) {
 	return (NULL);
 }
 
+void	Server::sendToAllChannels(Client &sender, std::string msg) {
+	for (
+		std::vector<Channel>::iterator chan = Server::_channels.begin();
+		chan != _channels.end();
+		chan++
+	) {
+		if (chan->isClientMember(sender.getFd()))
+			chan->sendAll(msg, sender.getFd());
+	}
+}
+
 void	Server::updateChannels() {
 	for (size_t i = 0; i < _channels.size(); i++) {
 		_channels[i].updateMembers();

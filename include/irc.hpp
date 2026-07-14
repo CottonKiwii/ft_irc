@@ -168,8 +168,11 @@
 # define RPL_WELCOME							":localhost 001 "
 
 // CUSTOM IRC REPLIES
-# define RPL_PING								":localhost PONG :"
-# define RPL_QUIT								":localhost QUIT :"
+# define CMD_PING								":localhost PING "
+# define CMD_PONG								":localhost PONG "
+# define CMD_QUIT(source)						":" \
+												+source \
+												+ " QUIT"
 # define RPL_PRIVMSG							":localhost PRIVMSG :"
 
 #endif

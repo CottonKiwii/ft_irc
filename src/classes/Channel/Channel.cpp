@@ -42,12 +42,9 @@ Channel	&Channel::operator=(const Channel &other) {
 }
 
 void	Channel::updateMembers() {
-	for (
-		std::vector<int>::iterator it = _members.begin();
-		it != _members.end();
-		it++) {
-		Client	*client = Server::getClient(*it);
+	for (size_t i = 0; i < _members.size(); i++) {
+		Client	*client = Server::getClient(_members[i]);
 		if (!client)
-			removeMember(*it);
+			removeMember(_members[i]);
 	}
 }

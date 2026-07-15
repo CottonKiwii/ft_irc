@@ -53,11 +53,16 @@
 - [x] 474 ERR_BANNEDFROMCHAN (we don't implement bans)
 - [x] 475 ERR_BADCHANNELKEY
 - [x] 476 ERR_BADCHANMASK
-- [] 332 RPL_TOPIC
-- [] 333 RPL_TOPICWHOTIME
-- [] 353 RPL_NAMEREPLY
-- [] 366 RPL_ENDOFNAMES
+- [x] 332 RPL_TOPIC
+- [x] 333 RPL_TOPICWHOTIME (we don't implement this one)
+- [x] 353 RPL_NAMEREPLY
+- [x] 366 RPL_ENDOFNAMES
+- [x] joining several channels (create all)
+- [x] joining several channels (join all)
+- [x] joining several channels (join all with passwords)
+- [x] joining several channels (mixed)
 
+### [INVITE](https://modern.ircdocs.horse/#invite-message)
 
 ### [PART](https://modern.ircdocs.horse/#part-message)
 

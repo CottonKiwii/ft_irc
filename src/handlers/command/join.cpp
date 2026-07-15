@@ -1,14 +1,12 @@
 #include "irc.hpp"
 #include <queue>
 
-static void	handleJoinCreate(Client &creator, std::string name, std::string key) {
+static void	handleJoinCreate(Client &creator, std::string name) {
 	if (!Channel::verifyName(name)) {
 		creator.addToResponse(ERR_BADCHANMASK(creator, name));
 		return ;
 	}
 	Channel	&channel = Server::createChannel(creator, name);
-	if (!key.empty())
-		channel.setKey(key);
 	std::string response =	":"
 							+ creator.getPrefix()
 							+ " JOIN "
@@ -23,28 +21,38 @@ static void	handleJoinCreate(Client &creator, std::string name, std::string key)
 	creator.addToResponse(RPL_ENDOFNAMES(creator, channel));
 }
 
-static void	handleJoinExisting(Client &sender, std::string name, std::string key) {
+static bool	runChecksJoinExisting(
+	Client &sender,
+	Channel *channel,
+	std::string name,
+	std::string key) {
 	if (!Channel::verifyName(name)) {
 		sender.addToResponse(ERR_BADCHANMASK(sender, name));
-		return ;
+		return false;
 	}
-	Channel	*channel = Server::getChannel(name);
 	if (!channel) {
 		sender.addToResponse(ERR_NOSUCHCHANNEL(name));
-		return ;
+		return false;
 	}
 	if (!channel->getKey().empty() && key != channel->getKey()) {
 		sender.addToResponse(ERR_BADCHANNELKEY(sender, (*channel)));
-		return ;
+		return false;
 	}
 	if (channel->isFull()) {
 		sender.addToResponse(ERR_CHANNELISFULL(sender, (*channel)));
-		return ;
+		return false;
 	}
 	if (channel->getInviteOnly()) {
 		sender.addToResponse(ERR_INVITEONLYCHAN(sender, (*channel)));
-		return ;
+		return false;
 	}
+	return true;
+}
+
+static void	handleJoinExisting(Client &sender, std::string name, std::string key) {
+	Channel	*channel = Server::getChannel(name);
+	if (runChecksJoinExisting(sender, channel, name, key) == false)
+		return ;
 
 	channel->addMember(sender.getFd());
 
@@ -60,20 +68,25 @@ static void	handleJoinExisting(Client &sender, std::string name, std::string key
 	sender.addToResponse(RPL_ENDOFNAMES(sender, (*channel)));
 }
 
-void	handleJoin(Client &sender, Command &command) {
-	std::string				response;
-	std::queue<std::string>	channels;
-	std::queue<std::string>	keys;
+static bool	runChecksJoin(Client &sender, Command &command) {
 	if (sender.getRegisterStatus() == false) {
 		sender.setIsConnected(false);
 		sender.addToResponse(ERROR_CLOSINGLINK("unauthorised"));
-		return ;
+		return false ;
 	}
 
 	if (command.getArgs().size() < 2) {
 		sender.addToResponse(ERR_NEEDMOREPARAMS(sender));
-		return ;
+		return false ;
 	}
+	return true ;
+}
+
+void	handleJoin(Client &sender, Command &command) {
+	if (runChecksJoin(sender, command) == false)
+		return ;
+	std::queue<std::string>	channels;
+	std::queue<std::string>	keys;
 
 	std::istringstream	namesSplit(command.getArgs()[1]);
 	std::string			curName;
@@ -97,7 +110,7 @@ void	handleJoin(Client &sender, Command &command) {
 		channels.pop();
 		Channel *curChan = Server::getChannel(curChanName);
 		if (!curChan)
-			handleJoinCreate(sender, curChanName, curKeyName);
+			handleJoinCreate(sender, curChanName);
 		else
 			handleJoinExisting(sender, curChanName, curKeyName);
 	}

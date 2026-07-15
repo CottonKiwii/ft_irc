@@ -41,9 +41,8 @@ then open the Irssi client and connect to our programs port and password.
 ## Resources
 🚫 **No AI was used in the making of this project** 🚫
 
-Since IRC has a lot of different clients and servers, their protocols started to deviate more and more from the numeric protocols \
-that were originally set by IRC. While some of the protocols on these websites stayed the same and worked with our chosen client, \
-others didn't, so we had to find a source that suits the Irssi client.
+Since IRC has a lot of different clients and servers, their protocols started to deviate more and more from the numeric protocols that were originally set by IRC. \
+While some of the protocols on these websites stayed the same and worked with our chosen client, others didn't, so we had to find a source that suits the Irssi client.
 ### Most Reliable Source:
 https://www.alien.net.au/irc/irc2numerics.html
 ### Other Sources:

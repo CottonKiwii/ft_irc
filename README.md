@@ -23,7 +23,7 @@ For our implementation, the things required by the subject are the following:
 - Change/View the channel topic
 - Change the channel's mode
 ## Instructions
-- If Irssi (our client) is not installed on your device, install it based on your system requirements on [their website](https://irssi.org/download/).
+If Irssi (our client) is not installed on your device, install it based on your system requirements on [their website](https://irssi.org/download/).
 
 ### For regular compilation:
 - `make run` - run this project with default port and password

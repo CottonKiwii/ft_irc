@@ -23,15 +23,16 @@ For our implementation, the things required by the subject are the following:
 - Change/View the channel topic
 - Change the channel's mode
 ## Instructions
-If Irssi (our client) is not installed on your device, install it based on your system requirements on [their website](https://irssi.org/download/).
+❗ **If Irssi (our client) is not installed on your device, install it based on your system requirements on [their website](https://irssi.org/download/).**
 
-### For regular compilation:
+To run this program, you need to first run our ft_irc program, \
+then open the Irssi client and connect to our programs port and password.
+### For ft_irc compilation:
 - `make run` - run this project with default port and password
 - `make run ARGS="<port> <password>"` - run this project with specified port and password
 
+### For Irssi compilation:
 - `irssi` - run Irssi
-
-### For specified compilation:
 - `make client` - run Irssi with a default profile
 - `make client PROFILE="<profile name>"` - run Irssi with a selected profile
 

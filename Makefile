@@ -94,4 +94,8 @@ valgrind: ${NAME}
 		--track-fds=all \
 		./${NAME} ${ARGS}
 
+client: PROFILE=gridis
+client:
+	irssi --config=profiles/${PROFILE} -c localhost
+
 .PHONY: all clean fclean re run valgrind

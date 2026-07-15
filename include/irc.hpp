@@ -172,7 +172,7 @@
 # define CMD_PONG								":localhost PONG "
 # define CMD_QUIT(source)						":" \
 												+source \
-												+ " QUIT"
+												+ " QUIT :Quit"
 # define RPL_PRIVMSG							":localhost PRIVMSG :"
 
 #endif

@@ -9,10 +9,11 @@ void handleQuit(Client &sender, Command &command) {
 	std::string response = CMD_QUIT(sender.getPrefix());
 
 	if (command.getArgs().size() < 2) {
-		response += " :Client exiting from the network";
+		response += ": Client exiting from the network";
 	} else {
 		for (size_t i = 1; i < command.getArgs().size(); i++) {
-			response += " ";
+			if (i != 1)
+				response += " ";
 			response += command.getArgs()[i];
 		}
 	}

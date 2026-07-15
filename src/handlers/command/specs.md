@@ -29,22 +29,48 @@
 ## Connection commands
 
 ### [PING](https://modern.ircdocs.horse/#ping-message)
+
 - [x] 461 ERR_NEEDMOREPARAMS
 - [x] PONG reply
 
 ### [PONG](https://modern.ircdocs.horse/#pong-message)
+
 - [x] Doesn't need a reply or any handling really
+
 ### [QUIT](https://modern.ircdocs.horse/#quit-message)
+
+- [x] ":<prefix> QUIT :Quit: <reason>"
 
 ## Channel commands
 
 ### [JOIN](https://modern.ircdocs.horse/#join-message)
+
+- []
+
 ### [PART](https://modern.ircdocs.horse/#part-message)
+
+- []
+
 ### [KICK](https://modern.ircdocs.horse/#kick-message)
+
+- []
+
 ### [MODE](https://modern.ircdocs.horse/#mode-message)
+
+- []
+
 ### [TOPIC](https://modern.ircdocs.horse/#topic-message)
+
+- []
+
 
 ## Messaging commands
 
 ### [PRIVMSG](https://modern.ircdocs.horse/#privmsg-message)
+
+- []
+
 ### [NOTICE](https://modern.ircdocs.horse/#notice-message)
+
+- []
+

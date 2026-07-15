@@ -94,7 +94,7 @@ valgrind: ${NAME}
 		--track-fds=all \
 		./${NAME} ${ARGS}
 
-client: PROFILE=gridis
+client: PROFILE=${USER}
 client:
 	irssi --config=profiles/${PROFILE} -c localhost
 

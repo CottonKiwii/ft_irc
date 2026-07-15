@@ -173,6 +173,9 @@
 # define CMD_QUIT(source)						":" \
 												+source \
 												+ " QUIT :Quit"
+# define CMD_TOPIC(source)						":" \
+												+ source \
+												+ " TOPIC "
 # define RPL_PRIVMSG							":localhost PRIVMSG :"
 
 #endif

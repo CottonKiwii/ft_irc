@@ -45,7 +45,19 @@
 
 ### [JOIN](https://modern.ircdocs.horse/#join-message)
 
-- []
+- [x] 403 ERR_NOSUCHCHANNEL (channel either exists or will be created, don't know in which situation this one will be sent)
+- [x] 405 ERR_TOOMANYCHANNELS (we don't have a channel amount restriction)
+- [x] 461 ERR_NEEDMODEPARAMS
+- [x] 471 ERR_CHANNELISFULL
+- [x] 473 ERR_INVITEONLYCHAN
+- [x] 474 ERR_BANNEDFROMCHAN (we don't implement bans)
+- [x] 475 ERR_BADCHANNELKEY
+- [x] 476 ERR_BADCHANMASK
+- [] 332 RPL_TOPIC
+- [] 333 RPL_TOPICWHOTIME
+- [] 353 RPL_NAMEREPLY
+- [] 366 RPL_ENDOFNAMES
+
 
 ### [PART](https://modern.ircdocs.horse/#part-message)
 
@@ -61,7 +73,13 @@
 
 ### [TOPIC](https://modern.ircdocs.horse/#topic-message)
 
-- []
+- [x] 403 ERR_NOSUCHCHANNEL
+- [x] 442 ERR_NOTONCHANNEL
+- [x] 461 ERR_NEEDMOREPARAMS (if no params, just returns topic, don't know in which situaton this one will be sent)
+- [x] 482 ERR_CHANOPRIVSNEEDED
+- [x] 331 RPL_NOTOPIC (irssi doesn't actually send anything in case if it knows that there is no topic, but we handle notopic)
+- [x] 332 RPL_TOPIC
+- [] 333 RPL_TOPICWHOTIME
 
 
 ## Messaging commands

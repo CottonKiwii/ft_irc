@@ -27,17 +27,19 @@ std::vector<std::string>	Command::getArgs() const { return _args;}
 e_command	Command::getType(std::string rawType) {
 	static std::map<std::string, e_command> types;
 	
-	if (types.size() != 37) {
+	if (types.size() != 39) {
 		types["PASS"] = PASS;
 		types["NICK"] = NICK;
 		types["USER"] = USER;
-		types["QUIT"] = QUIT;
 		types["PING"] = PING;
 		types["PONG"] = PONG;
+		types["QUIT"] = QUIT;
 		types["JOIN"] = JOIN;
 		types["PART"] = PART;
 		types["KICK"] = KICK;
 		types["MODE"] = MODE;
+		types["TOPIC"] = TOPIC;
+		types["INVITE"] = INVITE;
 		types["PRIVMSG"] = PRIVMSG;
 		types["NOTICE"] = NOTICE;
 		types["CAP"] = UNHANDLED;

@@ -14,6 +14,7 @@ enum e_command {
 	PING,
 	PONG,
 	JOIN,
+	INVITE,
 	PART,
 	KICK,
 	TOPIC,

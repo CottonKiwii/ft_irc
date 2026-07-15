@@ -5,8 +5,7 @@ static void sendResponse(Client &sender, Channel &channel)
 {
 	std::string response;
 
-	response = ":localhost TOPIC :"
-		+ sender.getNick() + " "
+	response = CMD_TOPIC(sender.getPrefix())
 		+ channel.getName() + " :"
 		+ channel.getTopic()
 		+ "\n";
@@ -14,16 +13,14 @@ static void sendResponse(Client &sender, Channel &channel)
 }
 
 void handleTopic(Client &sender, Command &command) {
-	std::string topic;
-
-	Channel *channel = Server::getChannel(command.getArgs()[1]);
-
-
 	if (sender.getRegisterStatus() == false) {
 		sender.setIsConnected(false);
 		sender.addToResponse(ERROR_CLOSINGLINK("unauthorised"));
 		return ;
 	}
+
+	Channel *channel = Server::getChannel(command.getArgs()[1]);
+
 	//ERR_NOSUCHCHANNEL
 	if (!channel) {
 		sender.addToResponse(ERR_NOSUCHCHANNEL(command.getArgs()[1]));
@@ -52,16 +49,19 @@ void handleTopic(Client &sender, Command &command) {
 	}
 
 	// RESET TOPIC
-	if ((command.getArgs().size() == 3) && (command.getArgs()[2] == "")) {
-		channel->setTopic(NULL);
+	if ((command.getArgs().size() == 3) && (command.getArgs()[2] == ":")) {
+		channel->setTopic("");
 		sendResponse(sender, (*channel));
 		return ;
 	}
 
 	// SET TOPIC
-	for (size_t i = 2; i < command.getArgs().size(); i++)
-		topic += command.getArgs()[i] + " ";
-	topic.erase(topic.size() - 1);
+	std::string topic;
+	for (size_t i = 2; i < command.getArgs().size(); i++) {
+		topic += " " + command.getArgs()[i];
+		if (i == 2)
+			topic.erase(topic.begin(), topic.begin() + 2);
+	}
 	channel->setTopic(topic);
 	sendResponse(sender, (*channel));
 }

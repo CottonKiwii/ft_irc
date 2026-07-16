@@ -2,6 +2,7 @@
 #include "Server.hpp"
 #include <algorithm>
 #include <sstream>
+#include <iostream>
 
 std::string	Channel::getName() const { return _name; }
 std::string	Channel::getTopic() const { return _topic; }
@@ -139,7 +140,7 @@ bool	Channel::isEmpty() const {
 }
 
 bool	Channel::isFull() const {
-	return (_members.size() == _memberLimit);
+	return (_memberLimit ? _members.size() >= _memberLimit : false);
 }
 
 bool	Channel::isClientMember(int fd) const {

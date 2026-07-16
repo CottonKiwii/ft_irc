@@ -92,23 +92,24 @@
 
 ### [MODE](https://modern.ircdocs.horse/#mode-message)
 
-- [] User
+- [x] User
     - [x] 221 RPL_UMODEIS
     - [x] 401 ERR_NOSUCHNICK
     - [x] 501 ERR_UMODEUNKNOWNFLAG
     - [x] 502 ERR_USERSDONTMATCH
-    - [] ignore all existing flags
+    - [x] ignore all existing flags
 - [] Channel
-    - [] 324 RPL_CHANNELMODEIS
-    - [] 329 RPL_CREATIONTIME
-    - [] 403 ERR_NOSUCHCHANNEL
-    - [] 482 ERR_CHANOPRIVSNEEDED
-    - [] i - makes/unmakes channel invite-only
-    - [] t - makes/unmakes channel topic changable only by ops
-    - [] k - adds/removes channel key
-    - [] o - adds/removes channel op
-    - [] l - adds/removes channel member limit
-    - [] mix of add/remove commmands
+    - [x] 324 RPL_CHANNELMODEIS
+    - [x] 329 RPL_CREATIONTIME
+    - [x] 403 ERR_NOSUCHCHANNEL
+    - [x] 482 ERR_CHANOPRIVSNEEDED
+    - [x] i - makes/unmakes channel invite-only
+    - [x] t - makes/unmakes channel topic changable only by ops
+    - [x] k - adds/removes channel key
+    - [x] o - adds/removes channel op
+    - [x] l - adds/removes channel member limit
+    - [x] if mode needs arg but arg is not provided - (protocol) silently ignore and mode doesn't appear in response
+    - [x] mix of add/remove commmands (good enough)
 
 ### [TOPIC](https://modern.ircdocs.horse/#topic-message)
 
@@ -119,6 +120,8 @@
 - [x] 331 RPL_NOTOPIC (irssi doesn't actually send anything in case if it knows that there is no topic, but we handle notopic)
 - [x] 332 RPL_TOPIC
 - [x] 333 RPL_TOPICWHOTIME (we don't implement this one)
+- [x] topic should be changable only by ops by default
+- [x] topic should be changable by everyone if `t` flag is removed
 
 
 ## Messaging commands

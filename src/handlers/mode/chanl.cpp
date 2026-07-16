@@ -3,22 +3,18 @@
 
 bool	modeChanl(
 	Channel &channel,
-	Client &sender,
 	std::queue<std::string> &modeArgs,
 	char mod
 ) {
 	if (mod == '+') {
-		if (modeArgs.size() == 0) {
-			sender.addToResponse(ERR_NEEDMOREPARAMS(sender));
+		if (modeArgs.size() == 0)
 			return (false);
-		}
+
 		size_t	newLimit = std::atoi(modeArgs.front().c_str());
-		if (!newLimit) {
-			modeArgs.pop();
-			return (false);
-		}
-		channel.setMemberLimit(newLimit);
 		modeArgs.pop();
+		if (!newLimit)
+			return (false);
+		channel.setMemberLimit(newLimit);
 		return (true);
 	}
 	if (mod == '-') {

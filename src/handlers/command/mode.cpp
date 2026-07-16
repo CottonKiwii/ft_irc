@@ -1,12 +1,14 @@
 #include "irc.hpp"
 #include <queue>
 
-static std::string buildResponse(Client &sender,
-								 Channel &channel,
-								 std::string add,
-								 std::string remove,
-								 std::vector<std::string> opsToAdd,
-								 std::vector<std::string> opsToRemove) {
+static std::string buildResponse(
+	Client &sender,
+	Channel &channel,
+	std::string add,
+	std::string remove,
+	std::vector<std::string> opsToAdd,
+	std::vector<std::string> opsToRemove
+) {
 	std::string	res;
 	std::stringstream responseStream;
 	responseStream << ":";
@@ -83,7 +85,7 @@ static void	handleModeChannel(Client &sender, Command &command) {
 			case 't': outcome = modeChant(*channel, mod); break ;
 			case 'k': outcome = modeChank(*channel, sender, modeArgs, mod); break ;
 			case 'o': outcome = modeChano(*channel, sender, modeArgs, mod); break ;
-			case 'l': outcome = modeChanl(*channel, sender, modeArgs, mod); break ;
+			case 'l': outcome = modeChanl(*channel, modeArgs, mod); break ;
 			default: modeChanUnknown(sender, modestring[i]);
 		}
 		if (outcome) {
@@ -132,12 +134,15 @@ static void	handleModeClient(Client &sender, Command &command) {
 	}
 	
 	std::string	modestring = command.getArgs()[2];
-	char		mod = 0;
 	for (size_t i = 0; i < modestring.size(); i++) {
 		switch (modestring[i]) {
-			case '-': mod = '-'; break ;
-			case '+': mod = '+'; break ;
-			case 'i': modeUserUnhandled(sender); break ;
+			case '-': break ;
+			case '+': break ;
+			case 'i':
+			case 'o':
+			case 'O':
+			case 'r':
+			case 'w': modeUserUnhandled(sender); break ;
 			default:
 				modeUserUnknown(sender);
 		}

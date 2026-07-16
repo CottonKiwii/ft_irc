@@ -5,5 +5,5 @@ bool	modeChant(Channel &channel, char mod) {
 		channel.setProtectedTopic(true);
 	if (mod == '-')
 		channel.setProtectedTopic(false);
-	return (false);
+	return (true);
 }

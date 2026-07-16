@@ -43,7 +43,7 @@ void handleTopic(Client &sender, Command &command) {
 	}
 
 	// ERR_CHANOPRIVSNEEDED
-	if (!(channel->isClientOp(sender.getFd()) && channel->hasMode('t'))) {
+	if (channel->isClientOp(sender.getFd()) == false && channel->hasMode('t')) {
 		sender.addToResponse(ERR_CHANOPRIVSNEEDED(sender, (*channel)));
 		return ;
 	}

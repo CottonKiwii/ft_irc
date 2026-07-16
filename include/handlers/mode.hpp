@@ -30,9 +30,9 @@ bool	modeChano(
 );
 bool	modeChanl(
 	Channel &channel,
-	Client &sender,
 	std::queue<std::string> &modeArgs,
-	char mod);
+	char mod
+);
 void	modeChanUnknown(Client &sender, char mode);
 void	modeChanUnhandled(Client &sender);
 

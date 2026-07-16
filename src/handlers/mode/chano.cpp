@@ -7,15 +7,13 @@ bool	modeChano(
 	char mod
 ) {
 	if (mod == '+') {
-		if (modeArgs.size() == 0) {
-			sender.addToResponse(ERR_NEEDMOREPARAMS(sender));
+		if (modeArgs.size() == 0)
 			return (false);
-		}
-		std::string newOpNick = modeArgs.front();
-		Client		*newOp = Server::getClient(newOpNick);
+
+		Client		*newOp = Server::getClient(modeArgs.front());
 		if (!newOp) {
+			sender.addToResponse(ERR_NOSUCHNICK(sender, modeArgs.front()));
 			modeArgs.pop();
-			sender.addToResponse(ERR_NOSUCHNICK(sender, newOpNick));
 			return (false);
 		}
 		if (!channel.isClientMember(newOp->getFd())) {
@@ -26,18 +24,17 @@ bool	modeChano(
 		if (newOp->getFd() == sender.getFd())
 			return (false);
 		channel.addOp(newOp->getFd());
+
 		return (true);
 	}
 	if (mod == '-') {
-		if (modeArgs.size() == 0) {
-			sender.addToResponse(ERR_NEEDMOREPARAMS(sender));
+		if (modeArgs.size() == 0)
 			return (false);
-		}
-		std::string opNick = modeArgs.front();
-		Client		*op = Server::getClient(opNick);
+
+		Client		*op = Server::getClient(modeArgs.front());
 		if (!op) {
+			sender.addToResponse(ERR_NOSUCHNICK(sender, modeArgs.front()));
 			modeArgs.pop();
-			sender.addToResponse(ERR_NOSUCHNICK(sender, opNick));
 			return (false);
 		}
 		if (!channel.isClientMember(op->getFd())) {
@@ -46,6 +43,7 @@ bool	modeChano(
 			return (false);
 		}
 		channel.removeOp(op->getFd());
+
 		return (true);
 	}
 	return (false);

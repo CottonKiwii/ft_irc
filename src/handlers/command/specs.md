@@ -64,6 +64,15 @@
 
 ### [INVITE](https://modern.ircdocs.horse/#invite-message)
 
+- [x] 461 ERR_NEEDMOREPARAMS
+- [x] 401 ERR_NOSUCHNICK
+- [x] 403 ERR_NOSUCHCHANNEL
+- [x] 442 ERR_NOTONCHANNEL
+- [x] 443 ERR_USERONCHANNEL
+- [x] 482 ERR_CHANOPRIVSNEEDED
+- [x] 341 RPL_INVITING
+- [x] ":<prefix> INVITE <nick> <channel>" to invitee
+
 ### [PART](https://modern.ircdocs.horse/#part-message)
 
 - []
@@ -84,7 +93,7 @@
 - [x] 482 ERR_CHANOPRIVSNEEDED
 - [x] 331 RPL_NOTOPIC (irssi doesn't actually send anything in case if it knows that there is no topic, but we handle notopic)
 - [x] 332 RPL_TOPIC
-- [] 333 RPL_TOPICWHOTIME
+- [x] 333 RPL_TOPICWHOTIME (we don't implement this one)
 
 
 ## Messaging commands

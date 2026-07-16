@@ -120,6 +120,20 @@ void	Channel::removeOp(int fd) {
 		_operators.erase(it);
 }
 
+void	Channel::addInvited(int fd) {
+	std::vector<int>::iterator it =
+		std::find(_invited.begin(), _invited.end(), fd);
+	if (it == _invited.end())
+		_invited.push_back(fd);
+}
+
+void	Channel::removeInvited(int fd) {
+	std::vector<int>::iterator it = 
+		std::find(_invited.begin(), _invited.end(), fd);
+	if (it != _invited.end())
+		_invited.erase(it);
+}
+
 bool	Channel::isEmpty() const {
 	return (_members.size() == 0);
 }
@@ -140,6 +154,14 @@ bool	Channel::isClientOp(int fd) const {
 	std::vector<int>::const_iterator it =
 		std::find(_operators.begin(), _operators.end(), fd);
 	if (it != _operators.end())
+		return (true);
+	return (false);
+}
+
+bool	Channel::isClientInvited(int fd) const {
+	std::vector<int>::const_iterator it =
+		std::find(_invited.begin(), _invited.end(), fd);
+	if (it != _invited.end())
 		return (true);
 	return (false);
 }

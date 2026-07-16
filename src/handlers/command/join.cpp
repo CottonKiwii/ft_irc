@@ -42,7 +42,7 @@ static bool	runChecksJoinExisting(
 		sender.addToResponse(ERR_CHANNELISFULL(sender, (*channel)));
 		return false;
 	}
-	if (channel->getInviteOnly()) {
+	if (channel->getInviteOnly() && !channel->isClientInvited(sender.getFd())) {
 		sender.addToResponse(ERR_INVITEONLYCHAN(sender, (*channel)));
 		return false;
 	}
@@ -53,6 +53,9 @@ static void	handleJoinExisting(Client &sender, std::string name, std::string key
 	Channel	*channel = Server::getChannel(name);
 	if (runChecksJoinExisting(sender, channel, name, key) == false)
 		return ;
+
+	if (channel->isClientInvited(sender.getFd()))
+		channel->removeInvited(sender.getFd());
 
 	channel->addMember(sender.getFd());
 

@@ -13,6 +13,7 @@ void	handleNick(Client &sender, Command &command);
 void	handleUser(Client &sender, Command &command);
 
 void	handleJoin(Client &sender, Command &command);
+void	handleInvite(Client &sender, Command &command);
 void	handlePart(Client &sender, Command &command);
 void	handleKick(Client &sender, Command &command);
 void	handleTopic(Client &sender, Command &command);

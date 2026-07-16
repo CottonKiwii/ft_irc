@@ -6,6 +6,7 @@ Channel::~Channel() {};
 Channel::Channel(Client &creator, std::string name):
 	_members(),
 	_operators(),
+	_invited(),
 	_name(name),
 	_topic(""),
 	_key(""),
@@ -20,6 +21,7 @@ Channel::Channel(Client &creator, std::string name):
 Channel::Channel(const Channel &other):
 	_members(other._members),
 	_operators(other._operators),
+	_invited(other._invited),
 	_name(other._name),
 	_topic(other._topic),
 	_key(other._key),
@@ -31,6 +33,7 @@ Channel	&Channel::operator=(const Channel &other) {
 	if (this != &other) {
 		_members = other._members;
 		_operators = other._operators;
+		_invited = other._invited;
 		_name = other._name;
 		_topic = other._topic;
 		_key = other._key;

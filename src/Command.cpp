@@ -35,11 +35,11 @@ e_command	Command::getType(std::string rawType) {
 		types["PONG"] = PONG;
 		types["QUIT"] = QUIT;
 		types["JOIN"] = JOIN;
+		types["INVITE"] = INVITE;
 		types["PART"] = PART;
 		types["KICK"] = KICK;
 		types["MODE"] = MODE;
 		types["TOPIC"] = TOPIC;
-		types["INVITE"] = INVITE;
 		types["PRIVMSG"] = PRIVMSG;
 		types["NOTICE"] = NOTICE;
 		types["CAP"] = UNHANDLED;

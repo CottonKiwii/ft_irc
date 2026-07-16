@@ -56,6 +56,13 @@
 												+ " :" \
 												+ channel.getTopic() \
 												+ "\n"
+# define RPL_INVITING(s, i, channel)			":localhost 341 " \
+												+ s.getNick() \
+												+ " "\
+												+ i.getNick() \
+												+ " "\
+												+ channel.getName() \
+												+ "\n"
 /**
  * No @ or * options for privacy of the channel
  * because according to subject all the channels
@@ -119,6 +126,11 @@
 # define ERR_NOTONCHANNEL(channel)				":localhost 442 " \
 												+ channel.getName() \
 												+ " :You are not on channel\n"
+# define ERR_USERONCHANNEL(client, channel)		":localhost 443 " \
+												+ client.getNick() \
+												+ " "\
+												+ channel.getName() \
+												+ " :User is already on channel\n"
 # define ERR_KEYSET(channel)					":localhost 467 " \
 												+ channel.getName() \
 												+ " :Channel key is already set\n"
@@ -146,7 +158,7 @@
 												+ client.getNick() \
 												+ " " \
 												+ name \
-												+ " :Invalid channel name\n"
+												+ " :Invalid channel name)\n"
 # define ERR_CHANOPRIVSNEEDED(client, channel)	":localhost 482 " \
 												+ client.getNick() \
 												+ " " \

@@ -51,6 +51,7 @@ void		Client::handleCommand(Command &command) {
 		case QUIT: handleQuit(*this, command); break ;
 		case MODE: handleMode(*this, command); break ;
 		case TOPIC: handleTopic(*this, command); break ;
+		case INVITE: handleInvite(*this, command); break ;
 		case NOTICE: handleNotice(*this, command); break ;
 		case PRIVMSG: handlePrivmsg(*this, command); break ;
 		case UNHANDLED: handleUnhandled(*this); break ;

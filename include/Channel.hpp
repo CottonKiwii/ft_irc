@@ -14,6 +14,7 @@ class Channel {
 	private:
 		std::vector<int>	_members;
 		std::vector<int>	_operators;
+		std::vector<int>	_invited;
 		std::string			_name;
 		std::string			_topic;
 		std::string			_key;
@@ -61,11 +62,14 @@ class Channel {
 		void		removeMember(int fd);
 		void		addOp(int fd);
 		void		removeOp(int fd);
+		void		addInvited(int fd);
+		void		removeInvited(int fd);
 	
 		bool		isEmpty() const;
 		bool		isFull() const;
 		bool		isClientMember(int fd) const;
 		bool		isClientOp(int fd) const;
+		bool		isClientInvited(int fd) const;
 		bool		hasMode(char mode) const;
 		bool		hasModes() const;
 

@@ -1,4 +1,4 @@
-#include "modeHandlers.hpp"
+#include "handlers/mode.hpp"
 
 bool	modeChant(Channel &channel, char mod) {
 	if (mod == '+')

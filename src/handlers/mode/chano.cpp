@@ -1,10 +1,11 @@
-#include "modeHandlers.hpp"
 #include "irc.hpp"
 
-bool	modeChano(Channel &channel,
-						Client &sender,
-						std::queue<std::string> modeArgs,
-						char mod) {
+bool	modeChano(
+	Channel &channel,
+	Client &sender,
+	std::queue<std::string> &modeArgs,
+	char mod
+) {
 	if (mod == '+') {
 		if (modeArgs.size() == 0) {
 			sender.addToResponse(ERR_NEEDMOREPARAMS(sender));

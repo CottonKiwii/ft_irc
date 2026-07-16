@@ -1,5 +1,5 @@
-#ifndef HANDLERSMODE_HPP
-# define HANDLERSMODE_HPP
+#ifndef MODEHANDLERS_HPP
+# define MODEHANDLERS_HPP
 
 # include "Client.hpp"
 # include "Channel.hpp"
@@ -11,23 +11,29 @@
  * but actual functionality of it is not required by
  * the subject
  */
-void	modeUseri(Client &sender, char mod, char mode);
+void	modeUserUnhandled(Client &sender);
 void	modeUserUnknown(Client &sender);
 
 bool	modeChani(Channel &channel, char mod);
 bool	modeChant(Channel &channel, char mod);
-bool	modeChank(Channel &channel, 
-						Client &sender,
-						std::queue<std::string> modeArgs,
-						char mod);
-bool	modeChano(Channel &channel,
-						Client &sender,
-						std::queue<std::string> modeArgs,
-						char mod);
-bool	modeChanl(Channel &channel,
-						Client &sender,
-						std::queue<std::string> modeArgs,
-						char mod);
-void			modeChanUnknown(Client &sender, char mode);
+bool	modeChank(
+	Channel &channel, 
+	Client &sender,
+	std::queue<std::string> &modeArgs,
+	char mod
+);
+bool	modeChano(
+	Channel &channel,
+	Client &sender,
+	std::queue<std::string> &modeArgs,
+	char mod
+);
+bool	modeChanl(
+	Channel &channel,
+	Client &sender,
+	std::queue<std::string> &modeArgs,
+	char mod);
+void	modeChanUnknown(Client &sender, char mode);
+void	modeChanUnhandled(Client &sender);
 
 #endif

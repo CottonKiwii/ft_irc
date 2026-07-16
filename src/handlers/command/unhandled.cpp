@@ -1,5 +1,5 @@
 #include "irc.hpp"
 
 void handleUnhandled(Client &sender) {
-	sender.logUnhandled();
+	sender.logUnhandledCommand();
 }

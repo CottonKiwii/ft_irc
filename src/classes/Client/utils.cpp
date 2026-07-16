@@ -88,13 +88,25 @@ void	Client::logResponse() {
 		std::cout << logPrefix << responseLine << std::endl;
 }
 
-void	Client::logUnhandled() {
+void	Client::logUnhandledCommand() {
 	std::cout 
 	<< "["
 	<< (_nick.empty() ? "" : _nick)
 	<< (_nick.empty() ? "" : " (")
 	<< _fd
 	<< (_nick.empty() ? "" : ")")
-	<< ": server] Command is recognized but unhandled";
-	std::cout << std::endl;
+	<< ": server] Command is recognized but unhandled"
+	<< std::endl;
+}
+
+void	Client::logUnhandledMode() {
+	std::cout 
+	<< "["
+	<< (_nick.empty() ? "" : _nick)
+	<< (_nick.empty() ? "" : " (")
+	<< _fd
+	<< (_nick.empty() ? "" : ")")
+	<< ": server] Mode is recognized but unhandled"
+	<< std::endl;
+
 }

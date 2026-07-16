@@ -1,6 +1,5 @@
 #include "irc.hpp"
 #include <queue>
-#include "modeHandlers.hpp"
 
 static std::string buildResponse(Client &sender,
 								 Channel &channel,
@@ -138,7 +137,7 @@ static void	handleModeClient(Client &sender, Command &command) {
 		switch (modestring[i]) {
 			case '-': mod = '-'; break ;
 			case '+': mod = '+'; break ;
-			case 'i': modeUseri(sender, mod, 'i'); break ;
+			case 'i': modeUserUnhandled(sender); break ;
 			default:
 				modeUserUnknown(sender);
 		}

@@ -34,16 +34,17 @@ SRCS = classes/Server/Server \
 	   handlers/command/notice \
 	   handlers/command/unknown \
 	   handlers/command/unhandled \
+	   handlers/mode/userUnknown \
+	   handlers/mode/userUnhandled \
+	   handlers/mode/chanUnknown \
+	   handlers/mode/chanUnhandled \
+	   handlers/mode/chani \
+	   handlers/mode/chant \
+	   handlers/mode/chank \
+	   handlers/mode/chano \
+	   handlers/mode/chanl \
 	   privmsgHandlers/handleClientToClient \
 	   privmsgHandlers/handleClientToChannel \
-	   modeHandlers/modeUserUnknown \
-	   modeHandlers/modeUseri \
-	   modeHandlers/modeChanUnknown \
-	   modeHandlers/modeChani \
-	   modeHandlers/modeChant \
-	   modeHandlers/modeChank \
-	   modeHandlers/modeChano \
-	   modeHandlers/modeChanl \
 
 
 OBJS = ${SRCS:%=${OBJS_DIR}/%.o}

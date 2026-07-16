@@ -21,7 +21,7 @@
 # include "Command.hpp"
 # include "Server.hpp"
 # include "handlers/command.hpp"
-# include "modeHandlers.hpp"
+# include "handlers/mode.hpp"
 # include "privmsgHandlers.hpp"
 
 // REPLIES

@@ -58,7 +58,12 @@ class Client {
 		 * For commands that are part of IRC protocol,
 		 * but not required by the subject
 		 */
-		void		logUnhandled();
+		void		logUnhandledCommand();
+		/**
+		 * For modes that are part of IRC protocol,
+		 * but not required by the subject
+		 */
+		void		logUnhandledMode();
 };
 
 #endif

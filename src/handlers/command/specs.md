@@ -93,10 +93,10 @@
 ### [MODE](https://modern.ircdocs.horse/#mode-message)
 
 - [] User
-    - [] 221 RPL_UMODEIS
-    - [] 401 ERR_NOSUCHNICK
-    - [] 501 ERR_UMODEUNKNOWNFLAG
-    - [] 502 ERR_USERSDONTMATCH
+    - [x] 221 RPL_UMODEIS
+    - [x] 401 ERR_NOSUCHNICK
+    - [x] 501 ERR_UMODEUNKNOWNFLAG
+    - [x] 502 ERR_USERSDONTMATCH
     - [] ignore all existing flags
 - [] Channel
     - [] 324 RPL_CHANNELMODEIS

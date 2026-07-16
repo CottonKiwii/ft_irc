@@ -1,10 +1,11 @@
-#include "modeHandlers.hpp"
 #include "irc.hpp"
 
-bool	modeChank(Channel &channel,
-						Client &sender,
-						std::queue<std::string> modeArgs,
-						char mod) {
+bool	modeChank(
+	Channel &channel,
+	Client &sender,
+	std::queue<std::string> &modeArgs,
+	char mod
+) {
 	if (mod == '+') {
 		if (!channel.getKey().empty()) {
 			sender.addToResponse(ERR_KEYSET(channel));

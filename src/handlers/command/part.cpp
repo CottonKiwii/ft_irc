@@ -2,6 +2,10 @@
 #include <sstream>
 
 static void	leaveChannel(Client &sender, Channel &channel, Command &command) {
+	if (channel.isClientMember(sender.getFd()) == false) {
+		sender.addToResponse(ERR_NOTONCHANNEL(channel));
+		return ;
+	}
 	std::string	response = ":"
 		+ sender.getPrefix()
 		+ " PART "

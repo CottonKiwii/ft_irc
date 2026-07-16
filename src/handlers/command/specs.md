@@ -75,10 +75,10 @@
 
 ### [PART](https://modern.ircdocs.horse/#part-message)
 
-- [] 403 ERR_NOSUCHCHANNEL
-- [] 442 ERR_NOTONCHANNEL
-- [] 461 ERR_NEEDMOREPARAMS
-- [] ":<prefix> PART <channel> [<reason>]" to channel members
+- [x] 403 ERR_NOSUCHCHANNEL
+- [x] 442 ERR_NOTONCHANNEL
+- [x] 461 ERR_NEEDMOREPARAMS
+- [x] ":<prefix> PART <channel> [<reason>]" to channel members
 
 ### [KICK](https://modern.ircdocs.horse/#kick-message)
 
@@ -98,7 +98,7 @@
     - [x] 501 ERR_UMODEUNKNOWNFLAG
     - [x] 502 ERR_USERSDONTMATCH
     - [x] ignore all existing flags
-- [] Channel
+- [x] Channel
     - [x] 324 RPL_CHANNELMODEIS
     - [x] 329 RPL_CREATIONTIME
     - [x] 403 ERR_NOSUCHCHANNEL

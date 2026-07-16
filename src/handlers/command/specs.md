@@ -75,15 +75,40 @@
 
 ### [PART](https://modern.ircdocs.horse/#part-message)
 
-- []
+- [] 403 ERR_NOSUCHCHANNEL
+- [] 442 ERR_NOTONCHANNEL
+- [] 461 ERR_NEEDMOREPARAMS
+- [] ":<prefix> PART <channel> [<reason>]" to channel members
 
 ### [KICK](https://modern.ircdocs.horse/#kick-message)
 
-- []
+- [] 403 ERR_NOSUCHCHANNEL
+- [] 441 ERR_USERNOTINCHANNEL
+- [] 442 ERR_NOTONCHANNEL
+- [] 461 ERR_NEEDMOREPARAMS
+- [] 482 ERR_CHANOPRIVSNEEDED
+- [] ":<prefix> KICK <channel> <nick> <reason>" to channel members
+    - [] when several people were kicked in one command, splits responses for each
 
 ### [MODE](https://modern.ircdocs.horse/#mode-message)
 
-- []
+- [] User
+    - [] 221 RPL_UMODEIS
+    - [] 401 ERR_NOSUCHNICK
+    - [] 501 ERR_UMODEUNKNOWNFLAG
+    - [] 502 ERR_USERSDONTMATCH
+    - [] ignore all existing flags
+- [] Channel
+    - [] 324 RPL_CHANNELMODEIS
+    - [] 329 RPL_CREATIONTIME
+    - [] 403 ERR_NOSUCHCHANNEL
+    - [] 482 ERR_CHANOPRIVSNEEDED
+    - [] i - makes/unmakes channel invite-only
+    - [] t - makes/unmakes channel topic changable only by ops
+    - [] k - adds/removes channel key
+    - [] o - adds/removes channel op
+    - [] l - adds/removes channel member limit
+    - [] mix of add/remove commmands
 
 ### [TOPIC](https://modern.ircdocs.horse/#topic-message)
 
@@ -100,9 +125,17 @@
 
 ### [PRIVMSG](https://modern.ircdocs.horse/#privmsg-message)
 
-- []
+- [] 301 RPL_AWAY
+- [] 401 ERR_NOSUCHNICK
+- [] 402 ERR_NOSUCHSERVER
+- [] 404 ERR_CANNOTSENDTOCHAN
+- [] 407 ERR_TOOMANYTARGETS
+- [] 411 ERR_NORECIPIENT
+- [] 412 ERR_NOEXTTOSEND
+- [] 413 ERR_NOTOPLEVEL
+- [] 414 ERR_WILDTOPLEVEL
 
 ### [NOTICE](https://modern.ircdocs.horse/#notice-message)
 
-- []
+- [] same thing as PRIVMSG but sends no reply
 

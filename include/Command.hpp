@@ -26,7 +26,6 @@ enum e_command {
 class Command {
 	private:
 		Command();
-		Command	&operator=(const Command &other);
 
 		e_command					_type;
 		std::vector<std::string>	_args;
@@ -36,6 +35,8 @@ class Command {
 		Command(const Command &other);
 		~Command();
 		
+		Command						&operator=(const Command &other);
+
 		int							getType() const;
 		std::vector<std::string>	getArgs() const;
 

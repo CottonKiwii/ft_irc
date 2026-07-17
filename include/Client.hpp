@@ -3,21 +3,24 @@
 
 # include "Command.hpp"
 # include <string>
+# include <queue>
 
 // TODO; make orthodox canonical (can shove unused into private)
 class Client {
 	private:
-		int			_fd;
-		std::string	_ip;
-		std::string	_nick;
-		std::string	_name;
+		int					_fd;
+		std::string			_ip;
+		std::string			_nick;
+		std::string			_name;
 
-		std::string _buff;
-		std::string	_response;
+		std::string			_buff;
+		std::string			_response;
 
-		bool		_isConnected;
-		bool		_registered;
-		bool		_passGiven;
+		std::queue<Command>	_commands;
+
+		bool				_isConnected;
+		bool				_registered;
+		bool				_passGiven;
 
 	public:
 		Client(int fd, std::string ip);
@@ -41,6 +44,7 @@ class Client {
 		void		setPassGiven(bool status);
 
 		bool		commandsReady();
+		void		createCommands();
 		void		handleCommands();
 		void		handleCommand(Command &command);
 

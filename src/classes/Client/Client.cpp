@@ -7,6 +7,7 @@ Client::Client(int fd, std::string ip):
 	_name(""),
 	_buff(""),
 	_response(""),
+	_commands(),
 	_isConnected(true),
 	_registered(false),
 	_passGiven(false) {}
@@ -17,23 +18,37 @@ Client::Client(const Client &other):
 	_name(other._name),
 	_buff(other._buff),
 	_response(other._response),
+	_commands(other._commands),
 	_isConnected(other._isConnected),
 	_registered(other._registered),
 	_passGiven(other._passGiven) {}
 Client::~Client() {}
 
-void		Client::handleCommands() {
+void	Client::createCommands() {
 	std::istringstream	commands(_buff);
-	_buff.clear();
 	std::string			rawCommand;
-	while (std::getline(commands, rawCommand, '\n') && _isConnected) {
-		while (rawCommand[rawCommand.size() - 1] == '\r'
-			|| rawCommand[rawCommand.size() - 1] == '\n')
-			rawCommand.erase(rawCommand.end() - 1);
-		if (rawCommand.size() == 0)
-			continue ;
-		Command command(rawCommand);
+
+	_buff.clear();
+	while (std::getline(commands, rawCommand)) {
+		if (rawCommand[rawCommand.size() - 1] == '\r')
+			rawCommand.erase(rawCommand.begin() + rawCommand.size() - 1);
+		if (commands.eof()
+			&& _buff[_buff.size() - 1] != '\n'
+			&& _buff[_buff.size() - 1] != '\r') {
+			_buff += rawCommand;
+			break ;
+		}
+		Command newCommand(rawCommand);
+		_commands.push(newCommand);
+	}
+}
+
+void	Client::handleCommands() {
+	createCommands();
+	while (_commands.size() && _isConnected) {
+		Command command = _commands.front();
 		handleCommand(command);
+		_commands.pop();
 	}
 }
 

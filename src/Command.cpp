@@ -16,10 +16,17 @@ Command::Command(std::string rawCommand) {
 
 Command::Command(const Command &other):
 	_type(other._type),
-	_args(other._args)
-{}
+	_args(other._args) {}
 
 Command::~Command() {}
+
+Command	&Command::operator=(const Command &other) {
+	if (this != &other) {
+		_type = other._type;
+		_args = other._args;
+	}
+	return (*this);
+}
 
 int							Command::getType() const { return _type; }
 std::vector<std::string>	Command::getArgs() const { return _args;}

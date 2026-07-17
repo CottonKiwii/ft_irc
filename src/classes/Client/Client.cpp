@@ -1,8 +1,7 @@
 #include "irc.hpp"
 
-Client::Client(int fd, std::string ip):
+Client::Client(int fd):
 	_fd(fd),
-	_ip(ip),
 	_nick(""),
 	_name(""),
 	_buff(""),
@@ -13,7 +12,6 @@ Client::Client(int fd, std::string ip):
 	_passGiven(false) {}
 Client::Client(const Client &other):
 	_fd(other._fd),
-	_ip(other._ip),
 	_nick(other._nick),
 	_name(other._name),
 	_buff(other._buff),

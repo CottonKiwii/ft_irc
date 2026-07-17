@@ -5,11 +5,9 @@
 # include <string>
 # include <queue>
 
-// TODO; make orthodox canonical (can shove unused into private)
 class Client {
 	private:
 		int					_fd;
-		std::string			_ip;
 		std::string			_nick;
 		std::string			_name;
 
@@ -23,12 +21,11 @@ class Client {
 		bool				_passGiven;
 
 	public:
-		Client(int fd, std::string ip);
+		Client(int fd);
 		Client(const Client &other);
 		~Client();
 
 		int			getFd() const;
-		std::string getIp() const;
 		std::string	getNick() const;
 		std::string	getName() const;
 		std::string	getHostname() const;

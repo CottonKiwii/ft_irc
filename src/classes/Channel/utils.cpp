@@ -1,8 +1,4 @@
-#include "Channel.hpp"
-#include "Server.hpp"
-#include <algorithm>
-#include <sstream>
-#include <iostream>
+#include "irc.hpp"
 
 std::string	Channel::getName() const { return _name; }
 std::string	Channel::getTopic() const { return _topic; }

@@ -1,7 +1,4 @@
-#include "Command.hpp"
-#include <sstream>
-#include <string>
-#include <map>
+#include "irc.hpp"
 
 Command::Command(std::string rawCommand) {
 	std::istringstream	split(rawCommand);

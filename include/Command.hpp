@@ -1,8 +1,8 @@
 #ifndef COMMAND_HPP
 # define COMMAND_HPP
 
-#include <string>
-#include <vector>
+# include <string>
+# include <vector>
 
 enum e_command {
 	UNKNOWN,

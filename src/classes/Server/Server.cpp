@@ -1,6 +1,4 @@
 #include "irc.hpp"
-#include <unistd.h>
-#include <signal.h>
 
 short					Server::Config::_port = 0;
 std::string				Server::Config::_pass;
@@ -23,6 +21,7 @@ void Server::init(char *args[3]) {
 
 	if (!(portToken >> Server::Config::_port))
 		throw (std::runtime_error(PORT_MSG));
+
 	signal(SIGINT, Server::signalHandler);
 	signal(SIGQUIT, Server::signalHandler);
 	Server::Config::_pass = args[2];
@@ -89,9 +88,11 @@ void	Server::acceptNewClient(void) {
 
 	newSocket.events = POLLIN;
 	newSocket.revents = 0;
+
 	Server::_sockets.push_back(newSocket);
-	Client newClient(newSocket.fd, inet_ntoa(newAddr.sin_addr));
+	Client newClient(newSocket.fd);
 	Server::_clients.push_back(newClient);
+
 	newClient.logConnect();
 }
 
@@ -107,9 +108,11 @@ void	Server::handleNewData(int fd) {
 		Server::disconnectClient(fd);
 		return ;
 	}
+
 	client->addToBuff(buff);
 	if (client->commandsReady())
 			getClient(fd)->handleCommands();
+
 	Server::flushClients();
 	Server::disconnectClients();
 	Server::updateChannels();

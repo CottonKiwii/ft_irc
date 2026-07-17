@@ -1,6 +1,5 @@
 #include "irc.hpp"
 
-std::string	Client::getIp() const { return _ip; }
 int			Client::getFd() const { return _fd; }
 std::string	Client::getNick() const { return _nick; }
 std::string	Client::getName() const { return _name; }
@@ -112,5 +111,4 @@ void	Client::logUnhandledMode() {
 	<< (_nick.empty() ? "" : ")")
 	<< ": server] Mode is recognized but unhandled"
 	<< std::endl;
-
 }

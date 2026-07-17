@@ -17,7 +17,7 @@ SRCS = classes/Server/Server \
 	   classes/Client/utils \
 	   classes/Channel/Channel \
 	   classes/Channel/utils \
-	   Command \
+	   classes/Command \
 	   handlers/command/pass \
 	   handlers/command/nick \
 	   handlers/command/user \

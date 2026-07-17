@@ -2,12 +2,16 @@
 # define IRC_HPP 
 
 # include <iostream>
+
+# include <sstream>
+# include <string>
+
+# include <algorithm>
+# include <map>
+
+# include <signal.h>
 # include <unistd.h>
 # include <string.h>
-# include <sstream>
-
-# include <string>
-# include <map>
 
 # include <sys/socket.h>
 # include <sys/types.h>
@@ -17,9 +21,10 @@
 # include <netinet/in.h>
 # include <asm-generic/socket.h>
 
+# include "Server.hpp"
 # include "Client.hpp"
 # include "Command.hpp"
-# include "Server.hpp"
+# include "Channel.hpp"
 # include "handlers/command.hpp"
 # include "handlers/mode.hpp"
 # include "privmsgHandlers.hpp"

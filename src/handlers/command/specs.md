@@ -128,17 +128,17 @@
 
 ### [PRIVMSG](https://modern.ircdocs.horse/#privmsg-message)
 
-- [] 301 RPL_AWAY
-- [] 401 ERR_NOSUCHNICK
-- [] 402 ERR_NOSUCHSERVER
-- [] 404 ERR_CANNOTSENDTOCHAN
-- [] 407 ERR_TOOMANYTARGETS
-- [] 411 ERR_NORECIPIENT
-- [] 412 ERR_NOEXTTOSEND
-- [] 413 ERR_NOTOPLEVEL
-- [] 414 ERR_WILDTOPLEVEL
+- [x] 301 RPL_AWAY (we don't implement this one)
+- [x] 401 ERR_NOSUCHNICK
+- [x] 402 ERR_NOSUCHSERVER (we don't implement this one)
+- [x] 404 ERR_CANNOTSENDTOCHAN
+- [x] 407 ERR_TOOMANYTARGETS (we don't implement this one)
+- [x] 411 ERR_NORECIPIENT (we don't really implement this one, text will be considered a user name)
+- [x] 412 ERR_NOEXTTOSEND
+- [x] 413 ERR_NOTOPLEVEL (we don't implement this one)
+- [x] 414 ERR_WILDTOPLEVEL (we don't implement this one)
 
 ### [NOTICE](https://modern.ircdocs.horse/#notice-message)
 
-- [] same thing as PRIVMSG but sends no reply
+- [x] same thing as PRIVMSG, actual thing would supress some stuff that we don't implement anyway
 

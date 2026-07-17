@@ -1,4 +1,3 @@
-
 #include "irc.hpp"
 
 void handleClientToClient(Client &sender, Client &receiver, Command &command)

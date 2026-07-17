@@ -101,8 +101,8 @@
 												+ chanName \
 												+ " :No such channel\n"
 
-# define ERR_CANNOTSENDTOCHAN(client, channel)		":localhost 404 " + client.getNick() \
-												+ " " + channel.getName() \
+# define ERR_CANNOTSENDTOCHAN(channel)			":localhost 404 " \
+												+ channel.getName() \
 												+ " :Cannot send to channel\n"
 # define ERR_NOTEXTTOSEND(client)				":localhost 412 " + client.getNick() \
 												+ " :No text to send"

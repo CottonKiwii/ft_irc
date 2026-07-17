@@ -43,8 +43,8 @@ SRCS = classes/Server/Server \
 	   handlers/mode/chank \
 	   handlers/mode/chano \
 	   handlers/mode/chanl \
-	   privmsgHandlers/handleClientToClient \
-	   privmsgHandlers/handleClientToChannel \
+	   handlers/msg/clientToClient \
+	   handlers/msg/clientToChannel \
 
 
 OBJS = ${SRCS:%=${OBJS_DIR}/%.o}

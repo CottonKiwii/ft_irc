@@ -82,13 +82,13 @@
 
 ### [KICK](https://modern.ircdocs.horse/#kick-message)
 
-- [] 403 ERR_NOSUCHCHANNEL
-- [] 441 ERR_USERNOTINCHANNEL
-- [] 442 ERR_NOTONCHANNEL
-- [] 461 ERR_NEEDMOREPARAMS
-- [] 482 ERR_CHANOPRIVSNEEDED
-- [] ":<prefix> KICK <channel> <nick> <reason>" to channel members
-    - [] when several people were kicked in one command, splits responses for each
+- [x] 403 ERR_NOSUCHCHANNEL
+- [x] 441 ERR_USERNOTINCHANNEL
+- [x] 442 ERR_NOTONCHANNEL
+- [x] 461 ERR_NEEDMOREPARAMS
+- [x] 482 ERR_CHANOPRIVSNEEDED
+- [x] ":<prefix> KICK <channel> <nick> <reason>" to channel members
+    - [x] when several people were kicked in one command, splits responses for each
 
 ### [MODE](https://modern.ircdocs.horse/#mode-message)
 

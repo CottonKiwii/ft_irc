@@ -65,7 +65,7 @@ ${NAME}: ${OBJS} obj/main.o
 		${CXX} ${CXXFLAGS} ${INCLUDE} $^ -o ${NAME}
 
 ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.cpp | ${OBJS_DIRS}
-		bear --append -- ${CXX} ${CXXFLAGS} ${INCLUDE} ${DEFINES} -c $< -o $@
+		${CXX} ${CXXFLAGS} ${INCLUDE} ${DEFINES} -c $< -o $@
 		
 ${OBJS_DIRS}:
 		mkdir -p $@
@@ -95,9 +95,5 @@ valgrind: ${NAME}
 		valgrind \
 		--track-fds=all \
 		./${NAME} ${ARGS}
-
-client: PROFILE=${USER}
-client:
-	irssi --config=profiles/${PROFILE} -c localhost
 
 .PHONY: all clean fclean re run valgrind

@@ -18,7 +18,6 @@ static void	leaveChannel(Client &sender, Channel &channel, Command &command) {
 			response += command.getArgs()[i];
 		}
 	}
-	response += "\n";
 	channel.sendAll(response);
 	channel.removeMember(sender.getFd());
 }

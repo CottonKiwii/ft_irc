@@ -7,18 +7,18 @@
 
 class Client {
 	private:
-		int					_fd;
-		std::string			_nick;
-		std::string			_name;
+		int						_fd;
+		std::string				_nick;
+		std::string				_name;
 
-		std::string			_buff;
-		std::string			_response;
+		std::string				_buff;
+		std::queue<std::string>	_response;
 
-		std::queue<Command>	_commands;
+		std::queue<Command>		_commands;
 
-		bool				_isConnected;
-		bool				_registered;
-		bool				_passGiven;
+		bool					_isConnected;
+		bool					_registered;
+		bool					_passGiven;
 
 	public:
 		Client(int fd);
@@ -54,7 +54,7 @@ class Client {
 		void		logConnect();
 		void		logDisconnect();
 		void		logCommand(Command &command);
-		void		logResponse();
+		void		logResponse(std::string response);
 		/**
 		 * For commands that are part of IRC protocol,
 		 * but not required by the subject

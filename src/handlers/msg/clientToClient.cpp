@@ -10,6 +10,5 @@ void handleClientToClient(Client &sender, Client &receiver, Command &command)
 		response += " ";
 	}
 	response.erase(response.begin() + response.size() - 1);
-	response += "\n";
 	receiver.addToResponse(response);
 }

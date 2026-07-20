@@ -45,7 +45,6 @@ static std::string buildResponse(
 				break;
 		}
 	}
-	responseStream << "\n";
 	res = responseStream.str();
 	return (res);
 }

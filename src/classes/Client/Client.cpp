@@ -5,7 +5,7 @@ Client::Client(int fd):
 	_nick(""),
 	_name(""),
 	_buff(""),
-	_response(""),
+	_response(),
 	_commands(),
 	_isConnected(true),
 	_registered(false),
@@ -25,20 +25,19 @@ Client::~Client() {}
 void	Client::createCommands() {
 	std::istringstream	commands(_buff);
 	std::string			rawCommand;
+	std::string			newBuff;
 
-	_buff.clear();
-	while (std::getline(commands, rawCommand)) {
-		if (rawCommand[rawCommand.size() - 1] == '\r')
-			rawCommand.erase(rawCommand.begin() + rawCommand.size() - 1);
-		if (commands.eof()
-			&& _buff[_buff.size() - 1] != '\n'
-			&& _buff[_buff.size() - 1] != '\r') {
-			_buff += rawCommand;
+	while (std::getline(commands, rawCommand, '\n')) {
+		if (commands.eof() && _buff[_buff.size() - 1] != '\n') {
+			newBuff += rawCommand;
 			break ;
 		}
+		if (rawCommand[rawCommand.size() - 1] == '\r')
+			rawCommand.erase(rawCommand.begin() + rawCommand.size() - 1);
 		Command newCommand(rawCommand);
 		_commands.push(newCommand);
 	}
+	_buff = newBuff;
 }
 
 void	Client::handleCommands() {

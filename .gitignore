@@ -5,6 +5,7 @@ bin
 ft_irc-tester
 .cache
 
-in
+bee_movie_script
+in*
 compile_commands.json
 Session.vim

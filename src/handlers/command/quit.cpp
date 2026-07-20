@@ -18,7 +18,6 @@ void handleQuit(Client &sender, Command &command) {
 		}
 	}
 
-	response += "\n";
 	Server::sendToAllChannels(sender, response);
 	sender.setIsConnected(false);
 }

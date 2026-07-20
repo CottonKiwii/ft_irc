@@ -29,15 +29,6 @@ void	Server::disconnectClient(int fd) {
 	Server::_clients.erase(Server::_clients.begin() + socketIdx - 1);
 }
 
-void	Server::flushClients() {
-	for (
-		std::vector<Client>::iterator client = Server::_clients.begin();
-		client != Server::_clients.end();
-		client++) {
-		client->flushResponse();
-	}
-}
-
 void	Server::disconnectClients() {
 	std::vector<int> fdsToDisconnect;
 

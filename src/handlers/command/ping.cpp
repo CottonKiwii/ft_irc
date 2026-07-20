@@ -14,7 +14,6 @@ void handlePing(Client &sender, Command &command) {
 
 	// RPL_PING
 	std::string response = CMD_PONG
-		+ command.getArgs()[1]
-		+ "\n";
+		+ command.getArgs()[1];
 	sender.addToResponse(response);
 }

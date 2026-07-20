@@ -35,7 +35,7 @@ void handleUser(Client &sender, Command &command) {
 		+ sender.getNick()
 		+ "! "
 		+ sender.getName()
-		+ "@localhost\n";
+		+ "@localhost";
 
 	sender.addToResponse(response);
 

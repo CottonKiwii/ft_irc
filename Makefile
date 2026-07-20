@@ -94,6 +94,7 @@ run:	${NAME}
 valgrind: ${NAME}
 		valgrind \
 		--track-fds=all \
+		-s \
 		./${NAME} ${ARGS}
 
 client: PROFILE=${USER}

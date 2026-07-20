@@ -50,6 +50,5 @@ void	handleInvite(Client &sender, Command &command) {
 	response += invited->getNick();
 	response += " ";
 	response += chan->getName();
-	response += "\n";
 	invited->addToResponse(response);
 }

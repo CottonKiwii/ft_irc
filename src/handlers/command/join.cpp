@@ -10,12 +10,11 @@ static void	handleJoinCreate(Client &creator, std::string name) {
 	std::string response =	":"
 							+ creator.getPrefix()
 							+ " JOIN "
-							+ name
-							+ "\n";
+							+ name;
 	creator.addToResponse(response);
 	response =	":localhost MODE "
 				+ channel.getName()
-				+ " +nt\n";
+				+ " +nt";
 	creator.addToResponse(response);
 	creator.addToResponse(RPL_NAMERPLY(creator, channel));
 	creator.addToResponse(RPL_ENDOFNAMES(creator, channel));
@@ -62,8 +61,7 @@ static void	handleJoinExisting(Client &sender, std::string name, std::string key
 	std::string response =	":"
 							+ sender.getPrefix()
 							+ " JOIN "
-							+ name
-							+ "\n";
+							+ name;
 	channel->sendAll(response);
 	if (!channel->getTopic().empty())
 		sender.addToResponse(RPL_TOPIC(sender, (*channel)));

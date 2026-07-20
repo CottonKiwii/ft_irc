@@ -20,7 +20,6 @@ static void	kickClient(
 		response += " ";
 		response += reason;
 	}
-	response += "\n";
 	channel.removeMember(toKick.getFd());
 	channel.sendAll(response);
 }

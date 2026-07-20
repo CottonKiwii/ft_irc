@@ -94,6 +94,7 @@ run:	${NAME}
 valgrind: ${NAME}
 		valgrind \
 		--track-fds=all \
+		-s \
 		./${NAME} ${ARGS}
 
 .PHONY: all clean fclean re run valgrind

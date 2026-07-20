@@ -7,8 +7,7 @@ static void sendResponse(Client &sender, Channel &channel)
 
 	response = CMD_TOPIC(sender.getPrefix())
 		+ channel.getName() + " :"
-		+ channel.getTopic()
-		+ "\n";
+		+ channel.getTopic();
 	channel.sendAll(response);
 }
 

@@ -42,8 +42,7 @@ void handleNick(Client &sender, Command &command) {
 		std::string response =	":"
 								+ sender.getPrefix()
 								+ " NICK "
-								+ command.getArgs()[1]
-								+ "\n";
+								+ command.getArgs()[1];
 		sender.addToResponse(response);
 	}
 

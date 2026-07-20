@@ -26,7 +26,7 @@ bool		Client::commandsReady() {
 }
 
 void	Client::addToResponse(std::string response) {
-	_response += response;
+	_response.push(response);
 }
 
 void	Client::addToBuff(std::string buff) {
@@ -34,13 +34,17 @@ void	Client::addToBuff(std::string buff) {
 }
 
 void	Client::flushResponse() {
+	std::string	responseStr;
 	if (_response.size() == 0)
 		return ;
-	logResponse();
-	_response += "\r\n";
-	if (send(_fd, _response.c_str(), _response.size(), 0) == -1)
-		throw std::runtime_error("Error: An error occured while sending a message!");
-	_response.clear();
+	while (_response.size()) {
+		responseStr += _response.front();
+		responseStr += "\r\n";
+		logResponse(_response.front());
+		_response.pop();
+	}
+	if (send(_fd, responseStr.c_str(), responseStr.size(), 0) < 0)
+		_isConnected = false;
 }
 
 void	Client::logConnect() {
@@ -75,20 +79,18 @@ void	Client::logCommand(Command &command) {
 	std::cout << std::endl;
 }
 
-void	Client::logResponse() {
-	std::stringstream logPrefixStream;
-	logPrefixStream
+void	Client::logResponse(std::string response) {
+	std::stringstream logStream;
+	logStream
 	<< "["
 	<< (_nick.empty() ? "" : _nick)
 	<< (_nick.empty() ? "" : " (")
 	<< _fd
 	<< (_nick.empty() ? "" : ")")
-	<< ": out] ";
-	std::string logPrefix = logPrefixStream.str();
-	std::istringstream responseSplit(_response);
-	std::string responseLine;
-	while (std::getline(responseSplit, responseLine, '\n'))
-		std::cout << logPrefix << responseLine << std::endl;
+	<< ": out] "
+	<< response;
+	std::string log = logStream.str();
+	std::cout << log  << std::endl;
 }
 
 void	Client::logUnhandledCommand() {

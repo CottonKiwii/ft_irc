@@ -43,6 +43,12 @@ void	Server::listenAndServe(void) {
 					handleNewData(Server::_sockets[i].fd);
 			}
 		}
+
+		for (size_t i = 1; i < Server::_sockets.size(); i++)
+			if (Server::_sockets[i].revents & POLLOUT)
+				Server::getClient(Server::_sockets[i].fd)->flushResponse();
+		Server::disconnectClients();
+		Server::updateChannels();
 	}
 }
 
@@ -83,10 +89,12 @@ void	Server::acceptNewClient(void) {
 		&newAddrSize
 	);
 
-	if (newSocket.fd == -1)
-		std::cout << "Couldn't accept new connection" << std::endl;
+	if (newSocket.fd == -1) {
+		std::cout << "[Server: new connection failed]" << std::endl;
+		return ;
+	}
 
-	newSocket.events = POLLIN;
+	newSocket.events = POLLIN | POLLOUT;
 	newSocket.revents = 0;
 
 	Server::_sockets.push_back(newSocket);
@@ -113,9 +121,6 @@ void	Server::handleNewData(int fd) {
 	if (client->commandsReady())
 			getClient(fd)->handleCommands();
 
-	Server::flushClients();
-	Server::disconnectClients();
-	Server::updateChannels();
 }
 
 void	Server::signalHandler(int signal) {

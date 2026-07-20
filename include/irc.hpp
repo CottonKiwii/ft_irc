@@ -32,7 +32,7 @@
 // REPLIES
 # define RPL_UMODEIS(client)					":localhost 221 " \
 												+ client.getNick() \
-												+ " +r\n"
+												+ " +r"
 # define RPL_CHANNELMODEIS(client, channel)		":localhost 324 " \
 												+ client.getNick() \
 												+ " " \
@@ -40,34 +40,30 @@
 												+ " "\
 												+ channel.getModestring() \
 												+ " "\
-												+ channel.getModeArgs() \
-												+ "\n"
+												+ channel.getModeArgs()
 # define RPL_CREATIONTIME(client, channel)		":localhost 329 " \
 												+ client.getNick() \
 												+ " " \
 												+ channel.getName() \
 												+ " " \
-												+ channel.getCreationTime() \
-												+ "\n"
+												+ channel.getCreationTime()
 # define RPL_NOTOPIC(client, channel)			":localhost 331 " \
 												+ client.getNick() \
 												+ " " \
 												+ channel.getName() \
-												+ " :No topic is set\n"
+												+ " :No topic is set"
 # define RPL_TOPIC(client, channel)				":localhost 332 " \
 												+ client.getNick() \
 												+ " " \
 												+ channel.getName() \
 												+ " :" \
-												+ channel.getTopic() \
-												+ "\n"
+												+ channel.getTopic()
 # define RPL_INVITING(s, i, channel)			":localhost 341 " \
 												+ s.getNick() \
 												+ " "\
 												+ i.getNick() \
 												+ " "\
-												+ channel.getName() \
-												+ "\n"
+												+ channel.getName()
 /**
  * No @ or * options for privacy of the channel
  * because according to subject all the channels
@@ -80,107 +76,106 @@
 												+ " = " \
 												+ channel.getName() \
 												+ " :" \
-												+ channel.getNames() \
-												+ "\n"
+												+ channel.getNames()
 # define RPL_ENDOFNAMES(client, channel)		":localhost 366 " \
 												+ client.getNick() \
 												+ " " \
 												+ channel.getName() \
-												+ " :End of /NAMES list.\n"
+												+ " :End of /NAMES list."
 
 // GENERAL ERRORS
 # define ERR_UNKNOWNCOMMAND(commandName)		":localhost 421 " \
 												+ commandName \
-												+ " :Unknown command\n"
+												+ " :Unknown command"
 # define ERR_NEEDMOREPARAMS(client)				":localhost 461 " + client.getNick() \
-												+ " :Not enough parameters\n"
+												+ " :Not enough parameters"
 # define ERR_ALREADYREGISTERED(client)			":localhost 462 " + client.getNick() \
-												+ " :You may not reregister\n"
+												+ " :You may not reregister"
 # define ERR_PASSWDMISMATCH(client)				":localhost 464 " + client.getNick() \
-												+ " :Password is incorrect\n"
+												+ " :Password is incorrect"
 // PRIVMSG ERRORS
 # define ERR_NOSUCHNICK(client, nick)			":localhost 401 " \
 												+ nick \
 												+ " :No such nick/channel"
 # define ERR_NOSUCHCHANNEL(chanName)			":localhost 403 " \
 												+ chanName \
-												+ " :No such channel\n"
+												+ " :No such channel"
 
 # define ERR_CANNOTSENDTOCHAN(channel)			":localhost 404 " \
 												+ channel.getName() \
-												+ " :Cannot send to channel\n"
+												+ " :Cannot send to channel"
 # define ERR_NOTEXTTOSEND(client)				":localhost 412 " + client.getNick() \
 												+ " :No text to send"
 
 // NICKNAME ERRORS
 # define ERR_NONICKNAMEGIVEN(client)			":localhost 431 " + client.getNick() \
-												+ " :No nickname given\n"
+												+ " :No nickname given"
 # define ERR_ERRONEUSNICKNAME(nick)				":localhost 432 " \
 												+ nick \
-												+ " :Erroneus nickname\n"
+												+ " :Erroneus nickname"
 # define ERR_NICKNAMEINUSE(nick)				":localhost 433 " \
 												+ nick \
-												+ " :Nickname is already in use\n"
+												+ " :Nickname is already in use"
 
 // CHANNEL ERRORS
 # define ERR_USERNOTINCHANNEL(nick, channel)	":localhost 441 " \
 												+ nick \
 												+ " " \
 												+ channel.getName() \
-												+ " :User is not on channel\n"
+												+ " :User is not on channel"
 # define ERR_NOTONCHANNEL(channel)				":localhost 442 " \
 												+ channel.getName() \
-												+ " :You are not on channel\n"
+												+ " :You are not on channel"
 # define ERR_USERONCHANNEL(client, channel)		":localhost 443 " \
 												+ client.getNick() \
 												+ " "\
 												+ channel.getName() \
-												+ " :User is already on channel\n"
+												+ " :User is already on channel"
 # define ERR_KEYSET(channel)					":localhost 467 " \
 												+ channel.getName() \
-												+ " :Channel key is already set\n"
+												+ " :Channel key is already set"
 # define ERR_CHANNELISFULL(client, channel)		":localhost 471 " \
 												+ client.getNick() \
 												+ " " \
 												+ channel.getName() \
-												+ " :Cannot join channel (+l)\n"
+												+ " :Cannot join channel (+l)"
 # define ERR_UNKNOWNMODE(client, modeChar)		":localhost 472 " \
 												+ client.getNick() \
 												+ " " \
 												+ modeChar \
-												+ " :Unknown mode char\n"
+												+ " :Unknown mode char"
 # define ERR_INVITEONLYCHAN(client, channel)	":localhost 473 " \
 												+ client.getNick() \
 												+ " " \
 												+ channel.getName() \
-												+ " :Cannot join channel (+i)\n"
+												+ " :Cannot join channel (+i)"
 # define ERR_BADCHANNELKEY(client, channel)		":localhost 475 " \
 												+ client.getNick() \
 												+ " " \
 												+ channel.getName() \
-												+ " :Cannot join channel (+k) - bad key\n"
+												+ " :Cannot join channel (+k) - bad key"
 # define ERR_BADCHANMASK(client, name)			":localhost 476 " \
 												+ client.getNick() \
 												+ " " \
 												+ name \
-												+ " :Invalid channel name)\n"
+												+ " :Invalid channel name)"
 # define ERR_CHANOPRIVSNEEDED(client, channel)	":localhost 482 " \
 												+ client.getNick() \
 												+ " " \
 												+ channel.getName() \
-												+ " :You're not channel operator\n"
+												+ " :You're not channel operator"
 
 // MODE ERRORS
 # define ERR_UMODEUNKNOWNFLAG(client)			":localhost 501 " \
 												+ client.getNick() \
-												+ " :Unknown MODE flag\n"
+												+ " :Unknown MODE flag"
 # define ERR_USERSDONTMATCH(client)				":localhost 502 " \
 												+ client.getNick() \
-												+ " :Can't access mode of other users\n"
+												+ " :Can't access mode of other users"
 
 # define ERROR_CLOSINGLINK(reason)				"ERROR :Closing Link: localhost (" \
 												reason \
-												")\n"
+												")"
 // OFFICIAL IRC REPLIES
 # define RPL_WELCOME							":localhost 001 "
 

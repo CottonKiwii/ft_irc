@@ -1,41 +1,36 @@
 #include "irc.hpp"
 
-void handleNick(Client &sender, Command &command) {
+static bool	runChecksNick(Client &sender, Command &command) {
 	// ERR_NONICKNAMEGIVEN
-	if (command.getArgs().empty() || command.getArgs()[1].size() < 1) {
+	if (command.getArgs().size() < 2) {
 		sender.addToResponse(ERR_NONICKNAMEGIVEN(sender));
-		return ;
+		return false;
 	}
-
 	// ERR_NICKNAMEINUSE
 	if (sender.getRegisterStatus()) {
 		Client	*compare = Server::getClient(command.getArgs()[1]);
 		if (compare) {
 			sender.addToResponse(ERR_NICKNAMEINUSE(command.getArgs()[1]));
-			return ;
+			return false;
 		}
 	}
-
 	// ERR_ERRONEUSNICKNAME
+	if (command.getArgs()[1][0] == '#' || command.getArgs()[1][0] == ':') {
+		sender.addToResponse(ERR_ERRONEUSNICKNAME(command.getArgs()[1]));
+		return false;
+	}
 	for (size_t i = 0; i < command.getArgs()[1].size() - 1; i++) {
 		if (!std::isprint(command.getArgs()[1][i])) {
 			sender.addToResponse(ERR_ERRONEUSNICKNAME(command.getArgs()[1]));
-			return ;
+			return false;
 		}
 	}
+	return true;
+}
 
-	if (command.getArgs()[1][0] == '#'
-		|| command.getArgs()[1][0] == ':'
-		|| command.getArgs()[1][0] == ' ') {
-		sender.addToResponse(ERR_ERRONEUSNICKNAME(command.getArgs()[1]));
+void handleNick(Client &sender, Command &command) {
+	if (runChecksNick(sender, command) == false)
 		return ;
-	}
-
-	Client	*client = Server::getClient(command.getArgs()[1]);
-	if (client) {
-		sender.addToResponse(ERR_NICKNAMEINUSE(command.getArgs()[1]));
-		return ;
-	}
 
 	// RPL_NEWNICKNAME
 	if (sender.getRegisterStatus()) {

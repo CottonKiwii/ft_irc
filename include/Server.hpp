@@ -7,8 +7,9 @@
 # include "Channel.hpp"
 # include "Client.hpp"
 
-#define USAGE_MSG	"Usage: ./ircserv <port> <pass>\n"
-#define PORT_MSG	"Port should be a number between 0 and 65535"
+# define USAGE_MSG	"Usage: ./ircserv <port> <pass>\n"
+# define PORT_MSG	"Port should be a number between 0 and 65535"
+# define PASS_MSG	"Pass cannot be an empty string"
 
 class Server {
 	private:

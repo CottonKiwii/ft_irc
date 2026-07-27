@@ -34,6 +34,8 @@ void	Client::createCommands() {
 		}
 		if (rawCommand[rawCommand.size() - 1] == '\r')
 			rawCommand.erase(rawCommand.begin() + rawCommand.size() - 1);
+		if (rawCommand.empty())
+			continue ;
 		Command newCommand(rawCommand);
 		_commands.push(newCommand);
 	}

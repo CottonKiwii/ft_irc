@@ -19,7 +19,6 @@ void		Client::setPassGiven(bool status) { _passGiven = status; }
 
 bool		Client::commandsReady() {
 	if (_buff.find("\n") != std::string::npos
-		|| _buff.find("\r") != std::string::npos
 		|| _buff.find("\r\n") != std::string::npos)
 		return true;
 	return false;

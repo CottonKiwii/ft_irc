@@ -6,6 +6,5 @@ ft_irc-tester
 .cache
 
 bee_movie_script
-in*
 compile_commands.json
 Session.vim

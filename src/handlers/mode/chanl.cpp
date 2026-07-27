@@ -1,5 +1,4 @@
 #include "irc.hpp"
-#include <cstdlib>
 
 bool	modeChanl(
 	Channel &channel,
@@ -9,10 +8,13 @@ bool	modeChanl(
 	if (mod == '+') {
 		if (modeArgs.size() == 0)
 			return (false);
+		std::istringstream	token(modeArgs.front());
+		int			newLimit;
 
-		size_t	newLimit = std::atoi(modeArgs.front().c_str());
 		modeArgs.pop();
-		if (!newLimit)
+		if (!(token >> newLimit))
+			return (false);
+		if (newLimit < 1)
 			return (false);
 		channel.setMemberLimit(newLimit);
 		return (true);

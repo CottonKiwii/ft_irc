@@ -1,4 +1,3 @@
-
 #include "irc.hpp"
 
 static void sendResponse(Client &sender, Channel &channel)
@@ -11,30 +10,39 @@ static void sendResponse(Client &sender, Channel &channel)
 	channel.sendAll(response);
 }
 
-void handleTopic(Client &sender, Command &command) {
+static bool	runChecksTopic(Client &sender, Command &command) {
+	Channel	*channel;
 	if (sender.getRegisterStatus() == false) {
 		sender.setIsConnected(false);
 		sender.addToResponse(ERROR_CLOSINGLINK("unauthorised"));
-		return ;
+		return false;
 	}
-
-	Channel *channel = Server::getChannel(command.getArgs()[1]);
-
+	if (command.getArgs().size() < 2) {
+		sender.addToResponse(ERR_NEEDMOREPARAMS(sender));
+		return false;
+	}
+	channel = Server::getChannel(command.getArgs()[1]);
 	//ERR_NOSUCHCHANNEL
 	if (!channel) {
 		sender.addToResponse(ERR_NOSUCHCHANNEL(command.getArgs()[1]));
-		return ;
+		return false;
 	}
-
 	// ERR_NOTONCHANNEL
 	if (!channel->isClientMember(sender.getFd())) {
 		sender.addToResponse(ERR_NOTONCHANNEL((*channel)));
-		return ;
+		return false;
 	}
+	return true;
+}
+
+void handleTopic(Client &sender, Command &command) {
+	if (runChecksTopic(sender, command) == false)
+		return ;
+	Channel	*channel = Server::getChannel(command.getArgs()[1]);
 
 	// RPL_TOPIC
 	if (command.getArgs().size() == 2) {
-		if (!channel->getTopic().c_str())
+		if (channel->getTopic().empty())
 			sender.addToResponse(RPL_NOTOPIC(sender, (*channel)));
 		else
 			sender.addToResponse(RPL_TOPIC(sender, (*channel)));

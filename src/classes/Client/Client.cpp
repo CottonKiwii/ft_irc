@@ -28,12 +28,16 @@ void	Client::createCommands() {
 	std::string			newBuff;
 
 	while (std::getline(commands, rawCommand, '\n')) {
-		if (commands.eof() && _buff[_buff.size() - 1] != '\n') {
+		if (commands.eof() && 
+				(_buff[_buff.size() - 1] != '\n'
+				|| _buff[_buff.size() - 1 ] != '\r')) {
 			newBuff += rawCommand;
 			break ;
 		}
 		if (rawCommand[rawCommand.size() - 1] == '\r')
 			rawCommand.erase(rawCommand.begin() + rawCommand.size() - 1);
+		if (rawCommand.empty())
+			continue ;
 		Command newCommand(rawCommand);
 		_commands.push(newCommand);
 	}

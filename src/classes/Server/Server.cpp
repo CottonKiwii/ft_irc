@@ -21,10 +21,12 @@ void Server::init(char *args[3]) {
 
 	if (!(portToken >> Server::Config::_port))
 		throw (std::runtime_error(PORT_MSG));
+	Server::Config::_pass = args[2];
+	if (Server::Config::_pass.empty())
+		throw (std::runtime_error(PASS_MSG));
 
 	signal(SIGINT, Server::signalHandler);
 	signal(SIGQUIT, Server::signalHandler);
-	Server::Config::_pass = args[2];
 };
 
 void	Server::listenAndServe(void) {

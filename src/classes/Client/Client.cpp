@@ -28,9 +28,7 @@ void	Client::createCommands() {
 	std::string			newBuff;
 
 	while (std::getline(commands, rawCommand, '\n')) {
-		if (commands.eof() && 
-				(_buff[_buff.size() - 1] != '\n'
-				|| _buff[_buff.size() - 1 ] != '\r')) {
+		if (commands.eof() && _buff[_buff.size() - 1] != '\n') {
 			newBuff += rawCommand;
 			break ;
 		}
